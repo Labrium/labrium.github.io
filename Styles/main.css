@@ -1,0 +1,668 @@
+@import url("https://fonts.googleapis.com/css?family=Orbitron");
+:root {
+  --round-border: 10px;
+  /*--square-border: 5px;*/
+  --dark-blue: #081340;
+  --light-blue: #00ccff;
+  --blue-gray: #186993;
+  --light-gray: #dddddd;
+  --dark-gray: #aaaaaa;
+  --animation-speed: 0.15s;
+  --animation-curve: cubic-bezier(.28, .11, .32, 1);
+  --float-shadow: 0px 60px 75px 0px rgba(0, 0, 0, 0.5);
+  --float-move: translate(0, -30px) scale(1.075);
+  --rest-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.25);
+}
+
+.bar {
+  /*display: inline-block;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background-color: rgba(250, 255, 255, 0.375);
+  box-shadow: var(--float-shadow);*/
+  overflow: auto;
+  line-height: 66px;
+  font-size: 24px;
+  padding: 10px;
+  color: white;
+  background-color: var(--dark-blue);
+  border-radius: var(--round-border);
+}
+.bar img {
+  float: left;
+}
+
+
+/* input styles */
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+  margin: 1rem 1.5rem 1rem 1.5rem !important;
+}
+
+input[type="checkbox"]:before,
+input[type="radio"]:before {
+  position: absolute;
+  display: block;
+  content: "";
+  background-color: white;
+  width: 3.5rem;
+  height: 2rem;
+  border-radius: 10000px;
+  transition: all 0.25s cubic-bezier(.28, .11, .32, 1);
+  border: var(--light-gray) 2.5px solid;
+  transform: translate(calc(-50% + 6px), calc(-50% + 6px));
+  }
+
+  input[type="checkbox"]:disabled,
+  input[type="radio"]:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  }
+
+  input[type="checkbox"]:after,
+  input[type="radio"]:after {
+  position: absolute;
+  display: block;
+  content: "";
+  background-color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  transition: all var(--animation-speed) var(--animation-curve);
+  transform: translate(calc(-87.5% + 6px), calc(-50% + 6px));
+  box-shadow: var(--rest-shadow);
+  }
+
+  input[type="checkbox"]:checked:before,
+  input[type="radio"]:checked:before {
+  background-color: var(--light-blue);
+  border-color: var(--light-blue);
+  }
+
+  input[type="checkbox"]:checked:after,
+  input[type="radio"]:checked:after {
+  transform: translate(calc(-14.25% + 6px), calc(-50% + 6px));
+  }
+
+  input[type="range"] {
+  -webkit-appearance: none;
+  border-radius: 10000px;
+  width: 100%;
+  height: 36px;
+  background: var(--light-blue);
+  outline: none;
+  border: var(--light-blue) 2.75px solid;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  transition: all var(--animation-speed) var(--animation-curve);
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  background: white;
+  box-shadow: var(--rest-shadow);
+  transition: all var(--animation-speed) var(--animation-curve);
+  }
+
+
+
+
+
+/*loader*/
+.loader {
+  position: absolute;
+  width: 45vw;
+  max-width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: -webkit-translate(-50%, -50%);
+  text-align: center;
+}
+.loader img {
+  width: 100%;
+}
+.loader h1 {
+  font-size: 3vw;
+}
+.loadbg {
+  background-color: white;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+/*body*/
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "Orbitron", sans-serif;
+  margin: 0;
+  cursor: default;
+  background: url("../Images/Circuit Blue Background.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+/*header*/
+.header {
+  padding: 60px;
+  text-align: center;
+  color: white;
+  position: relative;
+  top: 50vh;
+  transform: translate(0, -57.5%);
+  border-radius: var(--round-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background-color: rgba(250, 255, 255, 0.375);
+  box-shadow: var(--float-shadow);
+  width: 100vw;
+  text-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+}
+#logo {
+  border-radius: 30px;
+  box-shadow: var(--rest-shadow);
+  margin: 30px auto 20px auto;
+}
+#navbarLogo {
+  border-radius: var(--round-border);
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  max-height: 46px;
+  margin-left: auto;
+  margin-right: auto;
+  display: none;
+}
+h1 {
+  font-weight: normal;
+  font-size: 72px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 36px;
+  font-weight: normal;
+}
+#appimage {
+  max-width: 256px;
+}
+.single .header a {
+  border-radius: var(--round-border);
+  background-color: var(--dark-blue);
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 2em;
+  max-width: 19em;
+  box-shadow: var(--rest-shadow);
+  transition: all var(--animation-speed) var(--animation-curve);
+  -webkit-transition: all var(--animation-speed) var(--animation-curve);
+}
+.single .header a:hover {
+  background-color: var(--light-blue);
+  color: var(--dark-blue);
+  box-shadow: var(--float-shadow);
+  transform: scale(1.1);
+}
+.single .header a:active {
+  background-color: var(--blue-gray);
+  box-shadow: 0px 30px 37.5px 0px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+}
+.single .header a img {
+  display: block;
+  float: left;
+}
+.single .header h1 {
+  color: var(--dark-blue); 
+  font-weight: normal; 
+}
+.single .header h2 {
+  color: var(--dark-blue); 
+  font-weight: normal; 
+  font-size: 1.5em;
+}
+.single .header h3 {
+  color: var(--dark-blue); 
+  font-weight: normal; 
+  margin-top: 3em;
+  font-size: 12pt;
+}
+/*navigation bar*/
+.topnav {
+  z-index: 5;
+  overflow: hidden;
+  background-color: var(--dark-blue);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  border-radius: var(--round-border);
+  box-shadow: 0px 15px 30px 0px rgba(0,0,0,0.5);
+}
+.topnav a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  border-radius: var(--round-border);
+  transition: all var(--animation-speed) var(--animation-curve);
+  -webkit-transition: all var(--animation-speed) var(--animation-curve);
+}
+.active {
+  background-color: var(--light-blue) !important;
+  color: white;
+}
+.active:active {
+  background-color: var(--blue-gray) !important;
+}
+.topnav .icon {
+  display: none;
+}
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+.dropdown .dropbtn {
+  font-size: 17px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+  cursor: pointer;
+  border-radius: var(--round-border);
+  transition: all 0.3s;
+  display: none !important;
+}
+.dropdown-content {
+  /*position: absolute;*/
+  background-color: white;
+  min-width: 160px;
+  box-shadow: var(--float-shadow);
+  z-index: 3;
+  border-radius: var(--round-border);
+}
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  border-radius: var(--round-border);
+}
+.topnav a:hover, .dropdown:hover .dropbtn {
+  background-color: var(--light-blue);
+  color: var(--dark-blue);
+}
+.topnav a:active, .dropdown:active .dropbtn {
+  background-color: var(--blue-gray);
+}
+.dropdown-content a:hover {
+  background-color: var(--light-gray);
+  color: black;
+}
+.homeicon {
+  background-color: inherit;
+  color: inherit;
+  display: none !important;
+}
+.search {
+  border-radius: var(--round-border);
+  margin: 13px;
+  /*border-style: none;*/
+}
+.linkicon {
+  width: 17px;
+}
+/*main page*/
+.content {  
+  display: flex;
+  flex-wrap: wrap-reverse;
+  background-color: transparent;
+}
+.side {
+  background: url("../Images/Circuit Gray Background.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  flex: 30%;
+  background-color: var(--light-gray);
+  padding: 20px;
+  border-radius: var(--round-border);
+}
+.main {
+  background: url("../Images/Circuit White Background.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  flex: 70%;
+  background-color: white;
+  padding: 20px;
+  border-radius: var(--round-border);
+}
+.fakeimg {
+  background-color: var(--dark-gray);
+  width: 100%;
+  padding: 20px;
+  border-radius: var(--round-border);
+}
+code {
+  font: 2em/15px "Coder's Crux", "Andale Mono", monospace;
+}
+.code {
+  background-color: var(--light-gray);
+  border-radius: 10px;
+  width: 100%;
+  max-height: 500px;
+  padding: 10px;
+  margin: 10px;
+  overflow: scroll;
+  cursor: text;
+}
+iframe {
+  width: 100%;
+  height: 100%;
+  border-style: none;
+}
+.desktop {
+  width: calc(1920px/2);
+  height: calc(1080px/2);
+  margin: auto;
+}
+.laptop {
+  width: calc(1336px/2);
+  height: calc(768px/2);
+  margin: auto;
+}
+.tablet {
+  width: 768px;
+  height: 1024px;
+  margin: auto;
+  overflow: hidden;
+  border: 20px solid black;
+  border-top-width: 75px;
+  border-bottom-width: 75px;
+  border-radius: 40px;
+}
+.tablet.landscape {
+  width: 1024px;
+  height: 768px;
+  border-width: 20px;
+  border-right-width: 75px;
+  border-left-width: 75px;
+}
+.phone {
+  width: 375px;
+  height: 667px;
+  margin: auto;
+  overflow: hidden;
+  border: 10px solid black;
+  border-top-width: 55px;
+  border-bottom-width: 55px;
+  border-radius: 40px;
+}
+.phone.landscape {
+  width: 667px;
+  height: 375px;
+  border-width: 10px;
+  border-right-width: 55px;
+  border-left-width: 55px;
+}
+fieldset {
+  margin: 15px;
+}
+input[type="radio"], input[type="checkbox"], input[type="range"], input[type="button"], button, select {
+  cursor: pointer;
+}
+input:disabled {
+  cursor: not-allowed;
+}
+input[type="number"] {
+  width: 45px;
+}
+fieldset input[type="range"] {
+  width: 100%;
+  cursor: grab;
+}
+fieldset input[type="range"]:active {
+  cursor: grabbing;
+}
+fieldset input[type="url"] {
+  width: 90%;
+}
+button {
+  border-radius: var(--round-border);
+  background-color: var(--dark-blue);
+  color: white;
+  font-family: inherit;
+  font-size: 30px;
+  border-style: none;
+  margin: 5px;
+}
+button:hover {
+  background-color: var(--light-blue);
+  color: var(--dark-blue);
+  font-family: inherit;
+  font-size: 30px;
+}
+#longDescription {
+  max-width: 900px;
+  margin: auto auto 5em auto;
+  text-align: center;
+}
+.single {
+  background: url("../Images/Circuit White Background.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  border-radius: var(--round-border);
+  width: 100%;
+  margin: auto;
+  background-color: white;
+  padding: 25px;
+}
+.single h2 {
+  margin-top: 3em;
+  margin-bottom: 1em;
+}
+.single hr {
+  max-width: 1000px;
+  margin: auto auto 5em auto;
+}
+.gridRow {
+  margin: auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 1000px;
+}
+.gridItem {
+  text-align: center;
+  width: 192px;
+  margin: 1em;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14pt;
+  color: var(--dark-blue);
+  border-radius: var(--round-border);
+  transition: all var(--animation-speed) var(--animation-curve);
+  position: relative;
+}
+.gridItem:not(.card) img {
+  width: 128px;
+  transition: all var(--animation-speed) var(--animation-curve);
+}
+.gridItem p {
+  font-weight: normal;
+  font-size: 12pt;
+  color: var(--dark-gray);
+}
+.gridItem:hover {
+  box-shadow: var(--float-shadow);
+  background: white;
+  z-index: 4;
+  transform: var(--float-move);
+}
+.card {
+  background-color: white;
+  box-shadow: var(--rest-shadow);
+  width: 256px;
+}
+.card img {
+  width: 100%;
+  border-radius: var(--round-border);
+  margin-bottom: 20px;
+}
+
+.ribbon {
+  position: absolute;
+  left: 0; top: 0;
+  z-index: 1;
+  overflow: hidden;
+  width: 100px; height: 100px;
+  text-align: right;
+}
+.ribbon span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #FFF;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 25px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 120px;
+  display: block;
+  background: #79A70A;
+  background: linear-gradient(#F79E05, #FF8945);
+  box-shadow: 0 3px 15px -5px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 20px; left: -27px;
+}
+
+/*footer*/
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: var(--dark-blue);
+  color: white;
+  border-radius: var(--round-border);
+  /*border-top-left-radius: var(--round-border);
+  border-top-right-radius: var(--round-border);*/
+}
+.footer hr {
+  max-width: 1000px;
+}
+.footlogo {
+  border-radius: 10px;
+  margin: 10px;
+}
+/*other*/
+.articleimg {
+  border-radius: var(--round-border);
+  width: 100%;
+}
+.sqborder {
+  border-radius: var(--round-border);
+}
+.right {
+  float: right !important;
+}
+.fa {
+  font-size: 30px !important;
+  padding: 8px !important;
+  text-decoration: none;
+  color: inherit;
+}
+.fa-caret-down, .fa-caret-up, .fa-file-image-o {
+  padding: 0 !important;
+  font-size: 17px !important;
+}
+/* Responsive layout - when the screen is less than 900px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 900px) {
+  .row {  
+  flex-direction: column;
+  }
+  .topnav a:not(:first-child), .dropdown .dropbtn {
+  display: none;
+  }
+  #navbarLogo {
+    display: block;
+  }
+  .topnav a.icon {
+  float: right;
+  display: block;
+  }
+  .homeicon {
+  	display: block !important;
+  }
+  .home {
+  	display: none !important;
+  }
+  .dropdown-content, .dropdown-content a {
+  border-radius: var(--round-border);
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .single {
+  padding: 25px;
+  }
+  .topnav.responsive {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  }
+  .topnav.responsive .icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  }
+  .topnav.responsive a {
+  float: none;
+  display: block;
+  text-align: left;
+  }
+  .topnav.responsive .dropdown {
+  float: none;
+  }
+  .topnav.responsive .dropdown-content {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  }
+  .topnav.responsive .dropdown .dropbtn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  }
+}
