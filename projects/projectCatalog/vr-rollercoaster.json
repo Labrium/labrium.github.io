@@ -1,0 +1,6 @@
+{
+    "name": "VR Rollercoaster",
+    "projectPage": "vr-rollercoaster",
+    "description": "A test of the VR polyfill we here at Tech Labs transpiled for use with older or incompatible devices. Works with Google Cardboard or any other VR web browsers.",
+    "status": ["green", "Complete"]
+}

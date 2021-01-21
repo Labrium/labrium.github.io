@@ -1,0 +1,6 @@
+{
+    "name": "Flight Simulator",
+    "projectPage": "flight-simulator",
+    "description": "A simple flight simulator experiment originally developed to test mouse flight controls.",
+    "status": ["yellow", "In Progress"]
+}

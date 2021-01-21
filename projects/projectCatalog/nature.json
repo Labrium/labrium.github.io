@@ -1,0 +1,6 @@
+{
+    "name": "Nature",
+    "projectPage": "nature",
+    "description": "An experiment designed to test the realisticity of a computer generated world.",
+    "status": ["orange", "Performance Issues"]
+}

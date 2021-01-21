@@ -2,34 +2,131 @@
 <html lang="en-US">
 
 <head>
-	<title>Tech Labs - Coming Soon</title>
+	<title>Tech Labs - Inventing the Future</title>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-	<link rel="icon" href="Images/Logo.svg" />
-	<link rel="icon" href="Images/Logo.png" />
-	<link rel="shortcut icon" href="Images/Logo.svg" />
-	<link rel="shortcut icon" href="Images/Logo.png" />
-	<link rel="apple-touch-icon" href="Images/Logo.svg" />
-	<link rel="apple-touch-icon" href="Images/Logo.png" />
-	<link rel="mask-icon" href="Images/Logo Mono.svg" color="#081340" />
+	<link rel="icon" href="/Images/Logo.svg" />
+	<link rel="icon" href="/Images/Logo.png" />
+	<link rel="shortcut icon" href="/Images/Logo.svg" />
+	<link rel="shortcut icon" href="/Images/Logo.png" />
+	<link rel="apple-touch-icon" href="/Images/Logo.svg" />
+	<link rel="apple-touch-icon" href="/Images/Logo.png" />
+	<link rel="mask-icon" href="/Images/Logo Mono.svg" color="#081340" />
 	<meta name="theme-color" content="#00ccff">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-	<link rel="stylesheet" href="Styles/main.css" />
-	<script src="Scripts/main.js"></script>
+	<link rel="stylesheet" href="/Styles/main.css" />
+	<script src="/Scripts/main.js"></script>
 </head>
 
-<body>
-	<div id="content">
-		<div class="bar"><img width="46px" src="Images/Logo Mono.svg" class="footlogo" />Tech Labs</div>
-		<div class="header">
-			<h1>Coming Soon...</h1>
-			<img src="Images/Logo.svg" id="logo">
-			<h2>Tech Labs</h2>
-			<h3>Inventing The Future</h3>
+<body onload="finishLoad()">
+	<div class="loadbg" id="loader">
+		<div class="loader"><img src="/Images/Tech-Loader.svg" />
+			<h1>LOADING...</h1>
 		</div>
 	</div>
+	<!-- Header -->
+	<div id="content" style="display: none;">
+		<div html-include="/Common/Header.html"></div>
+		<div class="header">
+			<a href="#"><img src="/Images/Logo.svg" id="logo"></a>
+			<h1>Tech Labs</h1>
+			<h2>Inventing the Future</h2>
+		</div>
+		<!-- The flexible grid (content) -->
+		<div class="content">
+			<div class="side">
+				<h2>DARwIn-OP2 Project</h2>
+				<h5>Updated Jul 16, 2020</h5>
+				<img src="/Images/DARwIn-OP2.jpg" class="articleimg">
+				<p>Awaiting hardware funding.</p>
+				<h2>WebGL Mekorama</h2>
+				<h5>Updated Mar 16, 2020</h5>
+				<img src="/Images/Mekorama.png" class="articleimg">
+				<p>Latest features:</p>
+				<p>Added refractive water, electricity, and fixed up garbage can model. Almost playable, but pathfinding
+					algorithm is not working correctly.</p>
+			</div>
+			<div class="main">
+				<h2>macOS Big Sur Is Here!</h2>
+				<h5>Updated Jul 16, 2020</h5>
+				<img src="/Images/Big Sur.jpg" class="articleimg">
+				<p>Check out <a href="https://www.apple.com/macos/big-sur-preview/">Apple's preview</a> to learn about
+					all the new features of macOS Big Sur.</p>
+				<br />
+				<h2>WebGL Mario Kart 8</h2>
+				<h5>Updated Mar 26, 2020</h5>
+				<img src="/Images/Mario Kart 8.jpg" class="articleimg">
+				<p>Latest features:</p>
+				<p>New vehicles, tires, and characters. Toad Harbor is almost done, and it is possible to complete a
+					whole lap.</p>
+			</div>
+			<div class="single">
+				<!-- Slideshow container -->
+				<div class="slideshow-container">
+
+					<!-- Full-width images with number and caption text -->
+					<div class="mySlides">
+						<div html-include="products/PiWatchComingSoonBanner.html"></div>
+					</div>
+					<div class="mySlides">
+						<div html-include="apps/AppGalleryBanner.html"></div>
+					</div>
+					<div class="mySlides">
+						<div html-include="projects/ProjectsBanner.html"></div>
+					</div>
+					<!-- Next and previous buttons -->
+					<a class="prev" onclick="plusSlides(-1)"><span class="fa fa-chevron-left"></span></a>
+					<a class="next" onclick="plusSlides(1)"><span class="fa fa-chevron-right"></span></a>
+					<div class="dotbox">
+						<span class="dot" onclick="currentSlide(1)"></span>
+						<span class="dot" onclick="currentSlide(2)"></span>
+						<span class="dot" onclick="currentSlide(3)"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Footer -->
+		<div html-include="/Common/Footer.html"></div>
+	</div>
+	<script>
+		var slideIndex = 1;
+		var autoRotate;
+		showSlides(slideIndex);
+		// Next/previous controls
+		function plusSlides(n) {
+			showSlides(slideIndex += n);
+		}
+		// Thumbnail image controls
+		function currentSlide(n) {
+			showSlides(slideIndex = n);
+		}
+		function showSlides(n) {
+			var i;
+			var slides = document.getElementsByClassName("mySlides");
+			var dots = document.getElementsByClassName("dot");
+			if (n > slides.length) { slideIndex = 1 }
+			if (n < 1) { slideIndex = slides.length }
+			for (i = 0; i < slides.length; i++) {
+				slides[i].style.opacity = 0;
+			}
+			for (i = 0; i < dots.length; i++) {
+				dots[i].className = dots[i].className.replace(" active", "");
+			}
+			slides[slideIndex - 1].style.opacity = 1;
+			dots[slideIndex - 1].className += " active";
+			clearTimeout(autoRotate);
+			autoRotate = setTimeout(function () {
+				showSlides(slideIndex);
+				slideIndex++;
+				if (slideIndex > document.getElementsByClassName("mySlides").length) {
+					slideIndex = 1;
+				}
+			}, 5000);
+		}
+	</script>
+	<script src="/Common/Include.js"></script>
 </body>
 
 </html>

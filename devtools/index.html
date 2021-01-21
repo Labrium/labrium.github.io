@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<title>Developer Tools - Tech Labs</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<link rel="icon" href="/Images/Logo.svg" />
+	<link rel="icon" href="/Images/Logo.png" />
+	<link rel="shortcut icon" href="/Images/Logo.svg" />
+	<link rel="shortcut icon" href="/Images/Logo.png" />
+	<link rel="apple-touch-icon" href="/Images/Logo.svg" />
+	<link rel="apple-touch-icon" href="/Images/Logo.png" />
+	<link rel="mask-icon" href="/Images/Logo Mono.svg" color="#081340" />
+	<meta name="theme-color" content="#00ccff">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="/Styles/main.css" />
+	<script src="/Scripts/main.js"></script>
+</head>
+
+<body onload="finishLoad()">
+	<div class="loadbg" id="loader">
+		<div class="loader"><img src="/Images/Tech-Loader.svg" />
+			<h1>LOADING...</h1>
+		</div>
+	</div>
+	<!-- Header -->
+	<div id="content" style="display: none;">
+	<div html-include="/Common/Header.html"></div>
+		<div class="header">
+			<a href="/"><img src="/Images/Logo.svg" id="logo"></a>
+			<h1>Developer Tools</h1>
+		</div>
+		<!-- The flexible grid (content) -->
+		<div class="content">
+			<div class="single">
+				<h2><span class="fa fa-gears"></span>Developer Tools</h2>
+				<h5>Preview:</h5>
+				<div class="desktop" id="frame">
+					<img src="/Images/computer browser header.png" width="100%">
+					<iframe id="pageEditor" src="/"></iframe>
+				</div>
+				<br />
+				<br />
+				<button onclick="edit()">Edit <span class="fa fa-pencil-square-o"></span></button>
+				<button onclick="done()">Done <span class='fa fa-check-square-o'></span></button>
+				<div class="code">
+					<code id="editCode">Your edited code will appear here:</code>
+				</div>
+				<form name="settings" onchange="updateIframe()">
+					<fieldset>
+						<legend>Device</legend>
+						<input type="radio" name="device" value="desktop" id="desktop" checked />
+						<label for="desktop"><span class="fa fa-desktop"></span></label><br />
+						<input type="radio" name="device" value="laptop" id="laptop" />
+						<label for="laptop"><span class="fa fa-laptop"></span></label><br />
+						<input type="radio" name="device" value="tablet" id="tablet" />
+						<label for="tablet"><span class="fa fa-tablet"></span></label><br />
+						<input type="radio" name="device" value="phone" id="phone" />
+						<label for="phone"><span class="fa fa-mobile"></span></label><br />
+					</fieldset>
+					<fieldset>
+						<legend>Orientation</legend>
+						<input type="radio" name="orientation" value="vertical" id="vertical" disabled checked />
+						<label for="vertical"><span class="fa fa-mobile"></span></label><br />
+						<input type="radio" name="orientation" value="horizontal" id="horizontal" disabled />
+						<label for="horizontal"><span class="fa fa-mobile fa-rotate-270"></span></label><br />
+					</fieldset>
+					<fieldset>
+						<legend>Location</legend>
+						<label for="URL">URL:</label>
+						<input type="url" name="URL" id="URL"
+							value="file:///Volumes/BYUSB/code/Tech%20Labs/index.html" />
+						<input type="button" value="Go" />
+					</fieldset>
+					<fieldset>
+						<legend>Color</legend>
+						<label for="brightness">Brightness:</label><span id="brightnessAmount"></span><br />
+						<input type="range" name="brightness" id="brightness" min="0" max="200" step="1"
+							value="100" /><br />
+						<label for="contrast">Contrast:</label><span id="contrastAmount"></span><br />
+						<input type="range" name="contrast" id="contrast" min="0" max="100" step="1" value="50" /><br />
+						<label for="grayscale">Grayscale:</label><span id="grayscaleAmount"></span><br />
+						<input type="range" name="grayscale" id="grayscale" min="0" max="100" step="1"
+							value="0" /><br />
+						<label for="hue">Hue:</label><span id="hueAmount"></span><br />
+						<input type="range" name="hue" id="hue" min="0" max="360" step="5" value="0" /><br />
+						<label for="invert">Invert:</label><span id="invertAmount"></span><br />
+						<input type="range" name="invert" id="invert" min="0" max="100" step="1" value="0" /><br />
+						<label for="saturation">Saturation:</label><span id="saturationAmount"></span><br />
+						<input type="range" name="saturation" id="saturation" min="0" max="100" step="1"
+							value="0" /><br />
+						<label for="sepia">Sepia:</label><span id="sepiaAmount"></span><br />
+						<input type="range" name="sepia" id="sepia" min="0" max="100" step="1" value="0" /><br />
+					</fieldset>
+					<fieldset>
+						<legend>Variables</legend>
+						<label for="round">--round-border:</label>
+						<input type="number" name="round" id="round" value="25" min="0" />px<br />
+						<label for="square">--square-border:</label>
+						<input type="number" name="square" id="square" value="5" min="0" />px<br />
+						<label for="darkBlue">--dark-blue:</label>
+						<input type="color" name="darkBlue" id="darkBlue" value="#081340" /><br />
+						<label for="lightBlue">--light-blue:</label>
+						<input type="color" name="lightBlue" id="lightBlue" value="#00ccff" /><br />
+						<label for="blueGray">--blue-gray:</label>
+						<input type="color" name="blueGray" id="blueGray" value="#186993" /><br />
+						<label for="lightGray">--light-gray:</label>
+						<input type="color" name="lightGray" id="lightGray" value="#dddddd" /><br />
+						<label for="darkGray">--dark-gray:</label>
+						<input type="color" name="darkGray" id="darkGray" value="#aaaaaa" /><br />
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<!-- Footer -->
+		<div html-include="/Common/Footer.html"></div>
+	</div>
+	<script src="/Common/Include.js"></script>
+</body>
+
+</html>

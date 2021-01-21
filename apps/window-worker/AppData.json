@@ -1,0 +1,10 @@
+{
+    "downloadPath": "/apps/Builds/Window_Worker_1.1.dmg",
+    "name": "Window Worker",
+    "changelog": [
+        "1.1:\n • New updated software updater script can read and display release notes.\n • Updater Script is now standalone and localized.\n • Fixed layout bug of release notes to replace newlines correctly."
+    ],
+    "longDescription": "<div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Organize Your Windows</h2><br/><p>Choose from our many options to position windows exactly how you want.</p><p>The first three options organize all windows at once!</p></div><img src='Menu.png' /></div>",
+    "productPage": "window-worker",
+    "shortDescription": "Window Layout Manager"
+}

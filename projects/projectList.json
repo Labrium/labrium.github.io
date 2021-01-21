@@ -1,0 +1,20 @@
+{
+    "new": [
+        "drone-driver",
+        "flywings-simulator",
+        "flight-simulator",
+        "corona-earth",
+        "earth",
+        "vr-test",
+        "vr-rollercoaster"
+    ],
+    "notNew": [
+	"overcooked-online",
+        "mekorama",
+        "mario-kart-8",
+        "mushiemushie-plaza",
+        "nature",
+        "processing-js-super-mario-bros",
+        "three-js-sandbox"
+    ]
+}

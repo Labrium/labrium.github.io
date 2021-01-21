@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<title>Products - Tech Labs</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="icon" href="/Images/Logo.svg" />
+	<link rel="icon" href="/Images/Logo.png" />
+	<link rel="shortcut icon" href="/Images/Logo.svg" />
+	<link rel="shortcut icon" href="/Images/Logo.png" />
+	<link rel="apple-touch-icon" href="/Images/Logo.svg" />
+	<link rel="apple-touch-icon" href="/Images/Logo.png" />
+	<link rel="mask-icon" href="/Images/Logo Mono.svg" color="#081340" />
+	<meta name="theme-color" content="#00ccff">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="/Styles/main.css" />
+	<script src="/Scripts/main.js"></script>
+</head>
+
+<body onload="finishLoad()">
+	<div class="loadbg" id="loader">
+		<div class="loader"><img src="/Images/Tech-Loader.svg" />
+			<h1>LOADING...</h1>
+		</div>
+	</div>
+	<!-- Header -->
+	<div id="content" style="display: none;">
+		<div html-include="/Common/Header.html"></div>
+		<div class="header">
+			<a href="#"><img src="/Images/Logo.svg" id="logo"></a>
+			<h1>Products</h1>
+			<h2>Inventions of the Future</h2>
+		</div>
+		<!-- The flexible grid (content) -->
+		<div class="content">
+			<div class="single">
+				<div style="border-radius: var(--round-border); display: flex; flex-wrap: wrap; justify-content: center; background: url('/products/Images/PiWatchOS.png') black; background-repeat: no-repeat; background-position: center; background-size: 250px; color: white; width: calc(100vw - 50px); height: 750px;">
+					<h1 style="margin: 20px 50px; text-align: center;">Coming
+						Soon...</h1>
+					<span style="display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; font-size: 36px; text-align: center;">
+						<span style="">PiWatch<br />1.0</span>
+						<span style="margin: 20px 100px;">&</span>
+						<span style="">PiWatchOS<br />Hummingbird</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<!-- Footer -->
+		<div html-include="/Common/Footer.html"></div>
+	</div>
+	<script src="/Common/Include.js"></script>
+</body>
+
+</html>

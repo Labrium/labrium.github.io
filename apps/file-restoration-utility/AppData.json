@@ -1,0 +1,12 @@
+{
+    "downloadPath": "/apps/Builds/File_Restoration_Utility_8.15.dmg",
+    "name": "File Restoration Utility",
+    "changelog": [
+        "8.15:\n • Fixed bug where the dock tile badge would try to divide by zero.",
+        "8.14:\n • Updated to display progress on dock icon.\n • Updater Script is now standalone and localized.\n • Fixed layout bug of release notes to replace newlines correctly.",
+        "8.13:\n • New updated software updater script can read and display release notes.\n • Fixed bug where apple quarantined files would not get processed before quitting."
+    ],
+    "longDescription": "<div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Repair Apps, Files and Folders</h2><br/><p>Drag and drop anything from Finder to make it like new!</p><p>Fixes most damaged files and apps that can't be opened.</p></div><div style='width: 50% !important;'><img src='File Broken.png' style='width: 100%;' /><br/><img src='App Broken.png' style='width: 100%;' /></div></div><hr/><div class='splitCol'><img src='App Image.png' /><div><h2 style='margin-top: 0; margin-bottom: 0;'>Clear Icons, Fix Folder Layout and more!</h2><br/><p>Replaces files, folders and apps with fresh new ones using the data of the original.</p><p>This ensures that no data is lost in the process.</p></div></div>",
+    "productPage": "file-restoration-utility",
+    "shortDescription": "Universal file and folder repairman"
+}

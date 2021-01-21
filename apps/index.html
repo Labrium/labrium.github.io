@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<title>Apps - Tech Labs</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<link rel="icon" href="/Images/Logo.svg" />
+	<link rel="icon" href="/Images/Logo.png" />
+	<link rel="shortcut icon" href="/Images/Logo.svg" />
+	<link rel="shortcut icon" href="/Images/Logo.png" />
+	<link rel="apple-touch-icon" href="/Images/Logo.svg" />
+	<link rel="apple-touch-icon" href="/Images/Logo.png" />
+	<link rel="mask-icon" href="/Images/Logo Mono.svg" color="#081340" />
+	<meta name="theme-color" content="#00ccff">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="/Styles/main.css" />
+	<script src="/Scripts/main.js"></script>
+	<script src="/apps/Scripts/retrieveProductData.js"></script>
+	<script>
+		readTextFile("appList.json", function (text) {
+			var appList = JSON.parse(text);
+			for (var i = 0; i < appList.updated.length; i++) {
+				readTextFile(appList.updated[i] + "/AppData.json", function (newtext) {
+					var appData = JSON.parse(newtext);
+					var newAppCard = '<a href="' + appData.productPage + '" class="gridItem"><img src = "' + appData.productPage + '/App Image.png"> <br>' + appData.name + '<p>' + appData.shortDescription + '</p></a>';
+					document.getElementsByClassName("gridRow")[0].innerHTML += newAppCard;
+				});
+			}
+			for (var i = 0; i < appList.comingSoon.length; i++) {
+				readTextFile(appList.comingSoon[i] + "/AppData.json", function (newtext) {
+					var appData = JSON.parse(newtext);
+					var newAppCard = '<a href="' + appData.productPage + '" class="gridItem"><img src = "' + appData.productPage + '/App Image.png"> <br>' + appData.name + '<p>' + appData.shortDescription + '</p></a>';
+					document.getElementsByClassName("gridRow")[1].innerHTML += newAppCard;
+				});
+			}
+		});
+	</script>
+</head>
+
+<body onload="finishLoad()">
+	<div class="loadbg" id="loader">
+		<div class="loader"><img src="/Images/Tech-Loader.svg" />
+			<h1>LOADING...</h1>
+		</div>
+	</div>
+	<!-- Header -->
+	<div id="content" style="display: none;">
+	<div html-include="/Common/Header.html"></div>
+		<div class="header">
+			<a href="/"><img src="/Images/Logo.svg" id="logo"></a>
+			<h1>Apps</h1>
+			<h2>Powerful, Yet Simple</h2>
+		</div>
+		<!-- The flexible grid (content) -->
+		<div class="content">
+			<div class="single">
+
+				<h2 style="font-size: 1.5em;"><br>We provide beautifully crafted desktop apps to help use
+					your Mac to its
+					full potential.</h2>
+				<h2>*NEW* Upgraded for macOS Big Sur</h2>
+				<hr>
+				<div class="gridRow"></div>
+				<h2>Coming Soon</h2>
+				<hr>
+				<div class="gridRow"></div>
+			</div>
+		</div>
+		<!-- Footer -->
+		<div html-include="/Common/Footer.html"></div>
+	</div>
+	<script src="/Common/Include.js"></script>
+</body>
+
+</html>

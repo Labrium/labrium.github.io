@@ -12,25 +12,10 @@
   --float-shadow: 0px 60px 75px 0px rgba(0, 0, 0, 0.5);
   --float-move: translate(0, -30px) scale(1.075);
   --rest-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.25);
+  --text-rest-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+  --text-float-shadow: 0 60px 75px rgba(0, 0, 0, 0.5);
 }
 
-.bar {
-  /*display: inline-block;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  background-color: rgba(250, 255, 255, 0.375);
-  box-shadow: var(--float-shadow);*/
-  overflow: auto;
-  line-height: 66px;
-  font-size: 24px;
-  padding: 10px;
-  color: white;
-  background-color: var(--dark-blue);
-  border-radius: var(--round-border);
-}
-.bar img {
-  float: left;
-}
 
 
 /* input styles */
@@ -149,27 +134,34 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  color: var(--dark-blue);
+  text-shadow: var(--text-rest-shadow);
+}
+article {
+  font-size: 24px;
+  box-shadow: var(--rest-shadow);
+  border-radius: var(--round-border);
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  background-color: white;
+  max-width: 1250px;
+}
+article h2:first-child {
+  margin-top: 0 !important;
 }
 /*header*/
 .header {
   padding: 60px;
   text-align: center;
   color: white;
-  position: relative;
-  top: 50vh;
-  transform: translate(0, -57.5%);
-  border-radius: var(--round-border);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  background-color: rgba(250, 255, 255, 0.375);
-  box-shadow: var(--float-shadow);
-  width: 100vw;
-  text-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+  background-color: transparent;
 }
 #logo {
   border-radius: 30px;
   box-shadow: var(--rest-shadow);
-  margin: 30px auto 20px auto;
 }
 #navbarLogo {
   border-radius: var(--round-border);
@@ -217,16 +209,21 @@ h2 {
   transition: all var(--animation-speed) var(--animation-curve);
   -webkit-transition: all var(--animation-speed) var(--animation-curve);
 }
-.single .header a:hover {
+.single .header a:hover:not([disabled]) {
   background-color: var(--light-blue);
   color: var(--dark-blue);
   box-shadow: var(--float-shadow);
   transform: scale(1.1);
 }
-.single .header a:active {
+.single .header a:active:not([disabled]) {
   background-color: var(--blue-gray);
   box-shadow: 0px 30px 37.5px 0px rgba(0, 0, 0, 0.5);
   transform: scale(1.05);
+}
+.single .header a[disabled] {
+  background-color: var(--dark-gray);
+  filter: blur(3px) grayscale(10);
+  cursor: not-allowed;
 }
 .single .header a img {
   display: block;
@@ -246,6 +243,46 @@ h2 {
   font-weight: normal; 
   margin-top: 3em;
   font-size: 12pt;
+}
+.accordion {
+  border-radius: var(--round-border);
+  background-color: var(--light-gray);
+  box-shadow: var(--rest-shadow);
+  overflow: hidden;
+  max-width: 1000px;
+  margin: auto auto 100px auto;
+  max-height: 85px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all var(--animation-speed) var(--animation-curve);
+  -webkit-transition: all var(--animation-speed) var(--animation-curve);
+}
+.accordion h2 {
+  margin: 0 0 20px 0 !important;
+}
+.accordion p {
+  padding: 10px;
+  box-shadow: var(--rest-shadow);
+}
+.accordion span {
+  transition: all var(--animation-speed) var(--animation-curve);
+  -webkit-transition: all var(--animation-speed) var(--animation-curve);
+  float: left;
+}
+.accordion h2 img {
+  width: 75px;
+  margin: -15px 30px 0 20px;
+  float: left;
+  border: solid 4px white;
+  box-shadow: var(--rest-shadow);
+  border-radius: 50%;
+}
+.accordion.open {
+  max-height: 500px;
+  overflow: scroll;
+}
+.accordion.open span {
+  transform: rotate(90deg);
 }
 /*navigation bar*/
 .topnav {
@@ -356,6 +393,9 @@ h2 {
   padding: 20px;
   border-radius: var(--round-border);
 }
+.side img {
+  box-shadow: var(--rest-shadow);
+}
 .main {
   background: url("../Images/Circuit White Background.png") no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -366,6 +406,9 @@ h2 {
   background-color: white;
   padding: 20px;
   border-radius: var(--round-border);
+}
+.main img {
+  box-shadow: var(--rest-shadow);
 }
 .fakeimg {
   background-color: var(--dark-gray);
@@ -473,9 +516,31 @@ button:hover {
   font-size: 30px;
 }
 #longDescription {
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto auto 5em auto;
-  text-align: center;
+  text-align: left;
+}
+#longDescription .splitCol {
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+}
+#longDescription .splitCol img {
+  width: 50%;
+  margin: 20px;
+}
+#longDescription h2 {
+  text-align: left;
+  font-size: 24px;
+  font-weight: bold;
+}
+#longDescription p {
+  font-size: 17px;
+  line-height: 2em;
+}
+#longDescription hr {
+  margin-top: 5em;
+  margin-bottom: 5em;
 }
 .single {
   background: url("../Images/Circuit White Background.png") no-repeat center center fixed;
@@ -502,8 +567,8 @@ button:hover {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  align-items: flex-start;
-  max-width: 1000px;
+  align-items: stretch;
+  max-width: 1500px;
 }
 .gridItem {
   text-align: center;
@@ -516,6 +581,12 @@ button:hover {
   border-radius: var(--round-border);
   transition: all var(--animation-speed) var(--animation-curve);
   position: relative;
+  flex: 1 0 auto;
+  padding: 10px;
+}
+.otherApps {
+  flex: 0 1 auto;
+  padding: 20px;
 }
 .gridItem:not(.card) img {
   width: 128px;
@@ -535,12 +606,33 @@ button:hover {
 .card {
   background-color: white;
   box-shadow: var(--rest-shadow);
-  width: 256px;
+  width: 264px;
 }
 .card img {
-  width: 100%;
+  width: calc(100% + 20px);
   border-radius: var(--round-border);
-  margin-bottom: 20px;
+  margin: -10px -10px 20px -10px;
+}
+.card p {
+  margin-bottom: 45px;
+  font-size: 12px;
+}
+.statusLabel {
+  font-weight: normal;
+  font-size: 12pt;
+  text-align: left;
+  position:absolute;                  
+  top: calc(100% - 45px);                          
+  left: 10px;
+}
+.statusLabel div {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  box-shadow: var(--rest-shadow);
+  float: left;
+  margin-right: 10px;
+  margin-top: 2px;
 }
 
 .ribbon {
@@ -584,7 +676,6 @@ button:hover {
 }
 .footlogo {
   border-radius: 10px;
-  margin: 10px;
 }
 /*other*/
 .articleimg {
@@ -607,6 +698,86 @@ button:hover {
   padding: 0 !important;
   font-size: 17px !important;
 }
+
+
+
+/* Slideshow container */
+.slideshow-container {
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+  height: 500px;
+  box-shadow: var(--rest-shadow);
+  border-radius: var(--round-border);
+}
+
+/* Hide the images by default */
+.mySlides {
+  /*display: none;*/
+  user-select: none;
+  -webkit-user-select: none;
+  border-radius: var(--round-border);
+  transition: all 1s ease;
+  position: absolute;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: var(--animation-speed) var(--animation-curve);
+  border-radius: 0 var(--round-border) var(--round-border) 0;
+  user-select: none;
+  -webkit-user-select: none;
+  z-index: 2;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: var(--round-border) 0 0 var(--round-border);
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background-color: rgba(255,255,255,0.5);
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  background-color: var(--light-gray);
+  border-radius: 5px;
+  transition: all var(--animation-speed) var(--animation-curve);
+  box-shadow: var(--rest-shadow);
+  margin: 5px;
+}
+.dotbox {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.active, .dot:hover {
+  background-color: var(--dark-gray);
+}
+
+
+
 /* Responsive layout - when the screen is less than 900px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 900px) {
   .row {  
@@ -630,6 +801,12 @@ button:hover {
   }
   .dropdown-content, .dropdown-content a {
   border-radius: var(--round-border);
+  }
+  h1 {
+    font-size: 10vw;
+  }
+  h2 {
+    font-size: 5vw;
   }
 }
 
@@ -664,5 +841,8 @@ button:hover {
   display: block;
   width: 100%;
   text-align: left;
+  }
+  article {
+    margin: auto;
   }
 }

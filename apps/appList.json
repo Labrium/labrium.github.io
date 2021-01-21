@@ -1,0 +1,21 @@
+{
+    "updated": [
+        "file-restoration-utility",
+        "flash-media-downloader",
+        "icon-utility",
+        "lan-server-assistant",
+        "quietbar",
+        "window-worker"
+    ],
+    "comingSoon": [
+        "application-cloner",
+        "auto-transcriber",
+        "backup-assistant",
+        "base64-converter",
+        "copy-commander",
+	"dynamizer",
+        "directory-press",
+	"nib-cracker",
+        "webedit"
+    ]
+}

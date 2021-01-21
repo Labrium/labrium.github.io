@@ -1,0 +1,6 @@
+{
+    "name": "VR Test",
+    "projectPage": "vr-test",
+    "description": "An original test of VR content, controls, and performance optimizations serving as a basis for future VR games and simulations. Works with Google Cardboard or any other VR web browsers.",
+    "status": ["green", "Working"]
+}

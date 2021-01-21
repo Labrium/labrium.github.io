@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<title>About Us - Tech Labs</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="icon" href="/Images/Logo.svg" />
+	<link rel="icon" href="/Images/Logo.png" />
+	<link rel="shortcut icon" href="/Images/Logo.svg" />
+	<link rel="shortcut icon" href="/Images/Logo.png" />
+	<link rel="apple-touch-icon" href="/Images/Logo.svg" />
+	<link rel="apple-touch-icon" href="/Images/Logo.png" />
+	<link rel="mask-icon" href="/Images/Logo Mono.svg" color="#081340" />
+	<meta name="theme-color" content="#00ccff">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="/Styles/main.css" />
+	<script src="/Scripts/main.js"></script>
+</head>
+
+<body onload="finishLoad()">
+	<div class="loadbg" id="loader">
+		<div class="loader"><img src="/Images/Tech-Loader.svg" />
+			<h1>LOADING...</h1>
+		</div>
+	</div>
+	<!-- Header -->
+	<div id="content" style="display: none;">
+		<div html-include="/Common/Header.html"></div>
+		<div class="header">
+			<a href="/"><img src="/Images/Logo.svg" id="logo"></a>
+			<h1>About Us</h1>
+			<h2>Changing the World Through Software</h2>
+		</div>
+		<!-- The flexible grid (content) -->
+		<div class="content">
+			<div class="single">
+				<article>
+					<h2>Technological Laboratories Incorporated (Tech Labs Inc.) (est. 2016)<br />is an organization dedicated to
+						developing the best
+						high-quality products and software to enhance every user's experience.</h2>
+					<p style="text-align: center;">Every app we design is carefully crafted with the intention of making
+						every user's life easier
+						by harnessing the power of automation.</p>
+					<h2>Our Team</h2>
+					<div class="accordion" onclick="this.classList.toggle('open')">
+						<h2 style="text-align: left;"><span class="fa fa-chevron-right"></span><img src="Images/kiosk.png" alt="kiosk's profile picture" />kiosk
+						</h2>
+						<p style="background-color: white; border-radius: var(--round-border); padding: 20px; margin: 0;">
+							CEO, CFO, CTO, CHRO, and CMO of Tech Labs Inc.<br />
+							<br />
+							The original founder of Tech Labs Inc. comes from very humble beginnings, though ultimately making us into what we are today. The lower-case "k" is actually part of our identity.
+						</p>
+					</div>
+					<div class="accordion" onclick="this.classList.toggle('open')">
+						<h2 style="text-align: left;"><span class="fa fa-chevron-right"></span><img src="Images/kiosk.png" alt="kiosk's profile picture" />Me (kiosk)</h2>
+						<p style="background-color: white; border-radius: var(--round-border); padding: 20px; margin: 0;">
+							Marketing Director, Director of Operations, and Business Intelligence Director of Tech Labs Inc.<br />
+							<br />
+							(see <i>kiosk</i>)</p>
+					</div>
+					<div class="accordion" onclick="this.classList.toggle('open')">
+						<h2 style="text-align: left;"><span class="fa fa-chevron-right"></span><img src="Images/kiosk.png" alt="kiosk's profile picture" />Myself (kiosk)</h2>
+						<p style="background-color: white; border-radius: var(--round-border); padding: 20px; margin: 0;">
+							Operations Manager, Product Manager, and Software Developer/Engineer of Tech Labs Inc.<br />
+							<br />
+							(see <i>kiosk</i>)</p>
+					</div>
+					<div class="accordion" onclick="this.classList.toggle('open')">
+						<h2 style="text-align: left;"><span class="fa fa-chevron-right"></span><img src="Images/kiosk.png" alt="kiosk's profile picture" />I (kiosk)</h2>
+						<p style="background-color: white; border-radius: var(--round-border); padding: 20px; margin: 0;">
+							Creative Director, Content Creator, Graphic Designer, and Project Manager of Tech Labs Inc.<br />
+							<br />
+							Yep, I am the founder and only employee. (see <i>kiosk</i>)</p>
+					</div>
+				</article>
+			</div>
+		</div>
+		<!-- Footer -->
+		<div html-include="/Common/Footer.html"></div>
+	</div>
+	<script src="/Common/Include.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+{
+    "name": "ThreeJS Sandbox",
+    "projectPage": "three-js-sandbox",
+    "description": "The original project that started it all. It was created as a result of my first tinkerings with Three.js and served as a base for many of my modern projects.",
+    "status": ["red", "Broken"]
+}
