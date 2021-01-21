@@ -1,0 +1,9 @@
+newmtl Leaves
+Kd 0.000000 0.658824 0.000000
+illum 1
+map_Kd pc_tree_a.png
+
+newmtl Bark
+Kd 0.564706 0.533333 0.250980
+illum 1
+map_Kd pc_tree_b.png

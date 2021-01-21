@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <authoring_tool>three.js Collada Exporter</authoring_tool>
+    </contributor>
+    <created>2020-03-13T00:23:48.834Z</created>
+    <modified>2020-03-13T00:23:48.834Z</modified>
+    <up_axis>Y_UP</up_axis>
+  </asset>
+  <library_images>
+    <image id="image-1" name="image-1">
+      <init_from>zapside.png</init_from>
+    </image>
+    <image id="image-2" name="image-2">
+      <init_from>zaptop.png</init_from>
+    </image>
+    <image id="image-3" name="image-3">
+      <init_from>zaptop.png</init_from>
+    </image>
+    <image id="image-4" name="image-4">
+      <init_from>zapprong.png</init_from>
+    </image>
+    <image id="image-5" name="image-5">
+      <init_from>zapprong.png</init_from>
+    </image>
+    <image id="image-6" name="image-6">
+      <init_from>zapprong.png</init_from>
+    </image>
+    <image id="image-7" name="image-7">
+      <init_from>zapprong.png</init_from>
+    </image>
+  </library_images>
+  <library_effects>
+    <effect id="Mat1-effect">
+      <profile_COMMON>
+        <newparam sid="diffuse-surface">
+          <surface type="2D">
+            <init_from>image-1</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="diffuse-sampler">
+          <sampler2D>
+            <source>diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="diffuse-sampler" texcoord="TEXCOORD" />
+            </diffuse>
+            <reflective>
+              <color>1 1 1 1</color>
+            </reflective>
+            <reflectivity>
+              <float>1</float>
+            </reflectivity>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Mat2-effect">
+      <profile_COMMON>
+        <newparam sid="diffuse-surface">
+          <surface type="2D">
+            <init_from>image-2</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="diffuse-sampler">
+          <sampler2D>
+            <source>diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="diffuse-sampler" texcoord="TEXCOORD" />
+            </diffuse>
+            <reflective>
+              <color>1 1 1 1</color>
+            </reflective>
+            <reflectivity>
+              <float>1</float>
+            </reflectivity>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Mat3-effect">
+      <profile_COMMON>
+        <newparam sid="diffuse-surface">
+          <surface type="2D">
+            <init_from>image-3</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="diffuse-sampler">
+          <sampler2D>
+            <source>diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="diffuse-sampler" texcoord="TEXCOORD" />
+            </diffuse>
+            <reflective>
+              <color>1 1 1 1</color>
+            </reflective>
+            <reflectivity>
+              <float>1</float>
+            </reflectivity>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Mat4-effect">
+      <profile_COMMON>
+        <newparam sid="diffuse-surface">
+          <surface type="2D">
+            <init_from>image-4</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="diffuse-sampler">
+          <sampler2D>
+            <source>diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="diffuse-sampler" texcoord="TEXCOORD" />
+            </diffuse>
+            <reflective>
+              <color>1 1 1 1</color>
+            </reflective>
+            <reflectivity>
+              <float>1</float>
+            </reflectivity>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Mat5-effect">
+      <profile_COMMON>
+        <newparam sid="diffuse-surface">
+          <surface type="2D">
+            <init_from>image-5</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="diffuse-sampler">
+          <sampler2D>
+            <source>diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="diffuse-sampler" texcoord="TEXCOORD" />
+            </diffuse>
+            <reflective>
+              <color>1 1 1 1</color>
+            </reflective>
+            <reflectivity>
+              <float>1</float>
+            </reflectivity>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Mat6-effect">
+      <profile_COMMON>
+        <newparam sid="diffuse-surface">
+          <surface type="2D">
+            <init_from>image-6</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="diffuse-sampler">
+          <sampler2D>
+            <source>diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="diffuse-sampler" texcoord="TEXCOORD" />
+            </diffuse>
+            <reflective>
+              <color>1 1 1 1</color>
+            </reflective>
+            <reflectivity>
+              <float>1</float>
+            </reflectivity>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Mat7-effect">
+      <profile_COMMON>
+        <newparam sid="diffuse-surface">
+          <surface type="2D">
+            <init_from>image-7</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="diffuse-sampler">
+          <sampler2D>
+            <source>diffuse-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="diffuse-sampler" texcoord="TEXCOORD" />
+            </diffuse>
+            <reflective>
+              <color>1 1 1 1</color>
+            </reflective>
+            <reflectivity>
+              <float>1</float>
+            </reflectivity>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="Mat1">
+      <instance_effect url="#Mat1-effect" />
+    </material>
+    <material id="Mat2">
+      <instance_effect url="#Mat2-effect" />
+    </material>
+    <material id="Mat3">
+      <instance_effect url="#Mat3-effect" />
+    </material>
+    <material id="Mat4">
+      <instance_effect url="#Mat4-effect" />
+    </material>
+    <material id="Mat5">
+      <instance_effect url="#Mat5-effect" />
+    </material>
+    <material id="Mat6">
+      <instance_effect url="#Mat6-effect" />
+    </material>
+    <material id="Mat7">
+      <instance_effect url="#Mat7-effect" />
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Mesh1">
+      <mesh>
+        <source id="Mesh1-position">
+          <float_array id="Mesh1-position-array" count="54">0 0.125 0.5400000214576721 0.3818376660346985 0.125 0.3818376660346985 0.5400000214576721 0.125 3.306546303456606e-17 0.3818376660346985 0.125 -0.3818376660346985 6.613092606913212e-17 0.125 -0.5400000214576721 -0.3818376660346985 0.125 -0.3818376660346985 -0.5400000214576721 0.125 -9.919639241242064e-17 -0.3818376660346985 0.125 0.3818376660346985 -1.3226185213826425e-16 0.125 0.5400000214576721 0 -0.125 0.5400000214576721 0.3818376660346985 -0.125 0.3818376660346985 0.5400000214576721 -0.125 3.306546303456606e-17 0.3818376660346985 -0.125 -0.3818376660346985 6.613092606913212e-17 -0.125 -0.5400000214576721 -0.3818376660346985 -0.125 -0.3818376660346985 -0.5400000214576721 -0.125 -9.919639241242064e-17 -0.3818376660346985 -0.125 0.3818376660346985 -1.3226185213826425e-16 -0.125 0.5400000214576721</float_array>
+          <technique_common>
+            <accessor source="#Mesh1-position-array" count="18" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Mesh1-vertices">
+          <input semantic="POSITION" source="#Mesh1-position" />
+        </vertices>
+        <source id="Mesh1-normal">
+          <float_array id="Mesh1-normal-array" count="54">0 0 1 0.7071067690849304 0 0.7071067690849304 1 0 6.123234262925839e-17 0.7071067690849304 0 -0.7071067690849304 1.2246468525851679e-16 0 -1 -0.7071067690849304 0 -0.7071067690849304 -1 0 -1.8369701465288538e-16 -0.7071067690849304 0 0.7071067690849304 -2.4492937051703357e-16 0 1 0 0 1 0.7071067690849304 0 0.7071067690849304 1 0 6.123234262925839e-17 0.7071067690849304 0 -0.7071067690849304 1.2246468525851679e-16 0 -1 -0.7071067690849304 0 -0.7071067690849304 -1 0 -1.8369701465288538e-16 -0.7071067690849304 0 0.7071067690849304 -2.4492937051703357e-16 0 1</float_array>
+          <technique_common>
+            <accessor source="#Mesh1-normal-array" count="18" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Mesh1-texcoord">
+          <float_array id="Mesh1-texcoord-array" count="36">0 1 0.125 1 0.25 1 0.375 1 0.5 1 0.625 1 0.75 1 0.875 1 1 1 0 0 0.125 0 0.25 0 0.375 0 0.5 0 0.625 0 0.75 0 0.875 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#Mesh1-texcoord-array" count="18" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <triangles material="MESH_MATERIAL_0" count="16">
+          <input semantic="VERTEX" source="#Mesh1-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh1-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh1-texcoord" offset="0" set="0" />
+          <p>0 9 1 9 10 1 1 10 2 10 11 2 2 11 3 11 12 3 3 12 4 12 13 4 4 13 5 13 14 5 5 14 6 14 15 6 6 15 7 15 16 7 7 16 8 16 17 8</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="Mesh2">
+      <mesh>
+        <source id="Mesh2-position">
+          <float_array id="Mesh2-position-array" count="30">0 0 0 0.5400000214576721 0 0 0.3818376660346985 0.3818376660346985 0 3.306546303456606e-17 0.5400000214576721 0 -0.3818376660346985 0.3818376660346985 0 -0.5400000214576721 6.613092606913212e-17 0 -0.3818376660346985 -0.3818376660346985 0 -9.919639241242064e-17 -0.5400000214576721 0 0.3818376660346985 -0.3818376660346985 0 0.5400000214576721 -1.3226185213826425e-16 0</float_array>
+          <technique_common>
+            <accessor source="#Mesh2-position-array" count="10" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Mesh2-vertices">
+          <input semantic="POSITION" source="#Mesh2-position" />
+        </vertices>
+        <source id="Mesh2-normal">
+          <float_array id="Mesh2-normal-array" count="30">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Mesh2-normal-array" count="10" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Mesh2-texcoord">
+          <float_array id="Mesh2-texcoord-array" count="20">0.5 0.5 1 0.5 0.8535534143447876 0.8535534143447876 0.5 1 0.1464466154575348 0.8535534143447876 0 0.5 0.1464466154575348 0.1464466154575348 0.5 0 0.8535534143447876 0.1464466154575348 1 0.5</float_array>
+          <technique_common>
+            <accessor source="#Mesh2-texcoord-array" count="10" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <triangles material="MESH_MATERIAL_0" count="8">
+          <input semantic="VERTEX" source="#Mesh2-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh2-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh2-texcoord" offset="0" set="0" />
+          <p>1 2 0 2 3 0 3 4 0 4 5 0 5 6 0 6 7 0 7 8 0 8 9 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="Mesh3">
+      <mesh>
+        <source id="Mesh3-position">
+          <float_array id="Mesh3-position-array" count="30">0 0 0 0.5400000214576721 0 0 0.3818376660346985 0.3818376660346985 0 3.306546303456606e-17 0.5400000214576721 0 -0.3818376660346985 0.3818376660346985 0 -0.5400000214576721 6.613092606913212e-17 0 -0.3818376660346985 -0.3818376660346985 0 -9.919639241242064e-17 -0.5400000214576721 0 0.3818376660346985 -0.3818376660346985 0 0.5400000214576721 -1.3226185213826425e-16 0</float_array>
+          <technique_common>
+            <accessor source="#Mesh3-position-array" count="10" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Mesh3-vertices">
+          <input semantic="POSITION" source="#Mesh3-position" />
+        </vertices>
+        <source id="Mesh3-normal">
+          <float_array id="Mesh3-normal-array" count="30">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Mesh3-normal-array" count="10" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Mesh3-texcoord">
+          <float_array id="Mesh3-texcoord-array" count="20">0.5 0.5 1 0.5 0.8535534143447876 0.8535534143447876 0.5 1 0.1464466154575348 0.8535534143447876 0 0.5 0.1464466154575348 0.1464466154575348 0.5 0 0.8535534143447876 0.1464466154575348 1 0.5</float_array>
+          <technique_common>
+            <accessor source="#Mesh3-texcoord-array" count="10" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <triangles material="MESH_MATERIAL_0" count="8">
+          <input semantic="VERTEX" source="#Mesh3-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh3-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh3-texcoord" offset="0" set="0" />
+          <p>1 2 0 2 3 0 3 4 0 4 5 0 5 6 0 6 7 0 7 8 0 8 9 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="Mesh4">
+      <mesh>
+        <source id="Mesh4-position">
+          <float_array id="Mesh4-position-array" count="72">0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806</float_array>
+          <technique_common>
+            <accessor source="#Mesh4-position-array" count="24" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Mesh4-vertices">
+          <input semantic="POSITION" source="#Mesh4-position" />
+        </vertices>
+        <source id="Mesh4-normal">
+          <float_array id="Mesh4-normal-array" count="72">1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1</float_array>
+          <technique_common>
+            <accessor source="#Mesh4-normal-array" count="24" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Mesh4-texcoord">
+          <float_array id="Mesh4-texcoord-array" count="48">0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#Mesh4-texcoord-array" count="24" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <triangles material="MESH_MATERIAL_0" count="2">
+          <input semantic="VERTEX" source="#Mesh4-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh4-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh4-texcoord" offset="0" set="0" />
+          <p>0 2 1 2 3 1</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_1" count="2">
+          <input semantic="VERTEX" source="#Mesh4-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh4-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh4-texcoord" offset="0" set="0" />
+          <p>4 6 5 6 7 5</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_2" count="2">
+          <input semantic="VERTEX" source="#Mesh4-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh4-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh4-texcoord" offset="0" set="0" />
+          <p>8 10 9 10 11 9</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_3" count="2">
+          <input semantic="VERTEX" source="#Mesh4-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh4-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh4-texcoord" offset="0" set="0" />
+          <p>12 14 13 14 15 13</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_4" count="2">
+          <input semantic="VERTEX" source="#Mesh4-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh4-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh4-texcoord" offset="0" set="0" />
+          <p>16 18 17 18 19 17</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_5" count="2">
+          <input semantic="VERTEX" source="#Mesh4-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh4-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh4-texcoord" offset="0" set="0" />
+          <p>20 22 21 22 23 21</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="Mesh5">
+      <mesh>
+        <source id="Mesh5-position">
+          <float_array id="Mesh5-position-array" count="72">0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806</float_array>
+          <technique_common>
+            <accessor source="#Mesh5-position-array" count="24" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Mesh5-vertices">
+          <input semantic="POSITION" source="#Mesh5-position" />
+        </vertices>
+        <source id="Mesh5-normal">
+          <float_array id="Mesh5-normal-array" count="72">1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1</float_array>
+          <technique_common>
+            <accessor source="#Mesh5-normal-array" count="24" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Mesh5-texcoord">
+          <float_array id="Mesh5-texcoord-array" count="48">0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#Mesh5-texcoord-array" count="24" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <triangles material="MESH_MATERIAL_0" count="2">
+          <input semantic="VERTEX" source="#Mesh5-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh5-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh5-texcoord" offset="0" set="0" />
+          <p>0 2 1 2 3 1</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_1" count="2">
+          <input semantic="VERTEX" source="#Mesh5-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh5-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh5-texcoord" offset="0" set="0" />
+          <p>4 6 5 6 7 5</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_2" count="2">
+          <input semantic="VERTEX" source="#Mesh5-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh5-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh5-texcoord" offset="0" set="0" />
+          <p>8 10 9 10 11 9</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_3" count="2">
+          <input semantic="VERTEX" source="#Mesh5-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh5-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh5-texcoord" offset="0" set="0" />
+          <p>12 14 13 14 15 13</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_4" count="2">
+          <input semantic="VERTEX" source="#Mesh5-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh5-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh5-texcoord" offset="0" set="0" />
+          <p>16 18 17 18 19 17</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_5" count="2">
+          <input semantic="VERTEX" source="#Mesh5-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh5-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh5-texcoord" offset="0" set="0" />
+          <p>20 22 21 22 23 21</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="Mesh6">
+      <mesh>
+        <source id="Mesh6-position">
+          <float_array id="Mesh6-position-array" count="72">0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806</float_array>
+          <technique_common>
+            <accessor source="#Mesh6-position-array" count="24" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Mesh6-vertices">
+          <input semantic="POSITION" source="#Mesh6-position" />
+        </vertices>
+        <source id="Mesh6-normal">
+          <float_array id="Mesh6-normal-array" count="72">1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1</float_array>
+          <technique_common>
+            <accessor source="#Mesh6-normal-array" count="24" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Mesh6-texcoord">
+          <float_array id="Mesh6-texcoord-array" count="48">0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#Mesh6-texcoord-array" count="24" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <triangles material="MESH_MATERIAL_0" count="2">
+          <input semantic="VERTEX" source="#Mesh6-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh6-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh6-texcoord" offset="0" set="0" />
+          <p>0 2 1 2 3 1</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_1" count="2">
+          <input semantic="VERTEX" source="#Mesh6-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh6-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh6-texcoord" offset="0" set="0" />
+          <p>4 6 5 6 7 5</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_2" count="2">
+          <input semantic="VERTEX" source="#Mesh6-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh6-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh6-texcoord" offset="0" set="0" />
+          <p>8 10 9 10 11 9</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_3" count="2">
+          <input semantic="VERTEX" source="#Mesh6-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh6-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh6-texcoord" offset="0" set="0" />
+          <p>12 14 13 14 15 13</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_4" count="2">
+          <input semantic="VERTEX" source="#Mesh6-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh6-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh6-texcoord" offset="0" set="0" />
+          <p>16 18 17 18 19 17</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_5" count="2">
+          <input semantic="VERTEX" source="#Mesh6-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh6-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh6-texcoord" offset="0" set="0" />
+          <p>20 22 21 22 23 21</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="Mesh7">
+      <mesh>
+        <source id="Mesh7-position">
+          <float_array id="Mesh7-position-array" count="72">0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 0.125 0.05000000074505806 0.05000000074505806 0.125 0.05000000074505806 -0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 -0.125 0.05000000074505806 0.05000000074505806 0.125 -0.05000000074505806 -0.05000000074505806 0.125 -0.05000000074505806 0.05000000074505806 -0.125 -0.05000000074505806 -0.05000000074505806 -0.125 -0.05000000074505806</float_array>
+          <technique_common>
+            <accessor source="#Mesh7-position-array" count="24" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Mesh7-vertices">
+          <input semantic="POSITION" source="#Mesh7-position" />
+        </vertices>
+        <source id="Mesh7-normal">
+          <float_array id="Mesh7-normal-array" count="72">1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1</float_array>
+          <technique_common>
+            <accessor source="#Mesh7-normal-array" count="24" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Mesh7-texcoord">
+          <float_array id="Mesh7-texcoord-array" count="48">0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#Mesh7-texcoord-array" count="24" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <triangles material="MESH_MATERIAL_0" count="2">
+          <input semantic="VERTEX" source="#Mesh7-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh7-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh7-texcoord" offset="0" set="0" />
+          <p>0 2 1 2 3 1</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_1" count="2">
+          <input semantic="VERTEX" source="#Mesh7-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh7-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh7-texcoord" offset="0" set="0" />
+          <p>4 6 5 6 7 5</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_2" count="2">
+          <input semantic="VERTEX" source="#Mesh7-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh7-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh7-texcoord" offset="0" set="0" />
+          <p>8 10 9 10 11 9</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_3" count="2">
+          <input semantic="VERTEX" source="#Mesh7-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh7-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh7-texcoord" offset="0" set="0" />
+          <p>12 14 13 14 15 13</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_4" count="2">
+          <input semantic="VERTEX" source="#Mesh7-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh7-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh7-texcoord" offset="0" set="0" />
+          <p>16 18 17 18 19 17</p>
+        </triangles>
+        <triangles material="MESH_MATERIAL_5" count="2">
+          <input semantic="VERTEX" source="#Mesh7-vertices" offset="0" />
+          <input semantic="NORMAL" source="#Mesh7-normal" offset="0" />
+          <input semantic="TEXCOORD" source="#Mesh7-texcoord" offset="0" set="0" />
+          <p>20 22 21 22 23 21</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="scene">
+      <node name="Scene">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node name="Sides">
+          <matrix>0.9271838545667874 0 0.374606593415912 0 0 1 0 -0.375 -0.374606593415912 0 0.9271838545667874 0 0 0 0 1</matrix>
+          <instance_geometry url="#Mesh1">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="MESH_MATERIAL_0" target="#Mat1" >
+                  <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <node name="Top">
+            <matrix>1 0 0 0 0 2.220446049250313e-16 1 0.125 0 -1 2.220446049250313e-16 0 0 0 0 1</matrix>
+            <instance_geometry url="#Mesh2">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="MESH_MATERIAL_0" target="#Mat2" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node name="Bottom">
+            <matrix>1 0 0 0 0 2.220446049250313e-16 -1 -0.125 0 1 2.220446049250313e-16 0 0 0 0 1</matrix>
+            <instance_geometry url="#Mesh3">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="MESH_MATERIAL_0" target="#Mat3" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node name="Prong1">
+            <matrix>0.9238795325112867 0 -0.3826834323650897 0.12958256847231078 0 1 0 0.25 0.3826834323650897 0 0.9238795325112867 0.31707089656639087 0 0 0 1</matrix>
+            <instance_geometry url="#Mesh4">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="MESH_MATERIAL_0" target="#Mat4" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_1" target="#Mat4" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_2" target="#Mat4" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_3" target="#Mat4" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_4" target="#Mat4" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_5" target="#Mat4" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node name="Prong2">
+            <matrix>0.9238795325112867 0 -0.3826834323650897 -0.1305319706502767 0 1 0 0.25 0.3826834323650897 0 0.9238795325112867 -0.31779427711156505 0 0 0 1</matrix>
+            <instance_geometry url="#Mesh5">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="MESH_MATERIAL_0" target="#Mat5" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_1" target="#Mat5" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_2" target="#Mat5" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_3" target="#Mat5" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_4" target="#Mat5" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_5" target="#Mat5" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node name="Prong3">
+            <matrix>0.9238795325112867 0 -0.3826834323650897 0.317 0 1 0 0.25 0.3826834323650897 0 0.9238795325112867 -0.133 0 0 0 1</matrix>
+            <instance_geometry url="#Mesh6">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="MESH_MATERIAL_0" target="#Mat6" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_1" target="#Mat6" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_2" target="#Mat6" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_3" target="#Mat6" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_4" target="#Mat6" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_5" target="#Mat6" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node name="Prong4">
+            <matrix>0.9238795325112867 0 -0.3826834323650897 -0.3166427132872053 0 1 0 0.25 0.3826834323650897 0 0.9238795325112867 0.13337656300879278 0 0 0 1</matrix>
+            <instance_geometry url="#Mesh7">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="MESH_MATERIAL_0" target="#Mat7" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_1" target="#Mat7" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_2" target="#Mat7" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_3" target="#Mat7" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_4" target="#Mat7" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                  <instance_material symbol="MESH_MATERIAL_5" target="#Mat7" >
+                    <bind_vertex_input semantic="TEXCOORD" input_semantic="TEXCOORD" input_set="0" />
+                  </instance_material>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+        </node>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

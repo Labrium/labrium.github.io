@@ -1,0 +1,266 @@
+{
+	"metadata": {
+		"version": 4.5,
+		"type": "Object",
+		"generator": "Object3D.toJSON"
+	},
+	"geometries": [
+		{
+			"uuid": "707F4268-930A-4A1A-AB9E-E41AAEDF54F0",
+			"type": "CylinderBufferGeometry",
+			"radiusTop": 1.92,
+			"radiusBottom": 1.52,
+			"height": 2.9,
+			"radialSegments": 8,
+			"heightSegments": 1,
+			"openEnded": true
+		},
+		{
+			"uuid": "F36F9E64-711A-4FD4-B4E4-F2C05D6CE29B",
+			"type": "CylinderBufferGeometry",
+			"radiusTop": 0.94,
+			"radiusBottom": 1.68,
+			"height": -2.42,
+			"radialSegments": 8,
+			"heightSegments": 1,
+			"openEnded": true
+		},
+		{
+			"uuid": "B3F16EE1-B265-4E21-A50E-0C57F010B72B",
+			"type": "RingBufferGeometry",
+			"innerRadius": 1.68,
+			"outerRadius": 1.92,
+			"thetaSegments": 8,
+			"phiSegments": 1,
+			"thetaStart": 0,
+			"thetaLength": 6.283185
+		},
+		{
+			"uuid": "1DD260F4-8099-4EE2-BFE8-D6397DF9B486",
+			"type": "CircleBufferGeometry",
+			"radius": 1.52,
+			"segments": 8,
+			"thetaStart": 0,
+			"thetaLength": 6.283185
+		},
+		{
+			"uuid": "2FD449A5-65C5-46ED-98B6-987C6DB2195B",
+			"type": "CircleBufferGeometry",
+			"radius": 0.94,
+			"segments": 8,
+			"thetaStart": 0,
+			"thetaLength": 6.283185
+		}],
+	"materials": [
+		{
+			"uuid": "3248A7CC-0346-4606-9ECA-4314B2B1270C",
+			"type": "MeshLambertMaterial",
+			"color": 16777215,
+			"emissive": 0,
+			"map": "AC94F6F6-70D9-4662-9495-BDD1E9D29438",
+			"vertexColors": false,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilWriteMask": 255,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilFuncMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		},
+		{
+			"uuid": "661F54CB-B9E5-4635-B699-FFD329FF0B02",
+			"type": "MeshLambertMaterial",
+			"color": 16777215,
+			"emissive": 0,
+			"map": "C896CA7F-82FB-4E0F-B6AD-E2D3F2D281C2",
+			"vertexColors": false,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilWriteMask": 255,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilFuncMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		},
+		{
+			"uuid": "2603E853-B976-4067-87ED-68AFE75FD2E3",
+			"type": "MeshStandardMaterial",
+			"color": 6250335,
+			"roughness": 1,
+			"metalness": 0,
+			"emissive": 0,
+			"vertexColors": false,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilWriteMask": 255,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilFuncMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		},
+		{
+			"uuid": "250AE2BF-A7C7-443D-898B-A303A0D30E80",
+			"type": "MeshStandardMaterial",
+			"color": 16777215,
+			"roughness": 1,
+			"metalness": 0,
+			"emissive": 0,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilWriteMask": 255,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilFuncMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		},
+		{
+			"uuid": "BA20C997-ACC4-4CD0-AA43-105B0F34F86A",
+			"type": "MeshStandardMaterial",
+			"color": 4408131,
+			"roughness": 1,
+			"metalness": 0,
+			"emissive": 0,
+			"vertexColors": false,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilWriteMask": 255,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilFuncMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		}],
+	"textures": [
+		{
+			"uuid": "AC94F6F6-70D9-4662-9495-BDD1E9D29438",
+			"name": "",
+			"mapping": 300,
+			"repeat": [1,1],
+			"offset": [0,0],
+			"center": [0,0],
+			"rotation": 0,
+			"wrap": [1001,1001],
+			"format": 1023,
+			"type": 1009,
+			"encoding": 3001,
+			"minFilter": 1008,
+			"magFilter": 1006,
+			"anisotropy": 1,
+			"flipY": true,
+			"premultiplyAlpha": false,
+			"unpackAlignment": 4,
+			"image": "305CF2E1-B815-41A4-83EB-63E2E342DCE1"
+		},
+		{
+			"uuid": "C896CA7F-82FB-4E0F-B6AD-E2D3F2D281C2",
+			"name": "",
+			"mapping": 300,
+			"repeat": [1,1],
+			"offset": [0,0],
+			"center": [0,0],
+			"rotation": 0,
+			"wrap": [1001,1001],
+			"format": 1023,
+			"type": 1009,
+			"encoding": 3001,
+			"minFilter": 1008,
+			"magFilter": 1006,
+			"anisotropy": 1,
+			"flipY": true,
+			"premultiplyAlpha": false,
+			"unpackAlignment": 4,
+			"image": "338A3DCD-AA1C-4066-AC49-821DFDC26C00"
+		}],
+	"images": [
+		{
+			"uuid": "305CF2E1-B815-41A4-83EB-63E2E342DCE1",
+			"url": "data:image/png;base64,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"
+		},
+		{
+			"uuid": "338A3DCD-AA1C-4066-AC49-821DFDC26C00",
+			"url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcAAAAAqCAYAAAAkjYsjAAAAAXNSR0IArs4c6QAABwVJREFUeAHtnctOFF0Qx2suMIiikAiIUdQFS7ckLCAkuvEdDK+Cz8SGDQ8iKxJNIJHFB4xch4tTZ1L5eoZ2+jR0V8b07yRt9eV0/bt+51J2N5Ou7e7u3gkFAhCAAAQgUDEC9YrFS7gQgAAEIACBQKC2sbHBHSCdAQIQgAAEKkeg+f3798oFTcAQgAAEIACB5pcvX6AAAQhAAAIQqBwB3gFWrskJGAIQgAAElAAJkH4AAQhAAAKVJEACrGSzEzQEIAABCDRjENRqNbElrf7d3Z3Yknb8IftMT21aMT21jy2eWnatnpqeWsTXI0D/tJ6QbemfzJ/ZvaS/RlF95q8JUAXOz89lb29Pfv78GdYvLi7k7OwsJMOpqSl59uyZqH3//r0sLi5Ks9mUTqcjt7e3ISH2X3L2lqemp5ZF7qnpqUV8xY8J2o/5xcZVrPXsM55aFn8ZmrXNzc17t1Dtdlt2dnZkf38/JDlNdLq0Wq2Q5DTRabm+vg7L5eWlnJ6eytu3b2VtbU3q9bposry5ubFrz7Semp5aFrinpqcW8RU/Jmg/5hfmT5tZerasMXEvAerd3tbWVrizm5+fl5mZGZmcnJSx8XFpNhrS6C6aibXoYx5NctfdpXN1Fe4OteH0pxXj3fp60Zoks4qnpqeWxe2p6alFfMWPCdqP+YX502aWni1zTDTW19e/mZwmtu3t7ZC8Pnz4IK9fv5bp6emQAFuaALt3fpoAbdE7Pd2nyW5iYqJXr3uXqH4+fvwov3//Do9EzX+a9dT01LJYPTU9tYhvUooeE7Qf84s+ZdN+wPzZm2HKHhN9fwWqYoeHhzI3Nyezs7Py9OnTkOA00ekxW5KTn+2zZKjnHBwcyJs3b8JjUz0+rOhxL01PLYvZU9NTi/iKHxO0X2+OSfYtZaIL84tR6beefcZTy6IsW/NeAtS7OX3fp3d0lvjsYrKsdVQ998WLF+Gdoe4bVvS4l6anlsXsqempRXxGYLjVNtFxFDMmaL/iWJonT6aeWsRnBIbbrPF3LwHa/7TyJj+7DBPUR6MxPvLWN52kjfURWy/pe3A9r4+89Qf1dDvWR2y9NA3bl9dH3vqmk7SxPmLrJX0Pruf1kbf+oJ5ux/qIrZemYfvy+shb33SSNtZHbL2k78H1vD7y1h/U0+1YH7H10jRsX14feeubTtLG+oitl/Q9uJ7XR976g3q6PcxHXwJMO/mh+1TUu3hqemoZR09NTy3iMwLFWdqvOJbmyZOpp1aV4ystARpULAQgAAEIQGAUCZAAR7FVuCYIQAACECidAAmwdMQIQAACEIDAKBIgAY5iq3BNEIAABCBQOgESYOmIEYAABCAAgVEkQAIcxVbhmiAAAQhAoHQCJMDSESMAAQhAAAKjSIAEOIqtwjVBAAIQgEDpBEiApSNGAAIQgAAERpEACXAUW4VrggAEIACB0gmQAEtHjAAEIAABCIwigdISoH4s17t4anpqGUdPTU8t4jMCxVnarziW5smTqadWlePrS4AK/d27d+Er7re3t+GL7wYn1qqPlZWVaB+emp5axstT01OL+IxAttV2iRkTtF9xLM2TJ1NPLeIzAtl22Pi7lwBXV1dFk9/FxUWwenJs0br6LcHPnz/L0fGRXF5eZiZRPcdL01PLmHlqemoRnxEYbrVNYscE7VccS/PkydRTi/iMwHCbNf4a6+vr35IuZmZmZHl5Oez69etX6jf97FMd6jxZPn36JF+/fpXj42PZ29sTPf/q6ipZJXXdU9NTy4L11PTUIj4j0PvmmG49dkzQfsWxtNbxZOqpRXxG4OF9pra5udmXxfRDtlNTU7KwsCCzs7PhLm5/f19O2idy9N+RHB4ehqT46tUrefnyZaiztLQk09PTIdnp8R8/fsjBwYG02+3wKPT/y0xf89T01LJoPTU9tYiv+DFB+zG/MH/azNKzZY6JewlQJRuNhkxMTMjz589DYtPkputPnjyR8fHxcFzr3dzchKR3fn4uJyfdyeDoKCy6ro9Q9Xhs8dT01LL4PTU9tYiv+DFB+zVCt2J+Yf4se35JTYAqqo856/W6jI2NhWTYarVEM7EOTt2vRd8VaiftdDohEWrS0/WH/gGNp6anVoDV/cdT01OL+IofE7Qf84uNq1jr2Wc8tSz+MjT/mgBNVK0K25Lcb+v63sMW2/dYa3pq04rpDb5zSaubtc9Ty67FU9NTi/h6BOif1hOyLf2T+TO7l/TXKKrPNPvdpm/ZYE4/Ws5eT01PLaPlqempRXxGoDhL+xXH0jx5MvXUIj4jEGf7fgYRdwq1IAABCEAAAv8+ge5rvaibwH8/UiKAAAQgAAEIJAg0FxcXE5usQgACEIAABKpBoLa7u9v3O8BqhE2UEIAABCBQdQK8A6x6DyB+CEAAAhUl8AeD0Pt5SBL78AAAAABJRU5ErkJggg=="
+		}],
+	"object": {
+		"uuid": "187011C3-4971-441B-AFD3-764B9D740E6B",
+		"type": "Scene",
+		"name": "Scene",
+		"layers": 1,
+		"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+		"children": [
+			{
+				"uuid": "747772BC-F440-46A1-AB27-7D2A6F6E6BF3",
+				"type": "Mesh",
+				"name": "Outside",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0.02728,0,1],
+				"geometry": "707F4268-930A-4A1A-AB9E-E41AAEDF54F0",
+				"material": "3248A7CC-0346-4606-9ECA-4314B2B1270C"
+			},
+			{
+				"uuid": "BE874BB9-A745-4CCA-8574-A17206352296",
+				"type": "Mesh",
+				"name": "Inside",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0.263855,0,1],
+				"geometry": "F36F9E64-711A-4FD4-B4E4-F2C05D6CE29B",
+				"material": "661F54CB-B9E5-4635-B699-FFD329FF0B02"
+			},
+			{
+				"uuid": "7061B009-0196-443A-9055-4DB22B265811",
+				"type": "Mesh",
+				"name": "Top",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,0,-1,0,0,1,0,0,0,1.477059,0,1],
+				"geometry": "B3F16EE1-B265-4E21-A50E-0C57F010B72B",
+				"material": "2603E853-B976-4067-87ED-68AFE75FD2E3"
+			},
+			{
+				"uuid": "88C1B8F3-7E89-4355-9FF3-E82F889E0415",
+				"type": "Mesh",
+				"name": "Base",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,0,1,0,0,-1,0,0,0,-1.423349,0,1],
+				"geometry": "1DD260F4-8099-4EE2-BFE8-D6397DF9B486",
+				"material": "250AE2BF-A7C7-443D-898B-A303A0D30E80"
+			},
+			{
+				"uuid": "DCB3ABB4-5854-43DD-81AF-335B23C0ED6A",
+				"type": "HemisphereLight",
+				"name": "HemisphereLight",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,10,0,1],
+				"color": 16711679,
+				"intensity": 1,
+				"groundColor": 0
+			},
+			{
+				"uuid": "B69F39D8-C5B2-4464-B347-13B05906CE60",
+				"type": "Mesh",
+				"name": "Bottom",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,0,-1,0,0,1,0,0,0,-0.945741,0,1],
+				"geometry": "2FD449A5-65C5-46ED-98B6-987C6DB2195B",
+				"material": "BA20C997-ACC4-4CD0-AA43-105B0F34F86A"
+			}],
+		"background": 11184810
+	}
+}

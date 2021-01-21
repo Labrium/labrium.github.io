@@ -1,0 +1,11 @@
+newmtl Bark
+Kd 0.313726 0.188235 0.094118
+illum 1
+map_Kd mmf_tree_b.PNG
+
+newmtl Leaves
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+illum 2
+Ns 50.781250
+map_Kd mmf_tree_a.png

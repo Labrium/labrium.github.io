@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <title>VR Test</title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no, minimal-ui">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="VR Test" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="icon" type="image/png" href="Images/Icon.png" />
+  <link rel="shortcut icon" type="image/png" href="Images/Icon.png" />
+  <link rel="apple-touch-icon" type="image/png" href="Images/Icon.png" />
+  <style>
+    html,
+    body {
+      margin: 0px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    canvas {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 20px;
+      Left: 50%;
+      transform: translate(-50%);
+      padding: 6px 6px;
+      border: 2px solid #fff;
+      border-radius: 7.5px;
+      background: rgba(0, 0, 0, 0.3);
+      text-align: center;
+      opacity: 0.75;
+      z-index: 999;
+      /*backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);*/
+      transition: 0.5s ease;
+    }
+
+    /*#buttons:hover {
+      opacity: 0.75 !important;
+    }*/
+
+    #buttons button {
+      font: normal 0 sans-serif;
+      outline: none;
+      border: none;
+      color: white;
+      border-radius: 7.5px;
+      height: 2.9rem;
+      background: transparent;
+      transition: 0.25s ease;
+    }
+
+    #buttons button img {
+      height: 2rem;
+      padding: 5px;
+      float: left;
+    }
+
+    #buttons button:hover {
+      font: normal 16px/2.7rem sans-serif;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="buttons">
+    <button id="fullscreen"><img src="Images/fullscreen.svg">Fullscreen</button>
+    <button id="vr"><img src="Images/vr.svg">Enter VR</button>
+    <button id="reset"><img src="Images/reset.svg">Reset</button>
+  </div>
+
+</body>
+
+<script>
+  document.addEventListener('touchmove', function (e) {
+    e.preventDefault();
+  });
+</script>
+
+<!-- three.js library -->
+<script src="Scripts/three.js"></script>
+<script src="Scripts/ShadowMesh.js"></script>
+<script src="Scripts/VR-ES5-Fallback.js"></script>
+<script src="Scripts/Main.js"></script>
+<script>
+  // Get config from URL
+  var config = (function () {
+    var config = {};
+    var q = "BUFFER_SCALE=1&CARDBOARD_UI_DISABLED=true&PREDICTION_TIME_S=0.048";
+    if (q === '') {
+      return config;
+    }
+    var params = q.split('&');
+    var param, name, value;
+    for (var i = 0; i < params.length; i++) {
+      param = params[i].split('=');
+      name = param[0];
+      value = param[1];
+
+      // All config values are either boolean or float
+      config[name] = value === 'true' ? true :
+        value === 'false' ? false :
+          parseFloat(value);
+    }
+    return config;
+  })();
+
+  // Mock VRFrameData for VRControls
+  function VRFrameData() {
+    this.leftViewMatrix = new Float32Array(16);
+    this.rightViewMatrix = new Float32Array(16);
+    this.leftProjectionMatrix = new Float32Array(16);
+    this.rightProjectionMatrix = new Float32Array(16);
+    this.pose = null;
+  };
+
+  console.log('creating CardboardVRDisplay with options', config);
+  var vrDisplay = new CardboardVRDisplay(config);
+
+  // If loading this inside of an iframe (see iframe.html),
+  // force using the `devicemotion` sensor fusion, rather than
+  // newer Generic Sensors due to an issue with sensors
+  // in iframes in Chrome < m69:
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=849501
+  if (window.self !== window.top) {
+    vrDisplay.poseSensor_.useDeviceMotion();
+  }
+
+  navigator.getVRDisplays = function () {
+    return new Promise(function (resolve) {
+      resolve([vrDisplay]);
+    });
+  };
+
+
+  // Apply VR headset positional data to camera.
+  var controls = new THREE.VRControls(camera);
+
+  // Apply VR stereo rendering to renderer.
+  var effect = new THREE.VREffect(renderer);
+  effect.setSize(window.innerWidth, window.innerHeight);
+
+
+  function onVRDisplayPresentChange() {
+    console.log('onVRDisplayPresentChange');
+    console.log('Resizing to %s x %s.', window.innerWidth, window.innerHeight);
+    effect.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+  }
+
+  function UIShowHide() {
+    var UI = document.getElementById("buttons");
+    if (UI.style.opacity == 0) {
+      UI.style.opacity = 0.75;
+      setTimeout(function () {
+        if (UI.style.opacity == 0.75) {
+          UI.style.opacity = 0;
+        }
+      }, 1500);
+    }
+  }
+  window.addEventListener('mousemove', UIShowHide);
+  window.addEventListener('click', UIShowHide);
+  window.addEventListener('touchstart', UIShowHide);
+  window.addEventListener('touchend', UIShowHide);
+
+  // Resize the WebGL canvas when we resize and also when we change modes.
+  window.addEventListener('vrdisplaypresentchange', onVRDisplayPresentChange);
+
+  // Button click handlers.
+  document.querySelector('button#fullscreen').addEventListener('click', function () {
+    vrDisplay.exitPresent();
+    enterFullscreen(renderer.domElement);
+  });
+  document.querySelector('button#vr').addEventListener('click', function () {
+    vrDisplay.requestPresent([{ source: renderer.domElement }]);
+  });
+  document.querySelector('button#reset').addEventListener('click', function () {
+    vrDisplay.resetPose();
+    window.location.href = './index.html';
+  });
+
+  function enterFullscreen(el) {
+    if (el.requestFullscreen) {
+      el.requestFullscreen();
+    } else if (el.mozRequestFullScreen) {
+      el.mozRequestFullScreen();
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+    } else if (el.msRequestFullscreen) {
+      el.msRequestFullscreen();
+    }
+  }
+</script>
+
+</html>
