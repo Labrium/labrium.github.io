@@ -57,7 +57,7 @@ function socketConnect() {
                         scene.remove(selectedObject);
                     } catch (e) { console.log(e); }
 
-                    chefList[data.name] = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/GlossyGreen.png") }));
+                    chefList[data.name] = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyGreen.png") }));
                     chefList[data.name].position.set(0, 1, 0);
                     chefList[data.name].rotation.order = "YXZ";
                     scene.add(chefList[data.name]);
@@ -113,17 +113,26 @@ function init() {
     }
     window.addEventListener("resize", onWindowResize, false);
 
-    var chef = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/GlossyGreen.png") }));
+    var chef = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyGreen.png") }));
     chef.position.set(0, 1, 0);
     chef.rotation.order = "YXZ";
     scene.add(chef);
 
-    var chefShadow = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 2.5), new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: artist.load("Images/roundshadowMask.png"), transparent: true, opacity: 0.4 }));
+    var chefShadow = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 2.5), new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: artist.load("Images/roundshadowMask.png"), transparent: true, opacity: 0.5 }));
     chefShadow.position.set(chef.position.x, -chef.position.y, chef.position.z);
     chefShadow.rotation.x = deg(-90);
     scene.add(chefShadow);
 
-    var ground = new THREE.Mesh(new THREE.PlaneGeometry(10000, 10000), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/GlossyWhite.png") }));
+
+    var groundTile = artist.load("Images/floor_tiles/floor_tiles_06_diff_1k.jpg");
+    groundTile.wrapS = THREE.RepeatWrapping;
+    groundTile.wrapT = THREE.RepeatWrapping;
+    groundTile.repeat.set(10, 10);
+    var groundTileNrm = artist.load("Images/floor_tiles/floor_tiles_06_nor_1k.jpg");
+    groundTileNrm.wrapS = THREE.RepeatWrapping;
+    groundTileNrm.wrapT = THREE.RepeatWrapping;
+    groundTileNrm.repeat.set(10, 10);
+    var ground = new THREE.Mesh(new THREE.PlaneGeometry(75, 75), new THREE.MeshMatcapMaterial({ map: groundTile, normalMap: groundTileNrm, matcap: artist.load("Images/Materials/GlossyWhite.png") }));
     ground.rotation.set(deg(-90), 0, 0);
     scene.add(ground);
 
