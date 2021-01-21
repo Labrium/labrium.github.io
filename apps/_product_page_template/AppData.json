@@ -1,7 +1,0 @@
-{
-    "name": "Name Of App",
-    "shortDescription": "Short Description of App",
-    "longDescription": "<p>Full Description of App</p>",
-    "downloadPath": "/apps/builds/Compiled-App-Name_Version.zip",
-    "productPage": "_product_page_template"
-}
