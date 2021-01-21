@@ -5,7 +5,7 @@
         "10.19:\n • Updated to display progress on dock icon.\n • Updater Script is now standalone and localized.\n • Fixed layout bug of release notes to replace newlines correctly.", 
         "10.18:\n • New updated software updater script can read and display release notes.\n • Fixed bug where apple quarantined files would not get processed before quitting."
     ], 
-    "longDescription": "<div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Convert Any File Type to ICNS</h2><br/><p>Supports all file types supported by your Mac including jpeg, png, tiff, and gif.</p><p>Just drag and drop and Icon Utility instantly converts from image to icns, icns to iconset, and iconset to icns.</p></div><img src='iconset.png' /></div>", 
+    "longDescription": "<div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Convert Any File Type to ICNS</h2><br/><p>Supports all file types supported by your Mac including jpeg, png, tiff, and gif.</p><p>Just drag and drop and Icon Utility instantly converts from image to icns, icns to iconset, and iconset to icns.</p></div><img src='Iconset.png' /></div>", 
     "productPage": "icon-utility", 
     "shortDescription": "Lightning fast icon converter"
 }
