@@ -30,7 +30,7 @@ var chef;
 var chefShadow;
 
 function socketConnect() {
-    socket = io("http://Overcooked-Online-socketio-server.techlabsinc.repl.co");
+    socket = io("Overcooked-Online-socketio-server.techlabsinc.repl.co");
     var colors = ["Red", "Yellow", "Green", "Blue", "Black", "White"];
     var chefColor = colors[Math.floor(Math.random() * colors.length)];
     do {
@@ -39,7 +39,7 @@ function socketConnect() {
 
     socket.on("connect", function () {
         document.getElementById("usersConnected").innerHTML = "Users Connected:<br/>" + username + "<br/>";
-        socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(0, 0.5, 0) });
+        socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(), rotation: new THREE.Vector3() });
         // receive a message from anyone
         socket.on("message", function (message) {
             console.log("received a message", message);
@@ -55,6 +55,7 @@ function socketConnect() {
                 if (data.list[id].name != username) {
                     try {
                         chefList[data.list[id].name].position.set(data.list[id].position.x, data.list[id].position.y, data.list[id].position.z);
+                        chefList[data.list[id].name].rotation.set(data.list[id].rotation.x, data.list[id].rotation.y, data.list[id].rotation.z);
                     } catch (e) { }
                 }
             }
@@ -82,6 +83,7 @@ function socketConnect() {
                     chefList[data.list[id].name] = new THREE.Group();
                     chefList[data.list[id].name].add(new THREE.Mesh(chef.children[0].geometry, new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png"), flatShading: true })));
                     chefList[data.list[id].name].position.copy(data.list[id].position);
+                    chefList[data.list[id].name].rotation.set(data.list[id].rotation.x, data.list[id].rotation.y, data.list[id].rotation.z);
                     scene.add(chefList[data.list[id].name]);
 
                     chefList[data.list[id].name].add(chefShadow.clone());
@@ -186,6 +188,7 @@ function init() {
                 var block = new THREE.Mesh(new THREE.BoxGeometry(1, 0.5, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png"), flatShading: true }));
                 block.position.set(x, 0.25, -z);
                 block.add(chefShadow.clone());
+                block.children[0].position.y = -0.25;
                 block.children[0].scale.set(1.315, 1.315, 1);
                 kitchen.add(block);
             }
@@ -500,26 +503,32 @@ function init() {
 
 
 
-        chef.scale.y = (Math.sin(Date.now() * 0.008) * 0.1025) + 1;
+        chef.scale.y = (Math.sin(Date.now() * 0.008) * 0.05) + 1;
         if (chefControls.up == true) {
             chef.rotation.y = deg(180);
             chef.position.z += 0.075;
-            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.15) + 1;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.1) + 1;
         }
         if (chefControls.down == true) {
             chef.rotation.y = deg(0);
             chef.position.z -= 0.075;
-            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.15) + 1;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.1) + 1;
         }
         if (chefControls.left == true) {
             chef.rotation.y = deg(-90);
             chef.position.x += 0.075;
-            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.15) + 1;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.1) + 1;
         }
         if (chefControls.right == true) {
             chef.rotation.y = deg(90);
             chef.position.x -= 0.075;
-            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.15) + 1;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.1) + 1;
+        }
+
+        for (chf in chefList) {
+            try {
+                chefList[chf].scale.y = (Math.sin(Date.now() * 0.008) * 0.05) + 1;
+            } catch (e) {}
         }
 
         chefLinearVelocity.x *= chefDamping;
@@ -536,7 +545,7 @@ function init() {
         }
         try {
             if (chef.position.x != pposition.x || chef.position.y != pposition.y || chef.position.z != pposition.z) {
-                socket.emit("position", { position: chef.position });
+                socket.emit("position", { position: chef.position, rotation: new THREE.Vector3(chef.rotation.x, chef.rotation.y, chef.rotation.z) });
                 pposition.copy(chef.position);
             }
         } catch (e) { }
