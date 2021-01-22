@@ -14,18 +14,32 @@ document.body.appendChild(stats.dom);
 
 var chefList = [];
 
+var kitchens = [
+    [[1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'order'],
+    ['trash', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'order'],
+    [1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 'plates'],
+    ['fish', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'shrimp'],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 'cut', 'cut', 0, 0, 0, 0, 0, 0, 0, 'cut', 'cut', 1]]
+];
+
 var socket;
+var chef;
+var chefShadow;
 
 function socketConnect() {
     socket = io("http://Overcooked-Online-socketio-server.techlabsinc.repl.co");
-
+    var colors = ["Red", "Yellow", "Green", "Blue", "Black", "White"];
+    var chefColor = colors[Math.floor(Math.random() * colors.length)];
     do {
         var username = prompt("Enter your chef's name:");
     } while (username == null);
 
     socket.on("connect", function () {
         document.getElementById("usersConnected").innerHTML = "Users Connected:<br/>" + username + "<br/>";
-        socket.emit("register", { name: username });
+        socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(0, 0.5, 0) });
         // receive a message from anyone
         socket.on("message", function (message) {
             console.log("received a message", message);
@@ -39,7 +53,9 @@ function socketConnect() {
         socket.on("updatePositions", function (data) {
             for (var id in data.list) {
                 if (data.list[id].name != username) {
-                    chefList[data.name].position.set(data.list[id].position.x, data.list[id].position.y, data.list[id].position.z);
+                    try {
+                        chefList[data.list[id].name].position.set(data.list[id].position.x, data.list[id].position.y, data.list[id].position.z);
+                    } catch (e) { }
                 }
             }
         });
@@ -47,25 +63,32 @@ function socketConnect() {
         socket.on("getUsers", function (data) {
             document.getElementById("usersConnected").innerHTML = "Users Connected:<br/>";
             for (var id in data.list) {
+                if (data.list[id].name != username) {
+                    if (data.list[id].color == chefColor) {
+                        chefColor = colors[Math.floor(Math.random() * colors.length)];
+                        socket.emit("register", { name: username, color: chefColor, position: chef.position });
+                    }
+                }
                 if (data.list[id].name == username) {
-                    document.getElementById("usersConnected").innerHTML += data.list[id].name + " (Me)<br/>";
+                    document.getElementById("usersConnected").innerHTML += "<span style='color: " + data.list[id].color + ";'>" + data.list[id].name + " (Me)</span><br/>";
+                    chef.children[0].material.matcap = artist.load("Images/Materials/Glossy" + chefColor + ".png");
                 } else {
-                    document.getElementById("usersConnected").innerHTML += data.list[id].name + "<br/>";
+                    document.getElementById("usersConnected").innerHTML += "<span style='color: " + data.list[id].color + ";'>" + data.list[id].name + "</span><br/>";
 
                     try {
-                        var selectedObject = scene.getObjectByName(data.name);
-                        scene.remove(selectedObject);
-                    } catch (e) { console.log(e); }
+                        scene.remove(chefList[data.list[id].name]);
+                    } catch (e) { }
 
-                    chefList[data.name] = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyGreen.png") }));
-                    chefList[data.name].position.set(0, 1, 0);
-                    chefList[data.name].rotation.order = "YXZ";
-                    scene.add(chefList[data.name]);
+                    chefList[data.list[id].name] = new THREE.Group();
+                    chefList[data.list[id].name].add(new THREE.Mesh(chef.children[0].geometry, new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png"), flatShading: true })));
+                    chefList[data.list[id].name].position.copy(data.list[id].position);
+                    scene.add(chefList[data.list[id].name]);
 
-                    var chefShadow = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 2.5), new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: artist.load("Images/roundshadowMask.png"), transparent: true, opacity: 0.4 }));
-                    chefShadow.position.set(chefList[data.name].position.x, -chefList[data.name].position.y, chefList[data.name].position.z);
-                    chefShadow.rotation.x = deg(-90);
-                    scene.add(chefShadow);
+                    chefList[data.list[id].name].add(chefShadow.clone());
+
+                    chefList[data.list[id].name].children[0].position.set(0, 0.5, 0);
+                    chefList[data.list[id].name].children[0].material.matcap = artist.load("Images/Materials/Glossy" + data.list[id].color + ".png");
+                    console.log(chefList[data.list[id].name]);
                 }
             }
         });
@@ -76,6 +99,8 @@ function socketConnect() {
 
         // or left the server
         socket.on("user-disconnect", function (data) {
+            scene.remove(chefList[data.name]);
+            chefList[data.name] = {};
             console.log("user " + data.name + " has disconnected from the server");
         });
     });
@@ -84,24 +109,31 @@ function socketConnect() {
 var scene = new THREE.Scene();
 scene.background = new THREE.Color(0xeef6ff);
 
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000000000);
+var camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000000000);
 camera.position.set(0, 10, -5);
 camera.lookAt(scene.position);
 
 
 var renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
+var rendererAntialias = true;
+
+function toggleAntialias() {
+    document.body.removeChild(renderer.domElement);
+    if (rendererAntialias == true) {
+        renderer = new THREE.WebGLRenderer({ antialias: false });
+        rendererAntialias = false;
+    } else {
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        rendererAntialias = true;
+    }
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    document.body.appendChild(renderer.domElement);
+}
 
 var artist = new THREE.TextureLoader();
-
-artist.load("Images/sky.png", function (texture) {
-    var rt = new THREE.WebGLCubeRenderTarget(texture.image.height);
-    rt.fromEquirectangularTexture(renderer, texture);
-    scene.background = rt;
-});
 
 var physicalObjects = new THREE.Group();
 
@@ -113,15 +145,16 @@ function init() {
     }
     window.addEventListener("resize", onWindowResize, false);
 
-    var chef = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyGreen.png") }));
-    chef.position.set(0, 1, 0);
+    chef = new THREE.Group();
+    chef.add(new THREE.Mesh(new THREE.IcosahedronGeometry(0.5, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png"), flatShading: true })));
+    chef.children[0].position.set(0, 0.5, 0);
     chef.rotation.order = "YXZ";
     scene.add(chef);
 
-    var chefShadow = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 2.5), new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: artist.load("Images/roundshadowMask.png"), transparent: true, opacity: 0.5 }));
+    chefShadow = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.5), new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: artist.load("Images/roundshadowMask.png"), transparent: true, opacity: 0.55, alphaTest: 0.01, depthWrite: false }));
     chefShadow.position.set(chef.position.x, -chef.position.y, chef.position.z);
     chefShadow.rotation.x = deg(-90);
-    scene.add(chefShadow);
+    chef.add(chefShadow);
 
 
     var groundTile = artist.load("Images/floor_tiles/floor_tiles_06_diff_1k.jpg");
@@ -132,13 +165,34 @@ function init() {
     groundTileNrm.wrapS = THREE.RepeatWrapping;
     groundTileNrm.wrapT = THREE.RepeatWrapping;
     groundTileNrm.repeat.set(10, 10);
-    var ground = new THREE.Mesh(new THREE.PlaneGeometry(75, 75), new THREE.MeshMatcapMaterial({ map: groundTile, normalMap: groundTileNrm, matcap: artist.load("Images/Materials/GlossyWhite.png") }));
+    var ground = new THREE.Mesh(new THREE.PlaneGeometry(50, 50), new THREE.MeshMatcapMaterial({ map: groundTile, normalMap: groundTileNrm, matcap: artist.load("Images/Materials/GlossyWhite.png") }));
     ground.rotation.set(deg(-90), 0, 0);
     scene.add(ground);
 
     ground.material.depthWrite = false;
-
-
+    var level = 1;
+    var zlength = 0;
+    var xlength = 0;
+    var kitchen = new THREE.Group();
+    for (var z = 0; z < kitchens[level - 1].length; z++) {
+        if (z > zlength) {
+            zlength = z;
+        }
+        for (var x = 0; x < kitchens[level - 1][z].length; x++) {
+            if (x > xlength) {
+                xlength = x;
+            }
+            if (kitchens[level - 1][z][x] != 0) {
+                var block = new THREE.Mesh(new THREE.BoxGeometry(1, 0.5, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png"), flatShading: true }));
+                block.position.set(x, 0.25, -z);
+                block.add(chefShadow.clone());
+                block.children[0].scale.set(1.315, 1.315, 1);
+                kitchen.add(block);
+            }
+        }
+    }
+    kitchen.position.set(-xlength/2, 0, zlength/2);
+    scene.add(kitchen);
 
 
     var group = new SPE.Group({
@@ -374,6 +428,7 @@ function init() {
     var chefCollision = new THREE.Raycaster();
     var collisionDirections = [new THREE.Vector3(0, -1, 0), new THREE.Vector3(0, 1, 0), new THREE.Vector3(1, 0, 0), new THREE.Vector3(-1, 0, 0), new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -1)];
     var chefDistances = [1, 1, 5, 5, 5, 5];
+    var pposition = new THREE.Vector3();
 
 
 
@@ -444,25 +499,31 @@ function init() {
         requestAnimationFrame(animate);
 
 
+
+        chef.scale.y = (Math.sin(Date.now() * 0.008) * 0.1025) + 1;
         if (chefControls.up == true) {
-            chef.position.z += 0.1;
+            chef.rotation.y = deg(180);
+            chef.position.z += 0.075;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.15) + 1;
         }
         if (chefControls.down == true) {
-            chef.position.z -= 0.1;
+            chef.rotation.y = deg(0);
+            chef.position.z -= 0.075;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.15) + 1;
         }
         if (chefControls.left == true) {
-            chef.position.x += 0.1;
+            chef.rotation.y = deg(-90);
+            chef.position.x += 0.075;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.15) + 1;
         }
         if (chefControls.right == true) {
-            chef.position.x -= 0.1;
+            chef.rotation.y = deg(90);
+            chef.position.x -= 0.075;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.15) + 1;
         }
 
         chefLinearVelocity.x *= chefDamping;
         chefLinearVelocity.z *= chefDamping;
-
-        chef.rotation.x += 0.025;
-        chef.rotation.y += 0.025;
-        chef.rotation.z += 0.025;
 
         for (var i = 0; i < collisionDirections.length; i++) {
             chefCollision.set(chef.position, collisionDirections[i]);
@@ -474,9 +535,11 @@ function init() {
             } catch (e) { }
         }
         try {
-            socket.emit("position", { position: chef.position });
+            if (chef.position.x != pposition.x || chef.position.y != pposition.y || chef.position.z != pposition.z) {
+                socket.emit("position", { position: chef.position });
+                pposition.copy(chef.position);
+            }
         } catch (e) { }
-        chefShadow.position.set(chef.position.x, -chef.position.y, chef.position.z);
         renderer.render(scene, camera);
         stats.update();
     };
