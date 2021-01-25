@@ -14,6 +14,8 @@ document.body.appendChild(stats.dom);
 
 var chefList = [];
 
+var clock = new THREE.Clock();
+
 var kitchens = [
     [[1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -25,21 +27,22 @@ var kitchens = [
     [1, 'cut', 'cut', 0, 0, 0, 0, 0, 0, 0, 'cut', 'cut', 1]]
 ];
 
+var sculptor = new THREE.ObjectLoader();
+
 var socket;
 var chef;
-var chefShadow;
 
 function socketConnect() {
-    socket = io("Overcooked-Online-socketio-server.techlabsinc.repl.co");
     var colors = ["Red", "Yellow", "Green", "Blue", "Black", "White"];
     var chefColor = colors[Math.floor(Math.random() * colors.length)];
     do {
         var username = prompt("Enter your chef's name:");
     } while (username == null);
 
+    socket = io("Overcooked-Online-socketio-server.techlabsinc.repl.co");
+
     socket.on("connect", function () {
         document.getElementById("usersConnected").innerHTML = "Users Connected:<br/>" + username + "<br/>";
-        socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(), rotation: new THREE.Vector3() });
         // receive a message from anyone
         socket.on("message", function (message) {
             console.log("received a message", message);
@@ -72,24 +75,22 @@ function socketConnect() {
                 }
                 if (data.list[id].name == username) {
                     document.getElementById("usersConnected").innerHTML += "<span style='color: " + data.list[id].color + ";'>" + data.list[id].name + " (Me)</span><br/>";
-                    chef.children[0].material.matcap = artist.load("Images/Materials/Glossy" + chefColor + ".png");
+                    chef.children[3].material.matcap = artist.load("Images/Materials/Metallic" + chefColor + ".png");
                 } else {
                     document.getElementById("usersConnected").innerHTML += "<span style='color: " + data.list[id].color + ";'>" + data.list[id].name + "</span><br/>";
 
                     try {
                         scene.remove(chefList[data.list[id].name]);
+                        chefList[data.list[id].name].dispose();
                     } catch (e) { }
 
-                    chefList[data.list[id].name] = new THREE.Group();
-                    chefList[data.list[id].name].add(new THREE.Mesh(chef.children[0].geometry, new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png"), flatShading: true })));
+                    chefList[data.list[id].name] = chef.clone();
                     chefList[data.list[id].name].position.copy(data.list[id].position);
                     chefList[data.list[id].name].rotation.set(data.list[id].rotation.x, data.list[id].rotation.y, data.list[id].rotation.z);
                     scene.add(chefList[data.list[id].name]);
 
-                    chefList[data.list[id].name].add(chefShadow.clone());
-
-                    chefList[data.list[id].name].children[0].position.set(0, 0.5, 0);
-                    chefList[data.list[id].name].children[0].material.matcap = artist.load("Images/Materials/Glossy" + data.list[id].color + ".png");
+                    chefList[data.list[id].name].children[3].material = new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/Metallic" + data.list[id].color + ".png") });
+                    chefList[data.list[id].name].children[2].material = chefList[data.list[id].name].children[3].material;
                     console.log(chefList[data.list[id].name]);
                 }
             }
@@ -102,9 +103,10 @@ function socketConnect() {
         // or left the server
         socket.on("user-disconnect", function (data) {
             scene.remove(chefList[data.name]);
-            chefList[data.name] = {};
+            chefList[data.name].dispose();
             console.log("user " + data.name + " has disconnected from the server");
         });
+        socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(), rotation: new THREE.Vector3() });
     });
 }
 
@@ -112,7 +114,7 @@ var scene = new THREE.Scene();
 scene.background = new THREE.Color(0xeef6ff);
 
 var camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000000000);
-camera.position.set(0, 10, -5);
+camera.position.set(0, 20, -10);
 camera.lookAt(scene.position);
 
 
@@ -139,6 +141,14 @@ var artist = new THREE.TextureLoader();
 
 var physicalObjects = new THREE.Group();
 
+sculptor.load("Models/Chef.json", function (obj) {
+    chef = obj;
+    chef.children[9].position.set(0, 0.5, 0);
+    chef.rotation.order = "YXZ";
+    scene.add(chef);
+    init();
+});
+
 function init() {
     function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -146,18 +156,6 @@ function init() {
         renderer.setSize(window.innerWidth, window.innerHeight);
     }
     window.addEventListener("resize", onWindowResize, false);
-
-    chef = new THREE.Group();
-    chef.add(new THREE.Mesh(new THREE.IcosahedronGeometry(0.5, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png"), flatShading: true })));
-    chef.children[0].position.set(0, 0.5, 0);
-    chef.rotation.order = "YXZ";
-    scene.add(chef);
-
-    chefShadow = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.5), new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: artist.load("Images/roundshadowMask.png"), transparent: true, opacity: 0.55, alphaTest: 0.01, depthWrite: false }));
-    chefShadow.position.set(chef.position.x, -chef.position.y, chef.position.z);
-    chefShadow.rotation.x = deg(-90);
-    chef.add(chefShadow);
-
 
     var groundTile = artist.load("Images/floor_tiles/floor_tiles_06_diff_1k.jpg");
     groundTile.wrapS = THREE.RepeatWrapping;
@@ -167,7 +165,7 @@ function init() {
     groundTileNrm.wrapS = THREE.RepeatWrapping;
     groundTileNrm.wrapT = THREE.RepeatWrapping;
     groundTileNrm.repeat.set(10, 10);
-    var ground = new THREE.Mesh(new THREE.PlaneGeometry(50, 50), new THREE.MeshMatcapMaterial({ map: groundTile, normalMap: groundTileNrm, matcap: artist.load("Images/Materials/GlossyWhite.png") }));
+    var ground = new THREE.Mesh(new THREE.PlaneGeometry(75, 75), new THREE.MeshMatcapMaterial({ map: groundTile, normalMap: groundTileNrm, matcap: artist.load("Images/Materials/MetallicWhite.png") }));
     ground.rotation.set(deg(-90), 0, 0);
     scene.add(ground);
 
@@ -185,16 +183,17 @@ function init() {
                 xlength = x;
             }
             if (kitchens[level - 1][z][x] != 0) {
-                var block = new THREE.Mesh(new THREE.BoxGeometry(1, 0.5, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png"), flatShading: true }));
+                var block = new THREE.Mesh(new THREE.BoxGeometry(1, 0.5, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/MetallicWhite.png"), flatShading: true }));
                 block.position.set(x, 0.25, -z);
-                block.add(chefShadow.clone());
+                block.add(chef.children[9].clone());
                 block.children[0].position.y = -0.25;
-                block.children[0].scale.set(1.315, 1.315, 1);
+                block.children[0].scale.set(0.75, 0.75, 1);
                 kitchen.add(block);
             }
         }
     }
-    kitchen.position.set(-xlength/2, 0, zlength/2);
+    kitchen.position.set(-xlength, 0, zlength);
+    kitchen.scale.set(2, 2, 2);
     scene.add(kitchen);
 
 
@@ -499,36 +498,50 @@ function init() {
     console.log(scene);
     document.body.appendChild(renderer.domElement);
     function animate() {
+        var delta = clock.getDelta();
         requestAnimationFrame(animate);
 
 
 
-        chef.scale.y = (Math.sin(Date.now() * 0.008) * 0.05) + 1;
+        chef.scale.y = (Math.sin(Date.now() * 0.008) * 0.025) + 1;
         if (chefControls.up == true) {
             chef.rotation.y = deg(180);
-            chef.position.z += 0.075;
-            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.1) + 1;
+            chef.position.z += 10 * delta;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.05) + 1;
         }
         if (chefControls.down == true) {
             chef.rotation.y = deg(0);
-            chef.position.z -= 0.075;
-            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.1) + 1;
+            chef.position.z -= 10 * delta;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.05) + 1;
         }
         if (chefControls.left == true) {
             chef.rotation.y = deg(-90);
-            chef.position.x += 0.075;
-            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.1) + 1;
+            chef.position.x += 10 * delta;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.05) + 1;
         }
         if (chefControls.right == true) {
             chef.rotation.y = deg(90);
-            chef.position.x -= 0.075;
-            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.1) + 1;
+            chef.position.x -= 10 * delta;
+            chef.scale.y = (Math.sin(Date.now() * 0.035) * 0.05) + 1;
+        }
+
+        if (chefControls.up == true && chefControls.right == true) {
+            chef.rotation.y = deg(135);
+        }
+        if (chefControls.up == true && chefControls.left == true) {
+            chef.rotation.y = deg(-135);
+        }
+        if (chefControls.down == true && chefControls.right == true) {
+            chef.rotation.y = deg(45);
+        }
+        if (chefControls.down == true && chefControls.left == true) {
+            chef.rotation.y = deg(-45);
         }
 
         for (chf in chefList) {
             try {
                 chefList[chf].scale.y = (Math.sin(Date.now() * 0.008) * 0.05) + 1;
-            } catch (e) {}
+            } catch (e) { }
         }
 
         chefLinearVelocity.x *= chefDamping;
@@ -555,4 +568,3 @@ function init() {
 
     animate();
 }
-init();
