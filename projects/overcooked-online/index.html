@@ -12,7 +12,13 @@
 
 <body>
 	<div id="ui">
-		<input type="checkbox" onchange="toggleAntialias()" id="antialias" checked /><label for="antialias">Antialias</label>
+		<span>Quality</span>
+		<br />
+		<input type="radio" onchange="changeQuality(3)" id="high" name="quality" /><label for="antialias">High</label>
+		<br />
+		<input type="radio" onchange="changeQuality(2)" id="medium" name="quality" checked /><label for="antialias">Medium</label>
+		<br />
+		<input type="radio" onchange="changeQuality(1)" id="low" name="quality" /><label for="antialias">Low</label>
 		<br />
 		<span id="usersConnected"><button type="button" onclick="socketConnect()">Connect</button></span>
 	</div>
