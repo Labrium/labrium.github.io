@@ -109,7 +109,8 @@ function createChef(name, color) {
     model.add(shadow);
 
     if (name != "") {
-        chefCollisionBoxes[name] = new THREE.Mesh(new THREE.BoxBufferGeometry(2, 2, 2), new THREE.MeshBasicMaterial({ opacity: 0.2, transparent: true, depthWrite: false }));
+        chefCollisionBoxes[name] = new THREE.Mesh(new THREE.BoxBufferGeometry(2, 2, 2), new THREE.MeshBasicMaterial({ opacity: 0, transparent: true, depthWrite: false }));
+        chefCollisionBoxes[name].name = "chefCollisionBox";
         physicalObjects.add(chefCollisionBoxes[name]);
     }
 
@@ -183,8 +184,8 @@ function socketConnect() {
 
                     try {
                         scene.remove(chefList[data.list[id].name]);
-                        chefList[data.list[id].name].dispose();
                         scene.remove(chefCollisionBoxes[data.name]);
+                        chefList[data.list[id].name].dispose();
                         chefCollisionBoxes[data.name].dispose();
                     } catch (e) { }
 
@@ -204,10 +205,9 @@ function socketConnect() {
         // or left the server
         socket.on("user-disconnect", function (data) {
             scene.remove(chefList[data.name]);
-            chefList[data.name].dispose();
             scene.remove(chefCollisionBoxes[data.name]);
+            chefList[data.name].dispose();
             chefCollisionBoxes[data.name].dispose();
-            chefCollisionBoxes[data.name].pop();
             console.log("user " + data.name + " has disconnected from the server");
         });
         socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(), rotation: new THREE.Vector3() });
@@ -659,22 +659,38 @@ function init() {
                 switch (i) {
                     case 2:
                         if (intersect.distance <= chefDistances[i]) {
-                            chef.position.x -= (chefDistances[i] - intersect.distance);
+                            if (intersect.object.name == "chefCollisionBox") {
+                                chef.position.x -= (chefDistances[i] - intersect.distance) / 4;
+                            } else {
+                                chef.position.x -= (chefDistances[i] - intersect.distance);
+                            }
                         }
                         break;
                     case 3:
                         if (intersect.distance <= chefDistances[i]) {
-                            chef.position.x += (chefDistances[i] - intersect.distance);
+                            if (intersect.object.name == "chefCollisionBox") {
+                                chef.position.x += (chefDistances[i] - intersect.distance) / 4;
+                            } else {
+                                chef.position.x += (chefDistances[i] - intersect.distance);
+                            }
                         }
                         break;
                     case 4:
                         if (intersect.distance <= chefDistances[i]) {
-                            chef.position.z -= (chefDistances[i] - intersect.distance);
+                            if (intersect.object.name == "chefCollisionBox") {
+                                chef.position.z -= (chefDistances[i] - intersect.distance) / 4;
+                            } else {
+                                chef.position.z -= (chefDistances[i] - intersect.distance);
+                            }
                         }
                         break;
                     case 5:
                         if (intersect.distance <= chefDistances[i]) {
-                            chef.position.z += (chefDistances[i] - intersect.distance);
+                            if (intersect.object.name == "chefCollisionBox") {
+                                chef.position.z += (chefDistances[i] - intersect.distance) / 4;
+                            } else {
+                                chef.position.z += (chefDistances[i] - intersect.distance);
+                            }
                         }
                         break;
                 }

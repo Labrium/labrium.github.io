@@ -2,5 +2,5 @@
     "name": "Overcooked! Online",
     "projectPage": "overcooked-online",
     "description": "A 6-player online game based on <i>Overcooked 2</i> by <i>Team17</i> at <i>Ghost Town Games</i> where you race around the kitchen scrambling to prepare orders in time. Each player has an extended food-handler's permit allowing them to leave anything they want on the floor and throw food, knives, pots, dishes, etc. This project is designed to test client-to-client websocket connections and compatibility for mobile devices.",
-    "status": ["red", "Early Development"]
+    "status": ["orange", "Early Development"]
 }

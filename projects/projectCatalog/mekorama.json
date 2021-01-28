@@ -2,5 +2,5 @@
     "name": "Mekorama",
     "projectPage": "mekorama",
     "description": "Originally developed by <i>Martin Magni</i>, this fan-made web recreation is almost as good as the real thing.",
-    "status": ["orange", "Extremely Slow"]
+    "status": ["orange", "! CPU INTENSIVE !"]
 }
