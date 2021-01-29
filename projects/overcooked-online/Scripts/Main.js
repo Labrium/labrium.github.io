@@ -43,21 +43,21 @@ function createChef(name, color) {
 
     // meshes
     var hat = new THREE.Mesh(new THREE.CylinderBufferGeometry(0.5, 0.5, 0.5, radialSegments, 1, true), whiteFabric);
-    var frontLeftPuff = new THREE.Mesh(new THREE.SphereBufferGeometry(0.3, radialSegments, radialSegments), whiteFabric);
+    var frontLeftPuff = new THREE.Mesh(new THREE.SphereBufferGeometry(0.3, radialSegments / 2, radialSegments / 2), whiteFabric);
     frontLeftPuff.scale.set(1.5, 1.25, 1.5);
     var frontCenterPuff = frontLeftPuff.clone();
     var frontRightPuff = frontLeftPuff.clone();
     var backLeftPuff = frontLeftPuff.clone();
     var backCenterPuff = frontLeftPuff.clone();
     var backRightPuff = frontLeftPuff.clone();
-    var head = new THREE.Mesh(new THREE.SphereBufferGeometry(0.7, radialSegments, radialSegments), skin);
+    var head = new THREE.Mesh(new THREE.SphereBufferGeometry(0.7, radialSegments / 1.5, radialSegments / 1.5), skin);
     var bandana = new THREE.Mesh(new THREE.CylinderBufferGeometry(0.6, 0.6, 0.2, radialSegments, 1, true), coloredFabric);
-    var coat = new THREE.Mesh(new THREE.SphereBufferGeometry(1.1, radialSegments, radialSegments, 0, deg(360), 0, deg(80)), coloredFabric);
-    var rightHand = new THREE.Mesh(new THREE.SphereBufferGeometry(0.35, radialSegments, radialSegments), skin);
+    var coat = new THREE.Mesh(new THREE.SphereBufferGeometry(1.1, radialSegments, radialSegments / 3, 0, deg(360), 0, deg(80)), coloredFabric);
+    var rightHand = new THREE.Mesh(new THREE.SphereBufferGeometry(0.35, radialSegments / 2, radialSegments / 2), skin);
     var leftHand = rightHand.clone();
-    var apron = new THREE.Mesh(new THREE.SphereBufferGeometry(1.15, radialSegments, radialSegments, deg(230), deg(80), 0, deg(82.5)), whiteFabric);
+    var apron = new THREE.Mesh(new THREE.SphereBufferGeometry(1.15, radialSegments / 4, radialSegments / 3, deg(230), deg(80), 0, deg(82.5)), whiteFabric);
     var apronRibbon = new THREE.Mesh(new THREE.SphereBufferGeometry(1.14, radialSegments, 1, 0, deg(360), deg(60), deg(5)), whiteFabric);
-    var body = new THREE.Mesh(new THREE.SphereBufferGeometry(1, radialSegments, radialSegments, 0, deg(360), deg(90), deg(90)), whiteFabric);
+    var body = new THREE.Mesh(new THREE.SphereBufferGeometry(1, radialSegments / 2, radialSegments / 3, 0, deg(360), deg(90), deg(90)), whiteFabric);
     var shadow = new THREE.Mesh(new THREE.PlaneBufferGeometry(3, 3), shadowMaterial);
 
     // assembly
@@ -109,12 +109,18 @@ function createChef(name, color) {
     model.add(shadow);
 
     if (name != "") {
-        chefCollisionBoxes[name] = new THREE.Mesh(new THREE.BoxBufferGeometry(2, 2, 2), new THREE.MeshBasicMaterial({ opacity: 0, transparent: true, depthWrite: false }));
+        chefCollisionBoxes[name] = new THREE.Mesh(new THREE.BoxBufferGeometry(2, 3, 2), new THREE.MeshBasicMaterial({ opacity: 0, transparent: true, depthWrite: false }));
         chefCollisionBoxes[name].name = "chefCollisionBox";
         physicalObjects.add(chefCollisionBoxes[name]);
     }
 
     return model
+}
+
+function createFood(kind, position) {
+    var food = new THREE.Mesh(new THREE.SphereBufferGeometry(), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyRed.png") }));
+    food.position.copy(position);
+    return food;
 }
 
 var clock = new THREE.Clock();
@@ -161,7 +167,7 @@ function socketConnect() {
                     try {
                         chefList[data.list[id].name].position.set(data.list[id].position.x, data.list[id].position.y, data.list[id].position.z);
                         chefList[data.list[id].name].rotation.set(data.list[id].rotation.x, data.list[id].rotation.y, data.list[id].rotation.z);
-                        chefCollisionBoxes[data.list[id].name].position.set(data.list[id].position.x, data.list[id].position.y, data.list[id].position.z);
+                        chefCollisionBoxes[data.list[id].name].position.set(data.list[id].position.x, data.list[id].position.y + 1.5, data.list[id].position.z);
                     } catch (e) { }
                 }
             }
@@ -184,14 +190,18 @@ function socketConnect() {
 
                     try {
                         scene.remove(chefList[data.list[id].name]);
-                        scene.remove(chefCollisionBoxes[data.name]);
-                        chefList[data.list[id].name].dispose();
-                        chefCollisionBoxes[data.name].dispose();
-                    } catch (e) { }
+                    } catch (e) { console.log(e); }
+                    try {
+                        physicalObjects.remove(chefCollisionBoxes[data.list[id].name]);
+                    } catch (e) { console.log(e); }
+
 
                     chefList[data.list[id].name] = createChef(data.list[id].name, data.list[id].color);
                     chefList[data.list[id].name].position.copy(data.list[id].position);
-                    chefList[data.list[id].name].rotation.set(data.list[id].rotation.x, data.list[id].rotation.y, data.list[id].rotation.z);
+                    chefCollisionBoxes[data.list[id].name].position.set(data.list[id].position.x, data.list[id].position.y + 1.5, data.list[id].position.z);
+                    try {
+                        chefList[data.list[id].name].rotation.set(data.list[id].rotation.x, data.list[id].rotation.y, data.list[id].rotation.z);
+                    } catch (e) { }
                     scene.add(chefList[data.list[id].name]);
                     console.log(chefList[data.list[id].name]);
                 }
@@ -204,10 +214,12 @@ function socketConnect() {
 
         // or left the server
         socket.on("user-disconnect", function (data) {
-            scene.remove(chefList[data.name]);
-            scene.remove(chefCollisionBoxes[data.name]);
-            chefList[data.name].dispose();
-            chefCollisionBoxes[data.name].dispose();
+            try {
+                scene.remove(chefList[data.name]);
+            } catch (e) { console.log(e); }
+            try {
+                physicalObjects.remove(chefCollisionBoxes[data.name]);
+            } catch (e) { console.log(e); }
             console.log("user " + data.name + " has disconnected from the server");
         });
         socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(), rotation: new THREE.Vector3() });
@@ -228,7 +240,17 @@ renderer.setPixelRatio(window.devicePixelRatio);
 
 function changeQuality(loq) {
     if (loq == 3) {
+        document.body.removeChild(renderer.domElement);
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
     } else if (loq == 2) {
+        document.body.removeChild(renderer.domElement);
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
     } else {
         document.body.removeChild(renderer.domElement);
         renderer = new THREE.WebGLRenderer({ antialias: false });
@@ -282,17 +304,19 @@ function init() {
             if (x > xlength) {
                 xlength = x;
             }
-            if (kitchens[level - 1][z][x] != 0) {
-                var block = new THREE.Mesh(new THREE.BoxBufferGeometry(1, 0.2, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png"), normalMap: artist.load("Images/counter.png") }));
-                block.position.set(x, 0.4, -z);
-                block.add(chef.children[8].clone());
-                block.children[0].position.y = -0.4;
-                block.children[0].scale.set(0.75, 0.75, 1);
-                block.add(new THREE.Mesh(new THREE.BoxBufferGeometry(1.3, 0.5, 1.3), new THREE.MeshBasicMaterial({ opacity: 0, transparent: true })));
-                block.children[1].position.y = -0.3;
-                block.add(new THREE.Mesh(new THREE.BoxBufferGeometry(0.975, 0.3, 0.975), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png") })));
-                block.children[2].position.y = -0.25;
-                kitchen.add(block);
+            switch (kitchens[level - 1][z][x]) {
+                case 1:
+                    var block = new THREE.Mesh(new THREE.BoxBufferGeometry(1, 0.2, 1), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png"), normalMap: artist.load("Images/counter.png") }));
+                    block.position.set(x, 0.4, -z);
+                    block.add(chef.children[8].clone());
+                    block.children[0].position.y = -0.4;
+                    block.children[0].scale.set(0.75, 0.75, 1);
+                    block.add(new THREE.Mesh(new THREE.BoxBufferGeometry(1.3, 0.5, 1.3), new THREE.MeshBasicMaterial({ opacity: 0, transparent: true })));
+                    block.children[1].position.y = -0.3;
+                    block.add(new THREE.Mesh(new THREE.BoxBufferGeometry(0.975, 0.3, 0.975), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png") })));
+                    block.children[2].position.y = -0.25;
+                    kitchen.add(block);
+                    break;
             }
         }
     }
@@ -542,7 +566,7 @@ function init() {
                 break;
 
             case chefControls.keyPickUp:
-
+                physicalObjects.add(createFood("", chef.position));
                 break;
             case chefControls.keyAction:
                 chefControls.throw = true;
@@ -589,8 +613,8 @@ function init() {
         var delta = clock.getDelta();
         requestAnimationFrame(animate);
 
-        chefLinearVelocity.x = (chefLinearVelocity.x * chefDamping) * delta;
-        chefLinearVelocity.z = (chefLinearVelocity.z * chefDamping) * delta;
+        chefLinearVelocity.x = chefLinearVelocity.x * Math.pow(chefDamping, -delta);
+        chefLinearVelocity.z = chefLinearVelocity.z * Math.pow(chefDamping, -delta);
 
         chef.scale.y = (Math.sin(Date.now() * 0.008) * 0.03) + 1;
         if (chefControls.up == true) {
@@ -658,36 +682,36 @@ function init() {
             try {
                 switch (i) {
                     case 2:
-                        if (intersect.distance <= chefDistances[i]) {
+                        if (intersect.distance < chefDistances[i] + chefLinearVelocity.x && chefLinearVelocity.x > 0) {
                             if (intersect.object.name == "chefCollisionBox") {
-                                chef.position.x -= (chefDistances[i] - intersect.distance) / 4;
+                                chef.position.x -= (chefDistances[i] - intersect.distance) / 2.5;
                             } else {
                                 chef.position.x -= (chefDistances[i] - intersect.distance);
                             }
                         }
                         break;
                     case 3:
-                        if (intersect.distance <= chefDistances[i]) {
+                        if (intersect.distance < chefDistances[i] - chefLinearVelocity.x && chefLinearVelocity.x < 0) {
                             if (intersect.object.name == "chefCollisionBox") {
-                                chef.position.x += (chefDistances[i] - intersect.distance) / 4;
+                                chef.position.x += (chefDistances[i] - intersect.distance) / 2.5;
                             } else {
                                 chef.position.x += (chefDistances[i] - intersect.distance);
                             }
                         }
                         break;
                     case 4:
-                        if (intersect.distance <= chefDistances[i]) {
+                        if (intersect.distance < chefDistances[i] + chefLinearVelocity.z && chefLinearVelocity.z > 0) {
                             if (intersect.object.name == "chefCollisionBox") {
-                                chef.position.z -= (chefDistances[i] - intersect.distance) / 4;
+                                chef.position.z -= (chefDistances[i] - intersect.distance) / 2.5;
                             } else {
                                 chef.position.z -= (chefDistances[i] - intersect.distance);
                             }
                         }
                         break;
                     case 5:
-                        if (intersect.distance <= chefDistances[i]) {
+                        if (intersect.distance < chefDistances[i] - chefLinearVelocity.z && chefLinearVelocity.z < 0) {
                             if (intersect.object.name == "chefCollisionBox") {
-                                chef.position.z += (chefDistances[i] - intersect.distance) / 4;
+                                chef.position.z += (chefDistances[i] - intersect.distance) / 2.5;
                             } else {
                                 chef.position.z += (chefDistances[i] - intersect.distance);
                             }
