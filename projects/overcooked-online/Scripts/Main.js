@@ -27,8 +27,11 @@ var chefControls = {
     down: false,
     left: false,
     right: false,
-    throw: false
+    throw: false,
+    holding: ""
 }
+
+var kitchenObjects = [];
 
 var chefCollisionBoxes = [];
 function createChef(name, color) {
@@ -118,9 +121,9 @@ function createChef(name, color) {
 }
 
 function createFood(kind, position) {
-    var food = new THREE.Mesh(new THREE.SphereBufferGeometry(), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyRed.png") }));
-    food.position.copy(position);
-    return food;
+    kitchenObjects.push(new THREE.Mesh(new THREE.SphereBufferGeometry(0.75), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyRed.png") })));
+    kitchenObjects[kitchenObjects.length - 1].position.copy(position);
+    return kitchenObjects[kitchenObjects.length - 1];
 }
 
 var clock = new THREE.Clock();
@@ -128,12 +131,12 @@ var clock = new THREE.Clock();
 var kitchens = [
     [[1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'order'],
-    ['trash', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'order'],
-    [1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 'plates'],
-    ['fish', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'shrimp'],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "order"],
+    ["trash", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "order"],
+    [1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, "plates"],
+    ["boxfish", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "boxshrimp"],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 'cut', 'cut', 0, 0, 0, 0, 0, 0, 0, 'cut', 'cut', 1]]
+    [1, "cut", "cut", 0, 0, 0, 0, 0, 0, 0, "cut", "cut", 1]]
 ];
 
 var socket;
@@ -141,10 +144,10 @@ var chef;
 
 
 function socketConnect() {
-    var colors = ["Red", "Yellow", "Green", "Blue", "Black", "White"];
+    var colors = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Black", "White"];
     var chefColor = colors[Math.floor(Math.random() * colors.length)];
     do {
-        var username = prompt("Enter your chef's name:");
+        var username = prompt("Enter your chef's name: ");
     } while (username == null);
 
     socket = io("Overcooked-Online-socketio-server.techlabsinc.repl.co");
@@ -315,6 +318,18 @@ function init() {
                     block.children[1].position.y = -0.3;
                     block.add(new THREE.Mesh(new THREE.BoxBufferGeometry(0.975, 0.3, 0.975), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png") })));
                     block.children[2].position.y = -0.25;
+                    kitchen.add(block);
+                    break;
+                case "boxfish":
+                case "boxshrimp":
+                    var block = new THREE.Mesh(new THREE.BoxBufferGeometry(1, 0.5, 1), new THREE.MeshMatcapMaterial({ map: artist.load("Images/crate.gif"), matcap: artist.load("Images/Materials/GlossyWhite.png") }));
+                    block.name = "foodBox";
+                    block.position.set(x, 0.25, -z);
+                    block.add(chef.children[8].clone());
+                    block.children[0].position.y = -0.4;
+                    block.children[0].scale.set(0.75, 0.75, 1);
+                    block.add(new THREE.Mesh(new THREE.BoxBufferGeometry(1.3, 0.5, 1.3), new THREE.MeshBasicMaterial({ opacity: 0, transparent: true })));
+                    block.children[1].position.y = -0.3;
                     kitchen.add(block);
                     break;
             }
@@ -540,7 +555,7 @@ function init() {
     var chefLinearVelocity = new THREE.Vector3();
     var chefSpeedLimit = 2;
     var chefAcceleration = 1.25;
-    var chefDamping = 54;
+    var chefDamping = 200;
     var chefRestitution = 0.9;
     var chefHeading = 0;
     var chefCollision = new THREE.Raycaster();
@@ -566,7 +581,49 @@ function init() {
                 break;
 
             case chefControls.keyPickUp:
-                physicalObjects.add(createFood("", chef.position));
+                if (chefControls.holding == "") {
+                    for (var i = 0; i < kitchenObjects.length; i++) {
+                        if (CustomMath.Distance(kitchenObjects[i].position, chef.position) < 3 && chefControls.holding == "") {
+                            chefControls.holding = kitchenObjects[i];
+                            kitchenObjects[i].position.set(0, 1, -1.5);
+                            chef.add(chefControls.holding);
+                            chef.children[3].position.set(0.75, 0.75, -1);
+                            chef.children[4].position.set(-0.75, 0.75, -1);
+                        }
+                    }
+                    for (var i = 0; i < kitchen.children.length; i++) {
+                        if (CustomMath.Distance(kitchen.localToWorld(new THREE.Vector3().copy(kitchen.children[i].position)), chef.position) < 3 && chefControls.holding == "") {
+                            if (!kitchen.children[i].userData.objectOnTop) {
+                                if (kitchen.children[i].name == "foodBox") {
+                                    chefControls.holding = createFood("", new THREE.Vector3(0, 1, -1.5));
+                                    chef.add(chefControls.holding);
+                                    chef.children[3].position.set(0.75, 0.75, -1);
+                                    chef.children[4].position.set(-0.75, 0.75, -1);
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    for (var i = 0; i < kitchen.children.length; i++) {
+                        if (chefControls.holding != "") {
+                            if (CustomMath.Distance(kitchen.localToWorld(new THREE.Vector3().copy(kitchen.children[i].position)), chef.position) < 3) {
+                                chefControls.holding.position.copy(kitchen.localToWorld(new THREE.Vector3().copy(kitchen.children[i].position)));
+                                chef.remove(chefControls.holding);
+                                chefControls.holding.position.y = 1;
+                                physicalObjects.add(chefControls.holding);
+                                chefControls.holding = "";
+                            } else {
+                                chef.localToWorld(chefControls.holding.position);
+                                chef.remove(chefControls.holding);
+                                chefControls.holding.position.y = 0;
+                                physicalObjects.add(chefControls.holding);
+                                chefControls.holding = "";
+                            }
+                        }
+                    }
+                    chef.children[3].position.set(1.4, 0.75, 0);
+                    chef.children[4].position.set(-1.4, 0.75, 0);
+                }
                 break;
             case chefControls.keyAction:
                 chefControls.throw = true;
@@ -682,7 +739,7 @@ function init() {
             try {
                 switch (i) {
                     case 2:
-                        if (intersect.distance < chefDistances[i] + chefLinearVelocity.x && chefLinearVelocity.x > 0) {
+                        if (intersect.distance < chefDistances[i]) {
                             if (intersect.object.name == "chefCollisionBox") {
                                 chef.position.x -= (chefDistances[i] - intersect.distance) / 2.5;
                             } else {
@@ -691,7 +748,7 @@ function init() {
                         }
                         break;
                     case 3:
-                        if (intersect.distance < chefDistances[i] - chefLinearVelocity.x && chefLinearVelocity.x < 0) {
+                        if (intersect.distance < chefDistances[i]) {
                             if (intersect.object.name == "chefCollisionBox") {
                                 chef.position.x += (chefDistances[i] - intersect.distance) / 2.5;
                             } else {
@@ -700,7 +757,7 @@ function init() {
                         }
                         break;
                     case 4:
-                        if (intersect.distance < chefDistances[i] + chefLinearVelocity.z && chefLinearVelocity.z > 0) {
+                        if (intersect.distance < chefDistances[i]) {
                             if (intersect.object.name == "chefCollisionBox") {
                                 chef.position.z -= (chefDistances[i] - intersect.distance) / 2.5;
                             } else {
@@ -709,7 +766,7 @@ function init() {
                         }
                         break;
                     case 5:
-                        if (intersect.distance < chefDistances[i] - chefLinearVelocity.z && chefLinearVelocity.z < 0) {
+                        if (intersect.distance < chefDistances[i]) {
                             if (intersect.object.name == "chefCollisionBox") {
                                 chef.position.z += (chefDistances[i] - intersect.distance) / 2.5;
                             } else {
