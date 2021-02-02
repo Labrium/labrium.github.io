@@ -1,6 +1,10 @@
 body {
 	margin: 0;
-	/*background: radial-gradient(#ffffff,#dce7ef,#95b8cf); ,#8EB2CC);*/
+	background: url("../Images/background.png") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 	overflow: hidden;
 	cursor: default;
 }

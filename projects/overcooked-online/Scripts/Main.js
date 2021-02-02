@@ -8,6 +8,29 @@ function randomBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function arrayDifference(a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+}
+
 stats = new Stats(0.1);
 stats.showPanel(0);
 document.body.appendChild(stats.dom);
@@ -123,6 +146,7 @@ function createChef(name, color) {
 function createFood(kind, position) {
     kitchenObjects.push(new THREE.Mesh(new THREE.SphereBufferGeometry(0.75), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyRed.png") })));
     kitchenObjects[kitchenObjects.length - 1].position.copy(position);
+    kitchenObjects[kitchenObjects.length - 1].userData.pickup = true;
     return kitchenObjects[kitchenObjects.length - 1];
 }
 
@@ -153,7 +177,7 @@ function socketConnect() {
     socket = io("Overcooked-Online-socketio-server.techlabsinc.repl.co");
 
     socket.on("connect", function () {
-        document.getElementById("usersConnected").innerHTML = "Users Connected:<br/>" + username + "<br/>";
+        document.getElementById("usersConnected").innerHTML = "Users Connected: 1<br/>" + username + "<br/>";
         // receive a message from anyone
         socket.on("message", function (message) {
             console.log("received a message", message);
@@ -177,12 +201,14 @@ function socketConnect() {
         });
 
         socket.on("getUsers", function (data) {
-            document.getElementById("usersConnected").innerHTML = "Users Connected:<br/>";
+            var usedColors = [];
+            var colorTaken = false;
+            document.getElementById("usersConnected").innerHTML = "Users Connected: " + Object.keys(data.list).length + "<br/>";
             for (var id in data.list) {
                 if (data.list[id].name != username) {
+                    usedColors.push(data.list[id].color);
                     if (data.list[id].color == chefColor) {
-                        chefColor = colors[Math.floor(Math.random() * colors.length)];
-                        socket.emit("register", { name: username, color: chefColor, position: chef.position });
+                        colorTaken = true;
                     }
                 }
                 if (data.list[id].name == username) {
@@ -208,6 +234,10 @@ function socketConnect() {
                     scene.add(chefList[data.list[id].name]);
                     console.log(chefList[data.list[id].name]);
                 }
+            }
+            if (colorTaken == true) {
+                chefColor = arrayDifference(colors, usedColors)[Math.floor(Math.random() * colors.length)] || "White";
+                socket.emit("register", { name: username, color: chefColor, position: chef.position });
             }
         });
         // know when a user has joined the server
@@ -316,7 +346,7 @@ function init() {
                     block.children[0].scale.set(0.75, 0.75, 1);
                     block.add(new THREE.Mesh(new THREE.BoxBufferGeometry(1.3, 0.5, 1.3), new THREE.MeshBasicMaterial({ opacity: 0, transparent: true })));
                     block.children[1].position.y = -0.3;
-                    block.add(new THREE.Mesh(new THREE.BoxBufferGeometry(0.975, 0.3, 0.975), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyWhite.png") })));
+                    block.add(new THREE.Mesh(new THREE.BoxBufferGeometry(0.975, 0.3, 0.975), block.material));
                     block.children[2].position.y = -0.25;
                     kitchen.add(block);
                     break;
@@ -562,6 +592,7 @@ function init() {
     var collisionDirections = [new THREE.Vector3(0, -1, 0), new THREE.Vector3(0, 1, 0), new THREE.Vector3(1, 0, 0), new THREE.Vector3(-1, 0, 0), new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -1)];
     var chefDistances = [1, 1, 1, 1, 1, 1];
     var pposition = new THREE.Vector3();
+    var selected = [false, 10000];
 
 
 
@@ -582,32 +613,24 @@ function init() {
 
             case chefControls.keyPickUp:
                 if (chefControls.holding == "") {
-                    for (var i = 0; i < kitchenObjects.length; i++) {
-                        if (CustomMath.Distance(kitchenObjects[i].position, chef.position) < 3 && chefControls.holding == "") {
-                            chefControls.holding = kitchenObjects[i];
-                            kitchenObjects[i].position.set(0, 1, -1.5);
-                            chef.add(chefControls.holding);
-                            chef.children[3].position.set(0.75, 0.75, -1);
-                            chef.children[4].position.set(-0.75, 0.75, -1);
-                        }
-                    }
-                    for (var i = 0; i < kitchen.children.length; i++) {
-                        if (CustomMath.Distance(kitchen.localToWorld(new THREE.Vector3().copy(kitchen.children[i].position)), chef.position) < 3 && chefControls.holding == "") {
-                            if (!kitchen.children[i].userData.objectOnTop) {
-                                if (kitchen.children[i].name == "foodBox") {
-                                    chefControls.holding = createFood("", new THREE.Vector3(0, 1, -1.5));
-                                    chef.add(chefControls.holding);
-                                    chef.children[3].position.set(0.75, 0.75, -1);
-                                    chef.children[4].position.set(-0.75, 0.75, -1);
-                                }
+                    if (scene.getObjectById(selected[0], true).userData.pickup) {
+                        chefControls.holding = scene.getObjectById(selected[0], true);
+                        chefControls.holding.position.set(0, 1, -1.5);
+                        chef.add(chefControls.holding);
+                        chef.children[3].position.set(0.75, 0.75, -1);
+                        chef.children[4].position.set(-0.75, 0.75, -1);
+                    } else {
+                            if (scene.getObjectById(selected[0], true).name == "foodBox") {
+                                chefControls.holding = createFood("", new THREE.Vector3(0, 1, -1.5));
+                                chef.add(chefControls.holding);
+                                chef.children[3].position.set(0.75, 0.75, -1);
+                                chef.children[4].position.set(-0.75, 0.75, -1);
                             }
-                        }
                     }
                 } else {
-                    for (var i = 0; i < kitchen.children.length; i++) {
-                        if (chefControls.holding != "") {
-                            if (CustomMath.Distance(kitchen.localToWorld(new THREE.Vector3().copy(kitchen.children[i].position)), chef.position) < 3) {
-                                chefControls.holding.position.copy(kitchen.localToWorld(new THREE.Vector3().copy(kitchen.children[i].position)));
+                            try {
+                            if (scene.getObjectById(selected[0], true).parent == kitchen) {
+                                chefControls.holding.position.copy(kitchen.localToWorld(new THREE.Vector3().copy(scene.getObjectById(selected[0], true).position)));
                                 chef.remove(chefControls.holding);
                                 chefControls.holding.position.y = 1;
                                 physicalObjects.add(chefControls.holding);
@@ -619,11 +642,16 @@ function init() {
                                 physicalObjects.add(chefControls.holding);
                                 chefControls.holding = "";
                             }
-                        }
-                    }
+                            } catch (e) {
+                                chef.localToWorld(chefControls.holding.position);
+                                chef.remove(chefControls.holding);
+                                chefControls.holding.position.y = 0;
+                                physicalObjects.add(chefControls.holding);
+                                chefControls.holding = "";
+                            }
                     chef.children[3].position.set(1.4, 0.75, 0);
                     chef.children[4].position.set(-1.4, 0.75, 0);
-                }
+                        }
                 break;
             case chefControls.keyAction:
                 chefControls.throw = true;
@@ -724,6 +752,29 @@ function init() {
             if (chefControls.up == true || chefControls.down == true || chefControls.left == true || chefControls.right == true) {
                 chef.lookAt(chef.position.x - chefLinearVelocity.x, chef.position.y, chef.position.z - chefLinearVelocity.z);
             }
+        }
+        if (selected[0] != false) {
+            scene.getObjectById(selected[0], true).material.color = new THREE.Color(0xffffff);
+        }
+        selected = [false, 10000];
+        for (var i = 0; i < kitchenObjects.length; i++) {
+            var distance = CustomMath.Distance(kitchenObjects[i].position, chef.localToWorld(new THREE.Vector3(0, 1, -1)));
+            if (distance < 2.5) {
+                if (distance < selected[1]) {
+                    selected = [kitchenObjects[i].id, distance];
+                }
+            }
+        }
+        for (var i = 0; i < kitchen.children.length; i++) {
+            var distance = CustomMath.Distance(kitchen.localToWorld(new THREE.Vector3().copy(kitchen.children[i].position)), chef.localToWorld(new THREE.Vector3(0, 1, -1)));
+            if (distance < 2.5) {
+                if (distance < selected[1]) {
+                    selected = [kitchen.children[i].id, distance];
+                }
+            }
+        }
+        if (selected[0] != false) {
+            scene.getObjectById(selected[0], true).material.color = new THREE.Color(0xff0000);
         }
 
         for (chf in chefList) {
