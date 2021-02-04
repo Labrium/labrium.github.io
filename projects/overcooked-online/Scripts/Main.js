@@ -161,10 +161,11 @@ function createChef(name, color) {
 }
 
 function createFood(kind, position) {
-    kitchenObjects.push(new THREE.Mesh(new THREE.SphereBufferGeometry(0.75), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyRed.png") })));
+    kitchenObjects.push(new THREE.Mesh(new THREE.BoxBufferGeometry(1.25, 1.25, 1.25), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyRed.png") })));
     kitchenObjects[kitchenObjects.length - 1].position.copy(position);
     kitchenObjects[kitchenObjects.length - 1].userData.pickup = true;
     kitchenObjects[kitchenObjects.length - 1].userData.linearVelocity = new THREE.Vector3();
+    kitchenObjects[kitchenObjects.length - 1].userData.angularVelocity = new THREE.Vector3();
     return kitchenObjects[kitchenObjects.length - 1];
 }
 
@@ -619,13 +620,15 @@ function init() {
     var chefRestitution = 0.9;
     var chefHeading = 0;
     var chefCollision = new THREE.Raycaster();
+    var objectCollision = new THREE.Raycaster();
     var collisionDirections = [new THREE.Vector3(0, -1, 0), new THREE.Vector3(0, 1, 0), new THREE.Vector3(1, 0, 0), new THREE.Vector3(-1, 0, 0), new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -1)];
     var chefDistances = [1, 1, 1, 1, 1, 1];
     var pposition = new THREE.Vector3();
     var selected = [false, 10000];
 
 
-
+    var holdanimation;
+    var handanimations = [];
     var onKeyDown = function (event) {
         switch (event.key) {
             case chefControls.keyUp:
@@ -645,18 +648,26 @@ function init() {
                 if (chefControls.holding == "") {
                     if (scene.getObjectById(selected[0], true).userData.pickup) {
                         chefControls.holding = scene.getObjectById(selected[0], true);
-                        chefControls.holding.position.set(0, 1, -1.5);
+                        chefControls.holding.position.set(0, 1.625, -1.5);
                         chef.add(chefControls.holding);
                         chefControls.holding.userData.onGround = false;
-                        new TWEEN.Tween(chef.children[3].position).to({ x: 0.75, y: 0.75, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
-                        new TWEEN.Tween(chef.children[4].position).to({ x: -0.75, y: 0.75, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
+                        try {
+                            handanimations[0].stop();
+                            handanimations[1].stop();
+                        } catch (e) { }
+                        handanimations[0] = new TWEEN.Tween(chef.children[3].position).to({ x: 0.75, y: 1, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
+                        handanimations[1] = new TWEEN.Tween(chef.children[4].position).to({ x: -0.75, y: 1, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
                     } else {
                         if (scene.getObjectById(selected[0], true).name == "foodBox") {
-                            chefControls.holding = createFood("", new THREE.Vector3(0, 1, -1.5));
+                            chefControls.holding = createFood("", new THREE.Vector3(0, 1.625, -1.5));
                             chef.add(chefControls.holding);
                             chefControls.holding.userData.onGround = false;
-                            new TWEEN.Tween(chef.children[3].position).to({ x: 0.75, y: 0.75, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
-                            new TWEEN.Tween(chef.children[4].position).to({ x: -0.75, y: 0.75, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
+                            try {
+                                handanimations[0].stop();
+                                handanimations[1].stop();
+                            } catch (e) { }
+                            handanimations[0] = new TWEEN.Tween(chef.children[3].position).to({ x: 0.75, y: 1, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
+                            handanimations[1] = new TWEEN.Tween(chef.children[4].position).to({ x: -0.75, y: 1, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
                         }
                     }
                 } else {
@@ -666,11 +677,11 @@ function init() {
                                 chefControls.holding.userData.pickup = false;
                                 chefControls.holding.position.copy(kitchen.localToWorld(new THREE.Vector3().copy(scene.getObjectById(selected[0], true).position)));
                                 chef.remove(chefControls.holding);
-                                chefControls.holding.position.y = 1;
+                                chefControls.holding.position.y = 1.625;
                                 physicalObjects.add(chefControls.holding);
                                 var trashedObject = chefControls.holding;
                                 var spinSpeed = randomBetween(-10, 10);
-                                new TWEEN.Tween(trashedObject.scale).to({ x: 0.25, y: 0.25, z: 0.25 }, 300).easing(TWEEN.Easing.Cubic.In).start();
+                                new TWEEN.Tween(trashedObject.scale).to({ x: 0, y: 0, z: 0 }, 300).easing(TWEEN.Easing.Cubic.In).start();
                                 new TWEEN.Tween(trashedObject.position).to({ y: -1 }, 300).easing(TWEEN.Easing.Cubic.In).onComplete(function () {
                                     physicalObjects.remove(trashedObject);
                                     console.log(physicalObjects);
@@ -681,7 +692,7 @@ function init() {
                             } else {
                                 chefControls.holding.position.copy(kitchen.localToWorld(new THREE.Vector3().copy(scene.getObjectById(selected[0], true).position)));
                                 chef.remove(chefControls.holding);
-                                chefControls.holding.position.y = 1;
+                                chefControls.holding.position.y = 1.625;
                                 physicalObjects.add(chefControls.holding);
                                 chefControls.holding.userData.onGround = false;
                                 chefControls.holding = "";
@@ -689,7 +700,6 @@ function init() {
                         } else {
                             chef.localToWorld(chefControls.holding.position);
                             chef.remove(chefControls.holding);
-                            chefControls.holding.position.y = 0;
                             physicalObjects.add(chefControls.holding);
                             chefControls.holding.userData.onGround = true;
                             chefControls.holding = "";
@@ -697,21 +707,20 @@ function init() {
                     } catch (e) {
                         chef.localToWorld(chefControls.holding.position);
                         chef.remove(chefControls.holding);
-                        chefControls.holding.position.y = 0;
                         physicalObjects.add(chefControls.holding);
                         chefControls.holding.userData.onGround = true;
                         chefControls.holding = "";
                     }
-                    new TWEEN.Tween(chef.children[3].position).to({ x: 1.4, y: 0.75, z: 0 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
-                    new TWEEN.Tween(chef.children[4].position).to({ x: -1.4, y: 0.75, z: 0 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
+                    handanimations[0] = new TWEEN.Tween(chef.children[3].position).to({ x: 1.4, y: 0.75, z: 0 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
+                    handanimations[1] = new TWEEN.Tween(chef.children[4].position).to({ x: -1.4, y: 0.75, z: 0 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
                 }
                 break;
             case chefControls.keyAction:
                 chefControls.throw = true;
                 if (chefControls.holding != "") {
-                    new TWEEN.Tween(chefControls.holding.position).to({ x: 1, y: 2, z: 1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
-                    new TWEEN.Tween(chef.children[3].position).to({ x: 1, y: 2, z: 1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
-                    new TWEEN.Tween(chef.children[4].position).to({ x: -1, y: 0.75, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
+                    holdanimation = new TWEEN.Tween(chefControls.holding.position).to({ x: 1, y: 2.5, z: 1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
+                    handanimations[0] = new TWEEN.Tween(chef.children[3].position).to({ x: 1, y: 2, z: 1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
+                    handanimations[1] = new TWEEN.Tween(chef.children[4].position).to({ x: -1, y: 0.75, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
                 }
                 break;
             case chefControls.keyDash:
@@ -742,19 +751,31 @@ function init() {
                 break;
             case chefControls.keyAction:
                 chefControls.throw = false;
-                chefLinearVelocity.x = 0;
-                chefLinearVelocity.z = 0;
                 if (chefControls.holding != "") {
+                    try {
+                        holdanimation.stop();
+                    } catch (e) { }
+                    chefControls.holding.position.x = 0;
                     chef.localToWorld(chefControls.holding.position);
                     chef.remove(chefControls.holding);
                     physicalObjects.add(chefControls.holding);
-                    new TWEEN.Tween(chef.children[3].position).to({ x: 0, y: 2, z: -2 }, 100).easing(TWEEN.Easing.Cubic.Out).chain(new TWEEN.Tween(chef.children[3].position).to({ x: 1.4, y: 0.75, z: 0 }, 100).easing(TWEEN.Easing.Cubic.Out).delay(300)).start();
-                    new TWEEN.Tween(chef.children[4].position).to({ x: -1, y: 0.75, z: 1 }, 100).easing(TWEEN.Easing.Cubic.Out).chain(new TWEEN.Tween(chef.children[4].position).to({ x: -1.4, y: 0.75, z: 0 }, 100).easing(TWEEN.Easing.Cubic.Out).delay(300)).start();
+                    handanimations[0] = new TWEEN.Tween(chef.children[3].position).to({ x: 0, y: 2, z: -2 }, 100).easing(TWEEN.Easing.Cubic.Out).chain(new TWEEN.Tween(chef.children[3].position).to({ x: 1.4, y: 0.75, z: 0 }, 100).easing(TWEEN.Easing.Cubic.Out).delay(300)).start();
+                    handanimations[1] = new TWEEN.Tween(chef.children[4].position).to({ x: -1, y: 0.75, z: 1 }, 100).easing(TWEEN.Easing.Cubic.Out).chain(new TWEEN.Tween(chef.children[4].position).to({ x: -1.4, y: 0.75, z: 0 }, 100).easing(TWEEN.Easing.Cubic.Out).delay(300)).start();
+                    chefControls.holding.userData.linearVelocity.x = -Math.sin(chef.rotation.y) / 2.25;
+                    chefControls.holding.userData.linearVelocity.z = -Math.cos(chef.rotation.y) / 2.25;
+                    if (chef.rotation.x != 0) {
+                        chefControls.holding.userData.linearVelocity.z = -chefControls.holding.userData.linearVelocity.z;
+                    }
+                    chefControls.holding.userData.linearVelocity.y = 0.05;
+                    var randSpin = new THREE.Vector3(randomBetween(deg(-5), deg(5)), randomBetween(deg(-5), deg(5)), randomBetween(deg(-5), deg(5)));
+                    chefControls.holding.userData.angularVelocity.x = randSpin.x;
+                    chefControls.holding.userData.angularVelocity.y = randSpin.y;
+                    chefControls.holding.userData.angularVelocity.z = randSpin.z;
                     chefControls.holding.userData.onGround = true;
-                    chefControls.holding.userData.linearVelocity.x = 0.4;
-                    chefControls.holding.userData.linearVelocity.y = 0.25;
                     chefControls.holding = "";
                 }
+                chefLinearVelocity.x = 0;
+                chefLinearVelocity.z = 0;
                 break;
             case chefControls.keyDash:
 
@@ -830,7 +851,7 @@ function init() {
         }
         selected = [false, 10000];
         for (var i = 0; i < kitchenObjects.length; i++) {
-            var distance = CustomMath.Distance(kitchenObjects[i].position, chef.localToWorld(new THREE.Vector3(0, 1, -1)));
+            var distance = CustomMath.Distance(kitchenObjects[i].position, chef.localToWorld(new THREE.Vector3(0, 1.625, -1)));
             if (distance < 2.5 && chefControls.holding.id != kitchenObjects[i].id) {
                 if (distance < selected[1]) {
                     selected = [kitchenObjects[i].id, distance];
@@ -838,7 +859,7 @@ function init() {
             }
         }
         for (var i = 0; i < kitchen.children.length; i++) {
-            var distance = CustomMath.Distance(kitchen.localToWorld(new THREE.Vector3().copy(kitchen.children[i].position)), chef.localToWorld(new THREE.Vector3(0, 1, -1)));
+            var distance = CustomMath.Distance(kitchen.localToWorld(new THREE.Vector3().copy(kitchen.children[i].position)), chef.localToWorld(new THREE.Vector3(0, 1.625, -1)));
             if (distance < 2.5) {
                 if (distance < selected[1]) {
                     selected = [kitchen.children[i].id, distance];
@@ -856,14 +877,86 @@ function init() {
                 kitchenObjects[i].position.x += kitchenObjects[i].userData.linearVelocity.x;
                 kitchenObjects[i].position.y += kitchenObjects[i].userData.linearVelocity.y;
                 kitchenObjects[i].position.z += kitchenObjects[i].userData.linearVelocity.z;
+            } else {
+                kitchenObjects[i].userData.linearVelocity.x = 0;
+                kitchenObjects[i].userData.linearVelocity.y = 0;
+                kitchenObjects[i].userData.linearVelocity.z = 0;
+                kitchenObjects[i].userData.angularVelocity.x = 0;
+                kitchenObjects[i].userData.angularVelocity.y = 0;
+                kitchenObjects[i].userData.angularVelocity.z = 0;
             }
 
+            kitchenObjects[i].rotation.x += kitchenObjects[i].userData.angularVelocity.x;
+            kitchenObjects[i].rotation.y += kitchenObjects[i].userData.angularVelocity.y;
+            kitchenObjects[i].rotation.z += kitchenObjects[i].userData.angularVelocity.z;
+
             if (kitchenObjects[i].userData.onGround == true) {
-                if (kitchenObjects[i].position.y < 0) {
-                    kitchenObjects[i].position.y = 0;
+                for (var j = 0; j < collisionDirections.length; j++) {
+                    objectCollision.set(kitchenObjects[i].position, collisionDirections[j]);
+                    var intersects = objectCollision.intersectObjects(physicalObjects.children, true);
+                    var intersect = intersects[0];
+                    var distance = 0.625;
+                    try {
+                        switch (j) {
+                            case 0:
+                                if (intersect.distance < distance) {
+                                    kitchenObjects[i].position.y += (distance - intersect.distance);
+                                    kitchenObjects[i].userData.linearVelocity.y = Math.abs(kitchenObjects[i].userData.linearVelocity.y) * 0.5;
+                                    kitchenObjects[i].userData.linearVelocity.x = kitchenObjects[i].userData.linearVelocity.x * 0.5;
+                                    kitchenObjects[i].userData.linearVelocity.z = kitchenObjects[i].userData.linearVelocity.z * 0.5;
+
+                                    kitchenObjects[i].userData.angularVelocity.x = kitchenObjects[i].userData.angularVelocity.x * 0.5;
+                                    kitchenObjects[i].userData.angularVelocity.y = kitchenObjects[i].userData.angularVelocity.y * 0.5;
+                                    kitchenObjects[i].userData.angularVelocity.z = kitchenObjects[i].userData.angularVelocity.z * 0.5;
+                                }
+                            case 2:
+                                if (intersect.distance < distance) {
+                                    if (intersect.object.name == "chefCollisionBox") {
+                                        kitchenObjects[i].position.x -= (distance - intersect.distance) / 2.5;
+                                    } else {
+                                        kitchenObjects[i].position.x -= (distance - intersect.distance);
+                                    }
+                                }
+                                break;
+                            case 3:
+                                if (intersect.distance < distance) {
+                                    if (intersect.object.name == "chefCollisionBox") {
+                                        kitchenObjects[i].position.x += (distance - intersect.distance) / 2.5;
+                                    } else {
+                                        kitchenObjects[i].position.x += (distance - intersect.distance);
+                                    }
+                                }
+                                break;
+                            case 4:
+                                if (intersect.distance < distance) {
+                                    if (intersect.object.name == "chefCollisionBox") {
+                                        kitchenObjects[i].position.z -= (distance - intersect.distance) / 2.5;
+                                    } else {
+                                        kitchenObjects[i].position.z -= (distance - intersect.distance);
+                                    }
+                                }
+                                break;
+                            case 5:
+                                if (intersect.distance < distance) {
+                                    if (intersect.object.name == "chefCollisionBox") {
+                                        kitchenObjects[i].position.z += (distance - intersect.distance) / 2.5;
+                                    } else {
+                                        kitchenObjects[i].position.z += (distance - intersect.distance);
+                                    }
+                                }
+                                break;
+                        }
+                    } catch (e) { }
+                }
+                if (kitchenObjects[i].position.y < 0.625) {
+                    kitchenObjects[i].position.y = 0.625;
                     kitchenObjects[i].userData.linearVelocity.y = Math.abs(kitchenObjects[i].userData.linearVelocity.y) * 0.5;
                     kitchenObjects[i].userData.linearVelocity.x = kitchenObjects[i].userData.linearVelocity.x * 0.5;
                     kitchenObjects[i].userData.linearVelocity.z = kitchenObjects[i].userData.linearVelocity.z * 0.5;
+
+                    kitchenObjects[i].userData.angularVelocity.x = kitchenObjects[i].userData.angularVelocity.x * 0.5;
+                    kitchenObjects[i].userData.angularVelocity.y = kitchenObjects[i].userData.angularVelocity.y * 0.5;
+                    kitchenObjects[i].userData.angularVelocity.z = kitchenObjects[i].userData.angularVelocity.z * 0.5;
                 } else {
                     kitchenObjects[i].userData.linearVelocity.y -= 1 * delta;
                 }
@@ -930,7 +1023,6 @@ function init() {
         TWEEN.update();
         chef.children[8].position.set(0, -chef.position.y, 0);
         renderer.render(scene, camera);
-
 
         if (screenShot == true) {
             var SSTime = new Date();
