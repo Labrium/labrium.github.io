@@ -1,5 +1,9 @@
 var tau = Math.PI * 2;
 
+THREE.MathUtils.damp = function (x, y, lambda, dt) {
+    return THREE.MathUtils.lerp(x, y, 1 - Math.exp(- lambda * dt));
+}
+
 function deg(number) {
     return (number * tau) / 360;
 }
@@ -67,6 +71,7 @@ var chefControls = {
     down: false,
     left: false,
     right: false,
+    dash: false,
     throw: false,
     holding: ""
 }
@@ -165,10 +170,12 @@ function createFood(kind, position) {
         case "box":
             kitchenObjects.push(new THREE.Mesh(new THREE.BoxBufferGeometry(1.25, 1.25, 1.25), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyRed.png") })));
             kitchenObjects[kitchenObjects.length - 1].userData.bottom = 0.5;
+            kitchenObjects[kitchenObjects.length - 1].userData.kind = "box";
             break;
         case "sphere":
             kitchenObjects.push(new THREE.Mesh(new THREE.SphereBufferGeometry(0.75), new THREE.MeshMatcapMaterial({ matcap: artist.load("Images/Materials/GlossyRed.png") })));
             kitchenObjects[kitchenObjects.length - 1].userData.bottom = 0.5;
+            kitchenObjects[kitchenObjects.length - 1].userData.kind = "sphere";
             break;
     }
     kitchenObjects[kitchenObjects.length - 1].position.copy(position);
@@ -176,6 +183,7 @@ function createFood(kind, position) {
     kitchenObjects[kitchenObjects.length - 1].userData.linearVelocity = new THREE.Vector3();
     kitchenObjects[kitchenObjects.length - 1].userData.angularVelocity = new THREE.Vector3();
     kitchenObjects[kitchenObjects.length - 1].userData.type = "food";
+    kitchenObjects[kitchenObjects.length - 1].userData.onTopOf = "";
     return kitchenObjects[kitchenObjects.length - 1];
 }
 
@@ -204,7 +212,7 @@ function socketConnect() {
         var username = prompt("Enter your chef's name: ");
     } while (username == null);
 
-    socket = io("Overcooked-Online-socketio-server.techlabsinc.repl.co");
+    socket = io("https://Overcooked-Online-socketio-server.techlabsinc.repl.co", { transports: ['websocket', 'polling'] });
 
     socket.on("connect", function () {
         document.getElementById("usersConnected").innerHTML = "Users Connected: 1<br/>" + username + "<br/>";
@@ -285,7 +293,7 @@ function socketConnect() {
             } catch (e) { console.log(e); }
             console.log("user " + data.name + " has disconnected from the server");
         });
-        socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(), rotation: new THREE.Vector3() });
+        socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(), rotation: new THREE.Vector3(), kitchenObjects: {} });
     });
 }
 
@@ -326,6 +334,10 @@ function changeQuality(loq) {
 var artist = new THREE.TextureLoader();
 
 var physicalObjects = new THREE.Group();
+
+window.addEventListener("touchmove", function (e) {
+    e.preventDefault();
+})
 
 function init() {
     chef = createChef("", "White");
@@ -629,11 +641,16 @@ function init() {
     var chefLinearVelocity = new THREE.Vector3();
     var chefSpeedLimit = 2;
     var chefAcceleration = 1.25;
-    var chefDamping = 200;
-    var chefRestitution = 0.9;
+    var chefDamping = 5;
+    var chefRestitution = 0.95;
     var chefHeading = 0;
+    THREE.BufferGeometry.prototype.computeBoundsTree = MeshBVHLib.computeBoundsTree;
+    THREE.BufferGeometry.prototype.disposeBoundsTree = MeshBVHLib.disposeBoundsTree;
+    THREE.Mesh.prototype.raycast = MeshBVHLib.acceleratedRaycast;
     var chefCollision = new THREE.Raycaster();
+    chefCollision.firstHitOnly = true;
     var objectCollision = new THREE.Raycaster();
+    objectCollision.firstHitOnly = true;
     var collisionDirections = [new THREE.Vector3(0, -1, 0), new THREE.Vector3(0, 1, 0), new THREE.Vector3(1, 0, 0), new THREE.Vector3(-1, 0, 0), new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, -1)];
     var chefDistances = [1, 1, 1, 1, 1, 1];
     var pposition = new THREE.Vector3();
@@ -666,6 +683,10 @@ function init() {
                         chefControls.holding.rotation.set(0, 0, 0);
                         chef.add(chefControls.holding);
                         chefControls.holding.userData.onGround = false;
+                        if (chefControls.holding.userData.onTopOf != "") {
+                            kitchen.getObjectById(chefControls.holding.userData.onTopOf).userData.objectOnTop = "";
+                            chefControls.holding.userData.onTopOf = "";
+                        }
                         try {
                             handanimations[0].stop();
                             handanimations[1].stop();
@@ -683,6 +704,10 @@ function init() {
                             } catch (e) { }
                             handanimations[0] = new TWEEN.Tween(chef.children[3].position).to({ x: 0.75, y: 1, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
                             handanimations[1] = new TWEEN.Tween(chef.children[4].position).to({ x: -0.75, y: 1, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
+                            try {
+                                socket.emit("newObject", { id: chefControls.holding.id, type: chefControls.holding.userData.type, kind: chefControls.holding.userData.kind });
+                            } catch (e) { }
+                            console.log(kitchenObjects);
                         }
                     }
                 } else {
@@ -697,7 +722,12 @@ function init() {
                                 var spinSpeed = randomBetween(-10, 10);
                                 new TWEEN.Tween(trashedObject.scale).to({ x: 0, y: 0, z: 0 }, 300).easing(TWEEN.Easing.Cubic.In).start();
                                 new TWEEN.Tween(trashedObject.position).to({ y: -1 }, 300).easing(TWEEN.Easing.Cubic.In).onComplete(function () {
+                                    try {
+                                        socket.emit("trashObject", { id: trashedObject.id });
+                                    } catch (e) { }
                                     physicalObjects.remove(trashedObject);
+                                    kitchenObjects.splice(kitchenObjects.indexOf(trashedObject), 1);
+                                    console.log(kitchenObjects);
                                 }).onUpdate(function () {
                                     trashedObject.rotation.y += deg(spinSpeed);
                                 }).start();
@@ -705,6 +735,7 @@ function init() {
                             } else {
                                 chefControls.holding.position.copy(kitchen.localToWorld(new THREE.Vector3().copy(selectedObject.position)));
                                 selectedObject.userData.objectOnTop = chefControls.holding.userData.type;
+                                chefControls.holding.userData.onTopOf = selectedObject.id;
                                 chefControls.holding.position.y = 1.5;
                                 physicalObjects.add(chefControls.holding);
                                 chefControls.holding.userData.onGround = false;
@@ -735,7 +766,14 @@ function init() {
                 }
                 break;
             case chefControls.keyDash:
-
+                if (chefControls.dash == false) {
+                    chefLinearVelocity.x = -Math.sin(chef.rotation.y) * 0.75;
+                    chefLinearVelocity.z = -Math.cos(chef.rotation.y) * 0.75;
+                    if (chef.rotation.x != 0) {
+                        chefLinearVelocity.z = -chefLinearVelocity.z;
+                    }
+                    chefControls.dash = true;
+                }
                 break;
             case "0":
                 screenShot = true;
@@ -778,7 +816,7 @@ function init() {
                         chefControls.holding.userData.linearVelocity.z = -chefControls.holding.userData.linearVelocity.z;
                     }
                     chefControls.holding.userData.linearVelocity.y = 0.05;
-                    var randSpin = new THREE.Vector3(randomBetween(deg(-5), deg(5)), randomBetween(deg(-5), deg(5)), randomBetween(deg(-5), deg(5)));
+                    var randSpin = new THREE.Vector3(randomBetween(deg(-3), deg(3)), randomBetween(deg(-3), deg(3)), randomBetween(deg(-3), deg(3)));
                     chefControls.holding.userData.angularVelocity.x = randSpin.x;
                     chefControls.holding.userData.angularVelocity.y = randSpin.y;
                     chefControls.holding.userData.angularVelocity.z = randSpin.z;
@@ -789,7 +827,7 @@ function init() {
                 chefLinearVelocity.z = 0;
                 break;
             case chefControls.keyDash:
-
+                chefControls.dash = false;
                 break;
         }
     };
@@ -802,8 +840,10 @@ function init() {
         var delta = clock.getDelta();
         requestAnimationFrame(animate);
 
-        chefLinearVelocity.x = chefLinearVelocity.x * Math.pow(chefDamping, -delta);
-        chefLinearVelocity.z = chefLinearVelocity.z * Math.pow(chefDamping, -delta);
+        //chefLinearVelocity.x = chefLinearVelocity.x * Math.pow(chefDamping, delta);
+        //chefLinearVelocity.z = chefLinearVelocity.z * Math.pow(chefDamping, delta);
+        chefLinearVelocity.x = THREE.MathUtils.damp(chefLinearVelocity.x, 0, chefDamping, delta);
+        chefLinearVelocity.z = THREE.MathUtils.damp(chefLinearVelocity.z, 0, chefDamping, delta);
 
         chef.scale.y = (Math.sin(Date.now() * 0.008) * 0.03) + 1;
         if (chefControls.up == true) {
@@ -840,8 +880,8 @@ function init() {
         }
 
         if (chefControls.up != true && chefControls.down != true && chefControls.left != true && chefControls.right != true) {
-            chefLinearVelocity.x *= 0.95;
-            chefLinearVelocity.z *= 0.95;
+            chefLinearVelocity.x = THREE.MathUtils.damp(chefLinearVelocity.x, 0, chefDamping, delta);
+            chefLinearVelocity.z = THREE.MathUtils.damp(chefLinearVelocity.z, 0, chefDamping, delta);
         }
 
         chef.position.y += chefLinearVelocity.y;
@@ -862,12 +902,13 @@ function init() {
                 chef.lookAt(chef.position.x - chefLinearVelocity.x, chef.position.y, chef.position.z - chefLinearVelocity.z);
             }
         }
+
         if (selected[0] != false) {
             scene.getObjectById(selected[0], true).material.color = new THREE.Color(0xffffff);
         }
         selected = [false, 10000];
         for (var i = 0; i < kitchenObjects.length; i++) {
-            var distance = CustomMath.Distance(kitchenObjects[i].position, chef.localToWorld(new THREE.Vector3(0, 1.5, -1)));
+            var distance = CustomMath.Distance(kitchenObjects[i].position, chef.localToWorld(new THREE.Vector3(0, 1.75, -1)));
             if (distance < 3 && chefControls.holding.id != kitchenObjects[i].id) {
                 if (distance < selected[1]) {
                     selected = [kitchenObjects[i].id, distance];
@@ -875,7 +916,7 @@ function init() {
             }
         }
         for (var i = 0; i < kitchen.children.length; i++) {
-            var distance = CustomMath.Distance(kitchen.localToWorld(new THREE.Vector3().copy(kitchen.children[i].position)), chef.localToWorld(new THREE.Vector3(0, 1.5, -1)));
+            var distance = CustomMath.Distance(kitchen.localToWorld(new THREE.Vector3().copy(kitchen.children[i].position)), chef.localToWorld(new THREE.Vector3(0, 1.75, -1)));
             if (distance < 3) {
                 if (distance < selected[1]) {
                     selected = [kitchen.children[i].id, distance];
@@ -942,6 +983,7 @@ function init() {
                                                     kitchenObjects[i].position.y = 1.5;
                                                     physicalObjects.add(kitchenObjects[i]);
                                                     intersect.object.userData.objectOnTop = kitchenObjects[i].userData.type;
+                                                    kitchenObjects[i].userData.onTopOf = intersect.object.id;
                                                 }
                                             } catch (e) { }
                                         }
