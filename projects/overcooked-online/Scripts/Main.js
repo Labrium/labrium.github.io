@@ -208,9 +208,11 @@ var chef;
 function socketConnect() {
     var colors = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Black", "White"];
     var chefColor = colors[Math.floor(Math.random() * colors.length)];
-    do {
-        var username = prompt("Enter your chef's name: ");
-    } while (username == null);
+    var username = prompt("Enter your chef's name: ").trim();
+    if (username == null || username == "") {
+        return;
+    }
+
 
     socket = io("https://Overcooked-Online-socketio-server.techlabsinc.repl.co", { transports: ['websocket', 'polling'] });
 
@@ -238,17 +240,21 @@ function socketConnect() {
             }
         });
 
+        socket.on("rejectRegistration", function (data) {
+            if (data.reasons.includes("COLOR_TAKEN")) {
+                chefColor = arrayDifference(colors, data.usedColors)[Math.floor(Math.random() * colors.length)] || "White";
+            }
+            if (data.reasons.includes("NAME_TAKEN")) {
+                do {
+                username = prompt("That name is already taken.\nEnter your chef's name: ").trim();
+                } while (username == null || username == "")
+            }
+            socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(), rotation: new THREE.Vector3(), kitchenObjects: {} });
+        });
+
         socket.on("getUsers", function (data) {
-            var usedColors = [];
-            var colorTaken = false;
             document.getElementById("usersConnected").innerHTML = "Users Connected: " + Object.keys(data.list).length + "<br/>";
             for (var id in data.list) {
-                if (data.list[id].name != username) {
-                    usedColors.push(data.list[id].color);
-                    if (data.list[id].color == chefColor) {
-                        colorTaken = true;
-                    }
-                }
                 if (data.list[id].name == username) {
                     document.getElementById("usersConnected").innerHTML += "<span style='color: " + data.list[id].color + ";'>" + data.list[id].name + " (Me)</span><br/>";
                     chef.children[2].material.matcap = artist.load("Images/Materials/Metallic" + chefColor + ".png");
@@ -272,10 +278,6 @@ function socketConnect() {
                     scene.add(chefList[data.list[id].name]);
                     console.log(chefList[data.list[id].name]);
                 }
-            }
-            if (colorTaken == true) {
-                chefColor = arrayDifference(colors, usedColors)[Math.floor(Math.random() * colors.length)] || "White";
-                socket.emit("register", { name: username, color: chefColor, position: chef.position });
             }
         });
         // know when a user has joined the server
@@ -722,15 +724,15 @@ function init() {
                                 var spinSpeed = randomBetween(-10, 10);
                                 new TWEEN.Tween(trashedObject.scale).to({ x: 0, y: 0, z: 0 }, 300).easing(TWEEN.Easing.Cubic.In).start();
                                 new TWEEN.Tween(trashedObject.position).to({ y: -1 }, 300).easing(TWEEN.Easing.Cubic.In).onComplete(function () {
-                                    try {
-                                        socket.emit("trashObject", { id: trashedObject.id });
-                                    } catch (e) { }
                                     physicalObjects.remove(trashedObject);
                                     kitchenObjects.splice(kitchenObjects.indexOf(trashedObject), 1);
                                     console.log(kitchenObjects);
                                 }).onUpdate(function () {
                                     trashedObject.rotation.y += deg(spinSpeed);
                                 }).start();
+                                try {
+                                    socket.emit("trashObject", { id: trashedObject.id });
+                                } catch (e) { }
                                 chefControls.holding = "";
                             } else {
                                 chefControls.holding.position.copy(kitchen.localToWorld(new THREE.Vector3().copy(selectedObject.position)));
@@ -975,6 +977,9 @@ function init() {
                                             }).onUpdate(function () {
                                                 trashedObject.rotation.y += deg(spinSpeed);
                                             }).start();
+                                            try {
+                                                socket.emit("trashObject", { id: trashedObject.id });
+                                            } catch (e) { }
                                         } else {
                                             try {
                                                 if (intersect.object.userData.objectOnTop == "container" || intersect.object.userData.objectOnTop == false) {
