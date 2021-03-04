@@ -1,7 +1,7 @@
 {
-    "downloadPath": "/apps/Builds/LAN_Server_Assistant_6.1.dmg",
-    "productPage": "lan-server-assistant",
-    "shortDescription": "The fastest way to host a website",
-    "name": "LAN Server Assistant",
-    "longDescription": "<div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Instanly Host a Local Website</h2><br/><p>Full description coming soon...</p></div><img src='App Image.png' /></div>"
+    "downloadPath": "/apps/Builds/LAN_Server_Assistant_6.1.dmg", 
+    "longDescription": "<div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Instanly Host a Local Website</h2><br/><p>Full description coming soon...</p></div><img src='App Image.png' /></div>", 
+    "shortDescription": "The fastest way to host a website", 
+    "name": "LAN Server Assistant", 
+    "productPage": "lan-server-assistant"
 }

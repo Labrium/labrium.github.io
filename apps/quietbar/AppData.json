@@ -1,13 +1,13 @@
 {
-    "downloadPath": "/apps/Builds/Quietbar_9.6.dmg",
-    "name": "Quietbar",
+    "downloadPath": "/apps/Builds/Quietbar_9.6.dmg", 
+    "name": "Quietbar", 
     "changelog": [
-        "9.6:\n • Fixed bug in updater script that shows an error instead of telling you that it is up to date.",
-        "9.5:\n • Updater Script is now standalone and localized.\n • Fixed layout bug of release notes to replace newlines correctly.",
-        "9.4:\n • Fixed bug where VLC would be used when selected even if it was uninstalled, now defaults to Embed if VLC has disappeared or does not respond.\n • Software updater script now times out after 5 seconds to avoid delayed launching.\n • Quietbar now can do absolutely nothing when disabled.",
+        "9.6:\n • Fixed bug in updater script that shows an error instead of telling you that it is up to date.", 
+        "9.5:\n • Updater Script is now standalone and localized.\n • Fixed layout bug of release notes to replace newlines correctly.", 
+        "9.4:\n • Fixed bug where VLC would be used when selected even if it was uninstalled, now defaults to Embed if VLC has disappeared or does not respond.\n • Software updater script now times out after 5 seconds to avoid delayed launching.\n • Quietbar now can do absolutely nothing when disabled.", 
         "9.3:\n • Resized Quietube, Embed and Download icons for consistency with VLC.\n • Automatically detects VLC without needing to relaunch.\n • New updated software updater script can read and display release notes."
-    ],
-    "longDescription": "<div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Never watch a video with ads again!</h2><br/><p>Quietbar automatically isolates any YouTube video with your choice of three players to remove ads and interruptions.</p><p>Supports YouTube videos, playlists and live streams, simply install Quietbar, click on any YouTube video, and let it do it's thing!</p></div><img src='App Image.png' /></div><hr/><div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Supported Browsers</h2><br/><div style='display: flex; justify-content: space-around; align-items: flex-start; flex-direction: column;'><h3>Safari</h3><img src='Safari.png' style='width: 100%;' /></div></div><div><h2 style='margin-top: 0; margin-bottom: 0;'>Coming Soon</h2><br/><div style='display: flex; justify-content: space-around; align-items: flex-start; flex-direction: column;'><h3>Mozilla Firefox</h3><img src='Firefox.png' style='width: 100%;' /><h3>Chromium</h3><img src='Chromium.png' style='width: 100%;' /><h3>Google Chrome</h3><img src='Google Chrome.png' style='width: 100%;' /></div></div></div>",
-    "productPage": "quietbar",
+    ], 
+    "longDescription": "<div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Never watch a video with ads again!</h2><br/><p>Quietbar automatically isolates any YouTube video with your choice of three players to remove ads and interruptions.</p><p>Supports YouTube videos, playlists and live streams, simply install Quietbar, click on any YouTube video, and let it do it's thing!</p></div><img src='App Image.png' /></div><hr/><div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Supported Browsers</h2><br/><div style='display: flex; justify-content: space-around; align-items: flex-start; flex-direction: column;'><h3>Safari</h3><img src='Safari.png' style='width: 100%;' /></div></div><div><h2 style='margin-top: 0; margin-bottom: 0;'>Coming Soon</h2><br/><div style='display: flex; justify-content: space-around; align-items: flex-start; flex-direction: column;'><h3>Mozilla Firefox</h3><img src='Firefox.png' style='width: 100%;' /><h3>Chromium</h3><img src='Chromium.png' style='width: 100%;' /><h3>Google Chrome</h3><img src='Google Chrome.png' style='width: 100%;' /></div></div></div>", 
+    "productPage": "quietbar", 
     "shortDescription": "Enjoy YouTube Videos, Uninterrupted."
 }

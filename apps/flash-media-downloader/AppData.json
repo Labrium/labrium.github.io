@@ -1,7 +1,7 @@
 {
-    "downloadPath": "/apps/Builds/Flash_Media_Downloader_7.1.dmg",
-    "productPage": "flash-media-downloader",
-    "shortDescription": "Offline Flash Content Downloader",
-    "name": "Flash Media Downloader",
-    "longDescription": "<div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Download your favorite Flash games before it's too late!</h2><br/><p>Full description coming soon...</p></div><img src='App Image.png' /></div>"
+    "downloadPath": "/apps/Builds/Flash_Media_Downloader_7.1.dmg", 
+    "longDescription": "<div class='splitCol'><div><h2 style='margin-top: 0; margin-bottom: 0;'>Download your favorite Flash games before it's too late!</h2><br/><p>Full description coming soon...</p></div><img src='App Image.png' /></div>", 
+    "shortDescription": "Offline Flash Content Downloader", 
+    "name": "Flash Media Downloader", 
+    "productPage": "flash-media-downloader"
 }
