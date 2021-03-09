@@ -246,7 +246,7 @@ function socketConnect() {
             }
             if (data.reasons.includes("NAME_TAKEN")) {
                 do {
-                username = prompt("That name is already taken.\nEnter your chef's name: ").trim();
+                    username = prompt("That name is already taken.\nEnter your chef's name: ").trim();
                 } while (username == null || username == "")
             }
             socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(), rotation: new THREE.Vector3(), kitchenObjects: {} });
@@ -280,6 +280,18 @@ function socketConnect() {
                 }
             }
         });
+
+        socket.on("updateObjects", function (data) {
+            console.log(data);
+            for (var i = 0; i < data.list.length; i++) {
+                for (var j = 0; j < data.list[i].objects.length; i++) {
+                    if (scene.getObjectById(data.list[i].objects[j].id) == undefined) {
+                        chefList[data.list[i].owner].add(createFood(data.list[i].objects[j].kind, new THREE.Vector3()));
+                    }
+                }
+            }
+        });
+
         // know when a user has joined the server
         socket.on("user-connect", function (data) {
             console.log("user " + data.name + " has connected to the server");
@@ -295,7 +307,7 @@ function socketConnect() {
             } catch (e) { console.log(e); }
             console.log("user " + data.name + " has disconnected from the server");
         });
-        socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(), rotation: new THREE.Vector3(), kitchenObjects: {} });
+        socket.emit("register", { name: username, color: chefColor, position: new THREE.Vector3(), rotation: new THREE.Vector3(), kitchenObjects: {}, ua: navigator.userAgent });
     });
 }
 
