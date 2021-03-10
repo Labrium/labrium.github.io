@@ -284,11 +284,13 @@ function socketConnect() {
         socket.on("updateObjects", function (data) {
             console.log(data);
             for (var i = 0; i < data.list.length; i++) {
-                for (var j = 0; j < data.list[i].objects.length; i++) {
-                    if (scene.getObjectById(data.list[i].objects[j].id) == undefined) {
-                        chefList[data.list[i].owner].add(createFood(data.list[i].objects[j].kind, new THREE.Vector3()));
+                try {
+                    for (var j = 0; j < data.list[i].objects.length; i++) {
+                        if (scene.getObjectById(data.list[i].objects[j].id) == undefined) {
+                            chefList[data.list[i].owner].add(createFood(data.list[i].objects[j].kind, new THREE.Vector3(0, 5, 0)));
+                        }
                     }
-                }
+                } catch (e) { }
             }
         });
 
