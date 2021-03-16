@@ -287,7 +287,7 @@ function socketConnect() {
                 try {
                     for (var j = 0; j < data.list[i].objects.length; i++) {
                         if (scene.getObjectById(data.list[i].objects[j].id) == undefined) {
-                            chefList[data.list[i].owner].add(createFood(data.list[i].objects[j].kind, new THREE.Vector3(0, 5, 0)));
+                            chefList[data.list[i].owner].add(createFood(data.list[i].objects[j].kind, new THREE.Vector3(0, 1.5, -1.5)));
                         }
                     }
                 } catch (e) { }

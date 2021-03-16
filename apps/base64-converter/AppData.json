@@ -1,7 +1,7 @@
 {
     "downloadPath": "/apps/Builds/Base64_Converter_1.4.dmg", 
-    "longDescription": "<h2>Coming Soon...</h2>", 
+    "productPage": "base64-converter", 
     "shortDescription": "Image Stringifier", 
     "name": "Base64 Converter", 
-    "productPage": "base64-converter"
+    "longDescription": "<h2>Coming Soon...</h2>"
 }
