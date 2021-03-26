@@ -1,7 +1,8 @@
 {
-    "downloadPath": "/apps/Builds/Nib_Cracker_1.0.dmg", 
+    "downloadPath": "/apps/Builds/Nib_Cracker_2.0.dmg", 
     "productPage": "nib-cracker", 
     "shortDescription": "The uncrackable nib decompiler", 
     "name": "Nib Cracker", 
+    "requirements": "macOS 10.6 or later, Xcode Command Line Developer Tools",
     "longDescription": "<h2>Coming Soon...</h2>"
 }

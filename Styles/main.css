@@ -240,9 +240,11 @@ h2 {
 }
 .single .header h3 {
   color: var(--dark-blue); 
-  font-weight: normal; 
+  font-weight: normal;
+  margin: auto; 
   margin-top: 3em;
   font-size: 12pt;
+  max-width: 500px;
 }
 .accordion {
   border-radius: var(--round-border);

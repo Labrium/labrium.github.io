@@ -27,11 +27,17 @@
 			var nameElements = document.getElementsByClassName("appName");
 			var shortDescriptionElements = document.getElementsByClassName("shortDescription");
 			var downloadElements = document.getElementsByClassName("downloadButton");
+			var requirementElements = document.getElementsByClassName("requirements");
 			for (var i = 0; i < nameElements.length; i++) {
 				nameElements[i].innerHTML = appData.name;
 			}
 			for (var i = 0; i < shortDescriptionElements.length; i++) {
 				shortDescriptionElements[i].innerHTML = appData.shortDescription;
+			}
+			for (var i = 0; i < requirementElements.length; i++) {
+				try {
+					requirementElements[i].innerHTML = "Requires " + appData.requirements;
+				} catch (e) { }
 			}
 			for (var i = 0; i < downloadElements.length; i++) {
 				if (appData.downloadPath == "none") {
@@ -136,7 +142,7 @@
 					<h2 class="shortDescription">App Short Description</h2>
 					<a class="downloadButton" href="#" download><img src="/apps/Images/Finder.svg">Download for
 						Mac<span class="fa fa-download"></span></a>
-					<h3>Requires macOS 10.6 or later</h3>
+					<h3 class="requirements">Requires macOS 10.6 or later</h3>
 				</div>
 				<hr>
 				<div id="longDescription">
@@ -151,7 +157,7 @@
 					<h2 class="shortDescription">App Short Description</h2>
 					<a class="downloadButton" href="#" download><img src="/apps/Images/Finder.svg">Download for
 						Mac<span class="fa fa-download"></span></a>
-					<h3>Requires macOS 10.6 or later</h3>
+					<h3 class="requirements">Requires macOS 10.6 or later</h3>
 				</div>
 				<h2>Other Apps You Might Like</h2>
 				<hr>
