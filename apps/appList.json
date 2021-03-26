@@ -5,7 +5,8 @@
         "icon-utility",
         "lan-server-assistant",
         "quietbar",
-        "window-worker"
+        "window-worker",
+	"nib-cracker"
     ],
     "comingSoon": [
         "application-cloner",
@@ -15,7 +16,6 @@
         "copy-commander",
 	"dynamizer",
         "directory-press",
-	"nib-cracker",
         "webedit"
     ]
 }
