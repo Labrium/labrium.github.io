@@ -1,7 +1,7 @@
 {
     "downloadPath": "/apps/Builds/Application_Cloner_1.6.dmg", 
-    "longDescription": "<h2>Coming Soon...</h2>", 
+    "productPage": "application-cloner", 
     "shortDescription": "Two Apps are Better than One", 
     "name": "Application Cloner", 
-    "productPage": "application-cloner"
+    "longDescription": "<h2>Coming Soon...</h2>"
 }
