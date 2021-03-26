@@ -3,6 +3,9 @@
     "productPage": "nib-cracker", 
     "shortDescription": "The uncrackable nib decompiler", 
     "name": "Nib Cracker", 
+    "changelog":[
+        "2.0:\n • Added New Official Tech Labs Welcome Screen and Progress Window.\n • Now converts compiled nib files to decompiled nib or xib.\n • Nib Cracker now recompiles nib, xib, strings, and plist files."
+    ],
     "requirements": "macOS 10.6 or later, Xcode Command Line Developer Tools",
     "longDescription": "<h2>Coming Soon...</h2>"
 }
