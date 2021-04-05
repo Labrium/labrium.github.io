@@ -433,7 +433,7 @@ var kartLib = [
 //scene
 var scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2(0xdffdff, 0.0001);
-var sky = new THREE.CubeTextureLoader().load(["Images/skybox/right.png", "Images/skybox/left.png", "Images/skybox/top.png", "Images/skybox/bottom.png", "Images/skybox/front.png", "Images/skybox/back.png"]);
+var sky = new THREE.CubeTextureLoader().load(["Images/skybox/Right.png", "Images/skybox/Left.png", "Images/skybox/Top.png", "Images/skybox/Bottom.png", "Images/skybox/Front.png", "Images/skybox/Back.png"]);
 scene.background = sky;
 //scene.background = new THREE.Color(0xdffdff);
 
@@ -474,11 +474,11 @@ scene.add(new THREE.HemisphereLight(0xffffff, 0x888888, 0.75));
 
 
 //catch light
-var main = new THREE.TextureLoader().load("Images/lensflare/main.png");
-var burst = new THREE.TextureLoader().load("Images/lensflare/burst.png");
-var hex = new THREE.TextureLoader().load("Images/lensflare/hexangle.png");
-var round = new THREE.TextureLoader().load("Images/lensflare/round.png");
-var small = new THREE.TextureLoader().load("Images/lensflare/small.png");
+var main = new THREE.TextureLoader().load("Images/Lensflare/main.png");
+var burst = new THREE.TextureLoader().load("Images/Lensflare/burst.png");
+var hex = new THREE.TextureLoader().load("Images/Lensflare/hexangle.png");
+var round = new THREE.TextureLoader().load("Images/Lensflare/round.png");
+var small = new THREE.TextureLoader().load("Images/Lensflare/small.png");
 var lensflare = new THREE.Lensflare();
 lensflare.addElement(new THREE.LensflareElement(main, 1000, 0, new THREE.Color(0x888877)));
 lensflare.addElement(new THREE.LensflareElement(burst, 500, 0, new THREE.Color(0x888866)));

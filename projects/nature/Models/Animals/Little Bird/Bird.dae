@@ -201,7 +201,7 @@
   </library_lights>
   <library_images>
     <image id="Bird_png">
-      <init_from>./images/Bird.png</init_from>
+      <init_from>./images/bird.png</init_from>
     </image>
   </library_images>
   <library_visual_scenes>
