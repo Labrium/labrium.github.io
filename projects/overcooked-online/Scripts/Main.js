@@ -161,7 +161,7 @@ function createChef(name, color) {
         chefCollisionBoxes[name].name = "chefCollisionBox";
         physicalObjects.add(chefCollisionBoxes[name]);
     }
-
+    model.name = "chef";
     return model
 }
 
@@ -287,7 +287,12 @@ function socketConnect() {
                 try {
                     for (var j = 0; j < data.list[i].objects.length; i++) {
                         if (scene.getObjectById(data.list[i].objects[j].id) == undefined) {
-                            chefList[data.list[i].owner].add(createFood(data.list[i].objects[j].kind, new THREE.Vector3(0, 1.5, -1.5)));
+                            try {
+                                chefList[data.list[i].owner].clear();
+                            } catch (e) { }
+                            chefList[data.list[i].owner].add(createFood(data.list[i].objects[j].kind, data.list[i].objects[j].position));
+                        } else {
+                            scene.getObjectById(data.list[i].objects[j].id).position = data.list[i].objects[j].position;
                         }
                     }
                 } catch (e) { }
@@ -721,7 +726,7 @@ function init() {
                             handanimations[0] = new TWEEN.Tween(chef.children[3].position).to({ x: 0.75, y: 1, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
                             handanimations[1] = new TWEEN.Tween(chef.children[4].position).to({ x: -0.75, y: 1, z: -1 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
                             try {
-                                socket.emit("newObject", { id: chefControls.holding.id, type: chefControls.holding.userData.type, kind: chefControls.holding.userData.kind });
+                                socket.emit("newObject", { id: chefControls.holding.id, type: chefControls.holding.userData.type, kind: chefControls.holding.userData.kind, position: chefControls.holding.position });
                             } catch (e) { }
                             console.log(kitchenObjects);
                         }
@@ -755,18 +760,27 @@ function init() {
                                 chefControls.holding.position.y = 1.5;
                                 physicalObjects.add(chefControls.holding);
                                 chefControls.holding.userData.onGround = false;
+                                try {
+                                    socket.emit("objectPlace", { id: chefControls.holding.id, position: chefControls.holding.position });
+                                } catch (e) { }
                                 chefControls.holding = "";
                             }
                         } else {
                             chef.localToWorld(chefControls.holding.position);
                             physicalObjects.add(chefControls.holding);
                             chefControls.holding.userData.onGround = true;
+                            try {
+                                socket.emit("objectPlace", { id: chefControls.holding.id, position: chefControls.holding.position });
+                            } catch (e) { }
                             chefControls.holding = "";
                         }
                     } catch (e) {
                         chef.localToWorld(chefControls.holding.position);
                         physicalObjects.add(chefControls.holding);
                         chefControls.holding.userData.onGround = true;
+                        try {
+                            socket.emit("objectPlace", { id: chefControls.holding.id, position: chefControls.holding.position });
+                        } catch (e) { }
                         chefControls.holding = "";
                     }
                     handanimations[0] = new TWEEN.Tween(chef.children[3].position).to({ x: 1.4, y: 0.75, z: 0 }, 100).easing(TWEEN.Easing.Cubic.Out).start();
@@ -927,7 +941,10 @@ function init() {
             var distance = CustomMath.Distance(kitchenObjects[i].position, chef.localToWorld(new THREE.Vector3(0, 1.75, -1)));
             if (distance < 3 && chefControls.holding.id != kitchenObjects[i].id) {
                 if (distance < selected[1]) {
-                    selected = [kitchenObjects[i].id, distance];
+                    console.log(kitchenObjects[i].parent);
+                    if (kitchenObjects[i].parent.name != "chef") {
+                        selected = [kitchenObjects[i].id, distance];
+                    }
                 }
             }
         }

@@ -3,7 +3,7 @@
     "requirements": "macOS 10.6 or later, Xcode Command Line Developer Tools", 
     "name": "Nib Cracker", 
     "changelog": [
-	"2.1:\n • Fixed bug where unexpected termination occured due to progress window deallocation.",
+        "2.1:\n • Fixed bug where unexpected termination occured due to progress window deallocation.", 
         "2.0:\n • Added New Official Tech Labs Welcome Screen and Progress Window.\n • Now converts compiled nib files to decompiled nib or xib.\n • Nib Cracker now recompiles nib, xib, strings, and plist files."
     ], 
     "longDescription": "<h2>Coming Soon...</h2>", 

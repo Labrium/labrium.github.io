@@ -1,0 +1,6 @@
+{
+    "name": "macOS Fake Sur",
+    "projectPage": "fake-sur",
+    "description": "A macOS Big Sur operating system replica made with HTML, CSS and JavaScript.",
+    "status": ["green", "Working"]
+}

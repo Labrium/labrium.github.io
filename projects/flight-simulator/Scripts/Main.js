@@ -85,7 +85,7 @@ water = new THREE.Water(
 	{
 		textureWidth: 512,
 		textureHeight: 512,
-		waterNormals: new THREE.TextureLoader().load('Images/water.png', function (texture) {
+		waterNormals: new THREE.TextureLoader().load('Images/Water.png', function (texture) {
 
 			texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 

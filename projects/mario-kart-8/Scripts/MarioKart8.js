@@ -433,7 +433,7 @@ var kartLib = [
 //scene
 var scene = new THREE.Scene();
 //scene.fog = new THREE.FogExp2(0xdffdff, 0.0005);
-var sky = new THREE.CubeTextureLoader().load(["Images/skybox/right.png", "Images/skybox/left.png", "Images/skybox/top.png", "Images/skybox/bottom.png", "Images/skybox/front.png", "Images/skybox/back.png"]);
+var sky = new THREE.CubeTextureLoader().load(["Images/skybox/Right.png", "Images/skybox/Left.png", "Images/skybox/Top.png", "Images/skybox/Bottom.png", "Images/skybox/Front.png", "Images/skybox/Back.png"]);
 scene.background = sky;
 
 

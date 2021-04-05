@@ -1,5 +1,6 @@
 {
     "new": [
+	"fake-sur",
         "drone-driver",
         "flywings-simulator",
         "flight-simulator",
