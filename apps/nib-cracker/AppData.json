@@ -1,8 +1,9 @@
 {
-    "downloadPath": "/apps/Builds/Nib_Cracker_2.1.dmg", 
+    "downloadPath": "/apps/Builds/Nib_Cracker_2.2.dmg", 
     "requirements": "macOS 10.6 or later, Xcode Command Line Developer Tools", 
     "name": "Nib Cracker", 
     "changelog": [
+        "2.2:\n • New progress assembly with remaining time estimation.\n • Changed welcome screen display method to avoid appearance during processing.\n • Fixed miscellaneous cancellation bugs.\n • Updated welcome screen to allow more streamlined recompiling.", 
         "2.1:\n • Fixed bug where unexpected termination occured due to progress window deallocation.", 
         "2.0:\n • Added New Official Tech Labs Welcome Screen and Progress Window.\n • Now converts compiled nib files to decompiled nib or xib.\n • Nib Cracker now recompiles nib, xib, strings, and plist files."
     ], 
