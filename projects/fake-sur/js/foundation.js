@@ -9,28 +9,29 @@ function dragElement(elmnt, titlebar) {
     function dragMouseDown(e) {
         e = e || window.event;
         //e.preventDefault();
-	//e.stopPropagation();
+        //e.stopPropagation();
         // get the mouse cursor position at startup:
         pos3 = e.clientX;
         pos4 = e.clientY;
         document.onmouseup = closeDragElement;
         // call a function whenever the cursor moves:
         document.onmousemove = elementDrag;
+        elmnt.querySelector('.contentView').style.pointerEvents = "none";
     }
 
     function elementDrag(e) {
         e = e || window.event;
         //e.preventDefault();
-	//e.stopPropagation();
+        //e.stopPropagation();
         // calculate the new cursor position:
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
         pos4 = e.clientY;
         // set the element's new position:
-	if ((elmnt.offsetTop - pos2) < 25 || (elmnt.offsetTop - pos2) > (window.innerHeight - e.offsetHeight)) {
-		pos2 = 0;
-	}
+        if ((elmnt.offsetTop - pos2) < 25 || (elmnt.offsetTop - pos2) > (window.innerHeight - e.offsetHeight)) {
+            pos2 = 0;
+        }
         elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
         elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     }
@@ -39,6 +40,7 @@ function dragElement(elmnt, titlebar) {
         /* stop moving when mouse button is released:*/
         document.onmouseup = null;
         document.onmousemove = null;
+        elmnt.querySelector('.contentView').style.pointerEvents = "initial";
     }
 }
 
@@ -52,8 +54,8 @@ function NSWindow(options) {
     } else if (options.size == "maximize") {
         windowBase.style.width = window.innerWidth + "px";
         windowBase.style.height = ((window.innerHeight - 31) - document.getElementById('dock').offsetHeight) + "px";
-	windowBase.style.top = "25px";
-	windowBase.style.left = "0px";
+        windowBase.style.top = "25px";
+        windowBase.style.left = "0px";
     } else {
         windowBase.style.left = options.position[0] + "px";
         windowBase.style.top = options.position[1] + "px";

@@ -1,6 +1,6 @@
 {
     "name": "macOS Fake Sur",
     "projectPage": "fake-sur",
-    "description": "A macOS Big Sur operating system replica made with HTML, CSS and JavaScript.",
+    "description": "A macOS Big Sur operating system replica made with HTML, CSS and JavaScript. This project has been meticulously designed to be virtually indistinguishable from the real thing.",
     "status": ["green", "Working"]
 }

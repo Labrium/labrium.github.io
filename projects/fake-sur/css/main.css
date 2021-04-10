@@ -2,11 +2,11 @@
 	--accentColor: rgb(0, 122, 255);
 	--highlightColor: rgba(0, 122, 255, 0.3);
 	--dockSize: 83px;
-	--toolbarItemColor: #ececec;
-	--toolbarDisabledTextColor: #b9b9b9;
-	--toolbarTextColor: #6d6d6d;
-	--toolbarItemPressedColor: #e0e0e0;
-	--titlebarColor: #f9f9f9;
+	--toolbarItemColor: rgba(0, 0, 0, 0.1);
+	--toolbarDisabledTextColor: rgba(0, 0, 0, 0.1);
+	--toolbarTextColor: rgba(0, 0, 0, 0.5);
+	--toolbarItemPressedColor: rgba(0, 0, 0, 0.2);
+	--titlebarColor: rgba(0, 0, 0, 0.02);
 }
 
 @font-face {
@@ -15,7 +15,7 @@
 }
 
 *:focus {
-    outline: none;
+	outline: none;
 }
 
 body {
@@ -26,6 +26,17 @@ body {
 	font-size: 14px;
 	cursor: default;
 	overflow: hidden;
+}
+body:before {
+	display: block;
+	position: absolute;
+	content: "";
+	width: 100vw;
+	height: 100vh;
+	background: url("../images/desktopPictures/BigSurDark.png") no-repeat center center fixed, black;
+	background-size: cover;
+	opacity: 0;
+	transition: opacity 1s ease;
 }
 .f7-icons {
 	font-size: 17.5px !important;
@@ -83,11 +94,24 @@ body {
 .window {
 	background-color: white;
 	border-radius: 11px;
-	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.09), 0 15px 40px 1px rgba(0, 0, 0, 0.425);
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 15px 40px 1px rgba(0, 0, 0, 0.425);
 	position: absolute;
 	overflow: hidden;
 	resize: both;
+	transition: background-color 1s ease;
 }
+.window:before {
+	content:'';
+	display:block;
+	box-shadow:inset 0 0 2px 1px rgba(255, 255, 255, 0.75);
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	pointer-events: none;
+	border-radius: inherit;
+}​
 .titlebar {
 	width: 100%;
 	font-size: 12px;
@@ -154,10 +178,22 @@ body {
 #smartsearch {
 	text-align: center;
 	cursor: default;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 #smartsearch:focus {
 	text-align: left;
 	cursor: text;
+	-webkit-touch-callout: initial;
+	-webkit-user-select: initial;
+	-khtml-user-select: initial;
+	-moz-user-select: initial;
+	-ms-user-select: initial;
+	user-select: initial;
 }
 input[type="text"] {
 	font-size: 12px;
@@ -176,6 +212,7 @@ input:focus {
 	box-shadow: 0 0 0 4px var(--highlightColor);
 }
 .windowTitle {
+	transition: color 1s ease;
 	display: block;
 	line-height: 27px;
 	text-align: center;
@@ -259,21 +296,22 @@ input:focus {
 .tooltip .tooltiptext {
 	display: none;
 	background-color: rgba(255, 255, 255, 0.675);
-	color: #222222;
+	color: rgba(0, 0, 0, 0.8);
 	text-align: center;
 	border-radius: 6px;
 	padding: 4px 14px;
 	position: absolute;
 	font-size: 14px;
 	z-index: 1;
-	bottom: 110%;
+	bottom: 175%;
 	left: 50%;
 	transform: translateX(-50%);
 	white-space: nowrap;
 	box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
+	transition: color 1s ease, background-color 1s ease;
 }
 
-.tooltip .tooltiptext::after {
+.tooltip .tooltiptext:after {
 	content: "";
 	position: absolute;
 	top: 100%;
@@ -282,6 +320,7 @@ input:focus {
 	border-width: 5px;
 	border-style: solid;
 	border-color: rgba(255, 255, 255, 0.675) transparent transparent transparent;
+	transition: border-top-color 1s ease;
 }
 .tooltip.hover .tooltiptext {
 	bottom: 170%;
@@ -336,6 +375,7 @@ input:focus {
 	height: calc(var(--dockSize) * 0.8);
 	margin: auto 10px auto 10px;
 	cursor: ns-resize;
+	transition: background-color 1s ease;
 }
 .docktile {
 	display: flex;
@@ -344,20 +384,11 @@ input:focus {
 	transition: all 0.25s ease;
 	width: var(--dockSize);
 }
+#dock:hover .docktile {
+	transition: none !important;
+}
 .docktile.launching {
 	animation: dockJump 0.4s alternate cubic-bezier(0.2, 0.5, 0.5, 1) infinite;
-}
-.hover {
-	width: 128px;
-}
-.hovernextto1 {
-	width: calc(var(--dockSize) + calc(calc(128px - var(--dockSize)) / 2));
-}
-.hovernextto2 {
-	width: calc(var(--dockSize) + calc(calc(128px - var(--dockSize)) / 3));
-}
-.hovernextto3 {
-	width: calc(var(--dockSize) + calc(calc(128px - var(--dockSize)) / 4));
 }
 .docktile img {
 	display: block;
@@ -371,4 +402,42 @@ input:focus {
 }
 .docktile img:active {
 	filter: brightness(50%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body.dark:before {
+	opacity: 1;
+}
+body.dark .window {
+	background: black;
+}
+body.dark .windowTitle {
+	color: white;
+}
+body.dark #dock {
+	background-color: rgba(0, 0, 0, 0.4);
+}
+body.dark #dockseparator {
+	background-color: rgba(255, 255, 255, 0.5);
+}
+body.dark .tooltip .tooltiptext {
+	color: rgba(255, 255, 255, 1);
+	background-color: rgba(0, 0, 0, 0.5);
+}
+body.dark .tooltip .tooltiptext:after {
+	border-top-color: rgba(0, 0, 0, 0.5);
 }

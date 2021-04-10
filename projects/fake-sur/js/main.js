@@ -33,7 +33,13 @@ var dockApps = [
 		menus: ["File", "Edit", "View", "Window", "Help"],
 		run: function () {
 			activeApp = 2;
+			if (document.body.classList.contains('dark')) {
+				document.body.classList.remove('dark');
+			} else {
+				document.body.classList.add('dark');
+			}
 			loadMenubar();
+			document.querySelector('[src="images/apps/SystemPreferences.png"]').parentElement.classList.remove("launching");
 		}
 	},
 	{
@@ -48,7 +54,7 @@ var dockApps = [
 				app: 3,
 				toolbar: ['<a href="javascript:void(0);" class="toolbarbutton f7-icons">sidebar_left</a>', '<a href="javascript:void(0);" class="toolbarbutton adjl f7-icons" onclick="document.getElementById(\'safariwebview\').contentWindow.history.go(-1);">chevron_left</a>', '<a href="javascript:void(0);" class="toolbarbutton adjr f7-icons" onclick="document.getElementById(\'safariwebview\').contentWindow.history.go(1);">chevron_right</a>', '<div class="toolbarspace"></div>', '<a href="javascript:void(0);" class="toolbarbutton f7-icons">shield_lefthalf_fill</a>', '<form id="smartsearchform" style="max-width: 800px; width: 100%;"><input style="width: 100%; height: 100%;" type="text" name="smartsearch" id="smartsearch" onclick="this.select();" onblur="document.getSelection().removeAllRanges();" placeholder="Search or enter website name"/></form>', '<div class="toolbarspace"></div>', '<a href="javascript:void(0);" class="toolbarbutton f7-icons">square_arrow_up</a>', '<a href="javascript:void(0);" class="toolbarbutton f7-icons">plus</a>', '<a href="javascript:void(0);" class="toolbarbutton f7-icons">square_on_square</a>'],
 				tabs: true,
-				view: '<iframe id="safariwebview" name="viewer" src="https://techlabsinc.github.io/" style="width: 100%; height: calc(100% - 39px); border: none;"></iframe>'
+				view: '<iframe id="safariwebview" name="viewer" class="contentView" src="https://techlabsinc.github.io/" style="width: 100%; height: calc(100% - 55px); border: none;"></iframe>'
 			});
 			document.getElementById("smartsearchform").onsubmit = function (e) {
 				e.preventDefault();
@@ -80,7 +86,7 @@ var dockApps = [
 		menus: ["File", "Edit", "Format", "View", "Window", "Help"],
 		run: function () {
 			activeApp = 5;
-			NSWindow({ size: [550, 468], position: "center", titlebar: true, title: "Untitled", app: 5, view: '<textarea style="width:100% !important;height: calc(100% - 35px) !important; border: none; font-size: 12px; resize: none; overflow-y: scroll;"></textarea>' });
+			NSWindow({ size: [550, 468], position: "center", titlebar: true, title: "Untitled", app: 5, view: '<textarea class="contentView" style="width:100% !important;height: calc(100% - 31px) !important; border: none; font-size: 12px; resize: none; overflow-y: scroll;"></textarea>' });
 			loadMenubar();
 			document.querySelector('[src="images/apps/TextEdit.png"]').parentElement.classList.remove("launching");
 		},
@@ -137,38 +143,37 @@ var menubar = document.getElementById("menubar");
 var dock = document.getElementById("dock");
 var appLength = dockApps.length;
 
-function unDockHover(t) {
-	for (var i = 0; i < t.parentElement.children.length; i++) {
-		try { t.parentElement.children[i].classList.remove("hover"); } catch (e) { }
-		try { t.parentElement.children[i].classList.remove("hovernextto1"); } catch (e) { }
+function dockHover(e) {
+	document.onmousemove = dockmove;
+	function dockmove(e) {
+		e = e || window.event;
+		for (var i = 0; i < dock.children.length; i++) {
+			if (dock.children[i] != document.getElementById('dockseparator')) {
+				dock.children[i].style.width = Math.max(-(Math.abs(e.clientX - (dock.children[i].offsetLeft + (dock.offsetLeft / 2))) / 8) + 128, 83) + "px";
+			}
+		}
 	}
 }
 
-function dockHover(t) {
-	t.classList.add("hover");
-	try {
-		if (t.nextElementSibling.id == "dockseparator") {
-			t.nextElementSibling.nextElementSibling.classList.add("hovernextto1");
-		} else {
-			t.nextElementSibling.classList.add("hovernextto1");
+function unDockHover() {
+	for (var i = 0; i < dock.children.length; i++) {
+		if (dock.children[i] != document.getElementById('dockseparator')) {
+			dock.children[i].style.width = "";
 		}
-	} catch (e) { }
-	try {
-		if (t.previousElementSibling.id == "dockseparator") {
-			t.previousElementSibling.previousElementSibling.classList.add("hovernextto1");
-		} else {
-			t.previousElementSibling.classList.add("hovernextto1");
-		}
-	} catch (e) { }
+	}
+	document.onmousemove = null;
 }
+
+dock.onmouseover = dockHover;
+dock.onmouseout = unDockHover;
 
 function loadDock() {
 	for (var i = 0; i < dockApps.length; i++) {
-		dock.innerHTML += '<div class="docktile tooltip" onmouseover="dockHover(this);" onmouseout="unDockHover(this);" onclick="this.classList.add(\'launching\'); dockApps[' + i + '].run();"><span class="tooltiptext">' + dockApps[i].name + '</span><img src="images/apps/' + dockApps[i].name.replace(/\s/g, "") + '.png"/></div>';
+		dock.innerHTML += '<div class="docktile tooltip" onclick="this.classList.add(\'launching\'); dockApps[' + i + '].run();"><span class="tooltiptext">' + dockApps[i].name + '</span><img src="images/apps/' + dockApps[i].name.replace(/\s/g, "") + '.png"/></div>';
 	}
 	dock.innerHTML += '<div id="dockseparator"></div>'
 	for (var i = 0; i < dockFiles.length; i++) {
-		dock.innerHTML += '<div class="docktile tooltip" onmouseover="dockHover(this);" onmouseout="unDockHover(this);" onclick="dockApps[0].open(\'' + dockFiles[i].path + '\');"><span class="tooltiptext">' + dockFiles[i].name + '</span><img src="images/apps/' + dockFiles[i].name.replace(/\s/g, "") + dockFiles[i].state + '.png"/></div>';
+		dock.innerHTML += '<div class="docktile tooltip" onclick="dockApps[0].open(\'' + dockFiles[i].path + '\');"><span class="tooltiptext">' + dockFiles[i].name + '</span><img src="images/apps/' + dockFiles[i].name.replace(/\s/g, "") + dockFiles[i].state + '.png"/></div>';
 	}
 	setTimeout(function () { dock.style.bottom = "5px"; }, 250);
 }
