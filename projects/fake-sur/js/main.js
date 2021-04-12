@@ -144,12 +144,14 @@ var dock = document.getElementById("dock");
 var appLength = dockApps.length;
 
 function dockHover(e) {
-	document.onmousemove = dockmove;
+	if (document.onmousemove == null) {
+		document.onmousemove = dockmove;
+	}
 	function dockmove(e) {
 		e = e || window.event;
 		for (var i = 0; i < dock.children.length; i++) {
 			if (dock.children[i] != document.getElementById('dockseparator')) {
-				dock.children[i].style.width = Math.max(-(Math.abs(e.clientX - (dock.children[i].offsetLeft + (dock.offsetLeft / 2))) / 8) + 128, 83) + "px";
+				dock.children[i].style.width = Math.max(((128-83) * Math.cos(0.005 * ( (dock.children[i].getBoundingClientRect().left + (dock.children[i].clientWidth/2)) - e.clientX ) ) ) + 83, 83) + "px";
 			}
 		}
 	}
@@ -158,14 +160,14 @@ function dockHover(e) {
 function unDockHover() {
 	for (var i = 0; i < dock.children.length; i++) {
 		if (dock.children[i] != document.getElementById('dockseparator')) {
-			dock.children[i].style.width = "";
+			dock.children[i].style.width = "83px";
 		}
 	}
 	document.onmousemove = null;
 }
 
-dock.onmouseover = dockHover;
-dock.onmouseout = unDockHover;
+dock.onmouseenter = dockHover;
+dock.onmouseleave = unDockHover;
 
 function loadDock() {
 	for (var i = 0; i < dockApps.length; i++) {
