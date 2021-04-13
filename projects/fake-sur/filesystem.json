@@ -1,0 +1,46 @@
+{
+    "bootrom": {
+        "bootfiles": {
+            "type": 1,
+            "path": "boot/bootfiles.json"
+        },
+        "StartupChime": {
+            "type": 1,
+            "path": "sounds/startupChime.mp3"
+        }
+    },
+    "Macintosh HD": {
+        "Applications": {
+            "Safari.app": {
+                "type": 0,
+                "path": "Applications/Safari.app"
+            },
+            "TextEdit.app": {
+                "type": 0,
+                "path": "Applications/TextEdit.app"
+            }
+        },
+        "System": {
+            "Library": {
+                "Frameworks": {
+                    "AppKit.framework": {
+                        "type": 0,
+                        "path": "js/AppKit.js"
+                    }
+                },
+                "Private Frameworks": {
+                    "TweenMax.framework": {
+                        "type": 1,
+                        "path": "js/TweenMax.min.js"
+                    }
+                },
+                "CoreServices": {
+                    "SystemUIServer.app": {
+                        "type": 0,
+                        "path": "boot/SystemUIServer.app"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -18,18 +18,70 @@
 	outline: none;
 }
 
+
+/* Boot Screen */
+#bootScreen {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	z-index: 999999999 !important;
+	background: black;
+}
+#bootScreen img {
+	width: 75px;
+}
+#bootScreen progress {
+	-webkit-appearance: none;
+	height: 6px;
+	width: 232px;
+	margin-top: 75px;
+}
+#bootScreen progress::-webkit-progress-bar {
+	background-color: rgba(255, 255, 255, 0.2);
+	box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1);
+	border-radius: 100px;
+}
+#bootScreen progress::-webkit-progress-value {
+	background-color: white;
+	border-radius: 100px;
+	min-width: 6px;
+	transition: width 10s ease-in;
+}
+
 /* Desktop */
 
+html {
+	width: 100%;
+	height: 100%;
+}
 body {
-	background: url("../images/desktopPictures/BigSurLight.png") no-repeat center center fixed, black;
-	background-size: cover;
-	font-family: -apple-system, BlinkMacSystemFont, "AppleSystemFont", "Helvetica", sans-serif;
+	background: black;
+	font-family: -apple-system-font, -apple-system, BlinkMacSystemFont, "AppleSystemFont", "Helvetica", sans-serif;
 	margin: 0;
 	font-size: 14px;
 	cursor: default;
 	overflow: hidden;
+	width: 100%;
+	height: 100%;
 }
-body:before {
+
+.desktop {
+	background: url("../images/desktopPictures/BigSurLight.png") no-repeat center center fixed, black;
+	background-size: cover;
+	cursor: default;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+}
+.desktop:before {
 	display: block;
 	position: absolute;
 	content: "";
@@ -176,11 +228,13 @@ body:before {
 }
 
 .closeButton, .minimizeButton, .fullscreenButton {
+	box-sizing: border-box;
 	border-radius: 12px;
-	width: 10px;
-	height: 10px;
+	width: 12px;
+	height: 12px;
 	margin: 4px;
 	padding: 0;
+	transition: border-color 1s ease;
 }
 
 .closeButton {
@@ -432,7 +486,7 @@ input:focus {
 
 
 /* Dark Mode */
-body.dark:before {
+body.dark .desktop:before {
 	opacity: 1;
 }
 body.dark .window {
@@ -453,4 +507,7 @@ body.dark .tooltip .tooltiptext {
 }
 body.dark .tooltip .tooltiptext:after {
 	border-top-color: rgba(0, 0, 0, 0.5);
+}
+body.dark .closeButton, body.dark .minimizeButton, body.dark .fullscreenButton {
+	border-color: rgba(255, 255, 255, 0.15);
 }

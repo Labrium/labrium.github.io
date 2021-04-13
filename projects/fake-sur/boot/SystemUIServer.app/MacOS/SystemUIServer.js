@@ -136,15 +136,6 @@ var dockFiles = [
 ];
 var statusbarItems = [[1, "speaker_3_fill"], [1, "battery_100"], [1, "wifi"], [1, "search"]];
 
-
-
-var activeApp = 0;
-var menubar = document.getElementById("menubar");
-var dock = document.getElementById("dock");
-var appLength = dockApps.length;
-
-TweenLite.set(dock.children, {width: 83});
-
 function dockHover(e) {
 	if (document.onmousemove == null) {
 		document.onmousemove = dockmove;
@@ -153,7 +144,7 @@ function dockHover(e) {
 		e = e || window.event;
 		for (var i = 0; i < dock.children.length; i++) {
 			if (dock.children[i] != document.getElementById('dockseparator')) {
-				TweenLite.to(dock.children[i], 0.2, {width: Math.max(((128 - 83) * Math.cos(0.005 * ((dock.children[i].getBoundingClientRect().left + (dock.children[i].clientWidth / 2)) - e.clientX))) + 83, 83)});
+				TweenLite.to(dock.children[i], 0.2, { width: Math.max(((128 - 83) * Math.cos(0.005 * ((dock.children[i].getBoundingClientRect().left + (dock.children[i].clientWidth / 2)) - e.clientX))) + 83, 83) });
 			}
 		}
 	}
@@ -162,14 +153,11 @@ function dockHover(e) {
 function unDockHover() {
 	for (var i = 0; i < dock.children.length; i++) {
 		if (dock.children[i] != document.getElementById('dockseparator')) {
-			TweenLite.to(dock.children[i], 0.2, {width: 83});
+			TweenLite.to(dock.children[i], 0.2, { width: 83 });
 		}
 	}
 	document.onmousemove = null;
 }
-
-dock.onmouseenter = dockHover;
-dock.onmouseleave = unDockHover;
 
 function loadDock() {
 	for (var i = 0; i < dockApps.length; i++) {
@@ -223,6 +211,16 @@ function refreshDate() {
 }
 
 
-
-loadMenubar();
-loadDock();
+document.body.innerHTML += '<div class="desktop"><div id="menubar"></div><div id="dock"></div></div>';
+var activeApp = 0;
+var menubar = document.getElementById("menubar");
+var dock = document.getElementById("dock");
+var appLength = dockApps.length;
+TweenLite.to(document.getElementById("bootScreen"), 0.1, { opacity: 0 });
+setTimeout(function () {
+	TweenLite.set(dock.children, { width: 83 });
+	dock.onmouseenter = dockHover;
+	dock.onmouseleave = unDockHover;
+	loadMenubar();
+	loadDock();
+}, 500);
