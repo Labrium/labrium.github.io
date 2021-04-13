@@ -218,6 +218,7 @@ var dock = document.getElementById("dock");
 var appLength = dockApps.length;
 TweenLite.to(document.getElementById("bootScreen"), 0.1, { opacity: 0 });
 setTimeout(function () {
+	document.getElementById("bootScreen").parentElement.removeChild(document.getElementById("bootScreen"));
 	TweenLite.set(dock.children, { width: 83 });
 	dock.onmouseenter = dockHover;
 	dock.onmouseleave = unDockHover;

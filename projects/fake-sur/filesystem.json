@@ -24,7 +24,7 @@
             "Library": {
                 "Frameworks": {
                     "AppKit.framework": {
-                        "type": 0,
+                        "type": 1,
                         "path": "js/AppKit.js"
                     }
                 },
