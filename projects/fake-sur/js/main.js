@@ -143,6 +143,8 @@ var menubar = document.getElementById("menubar");
 var dock = document.getElementById("dock");
 var appLength = dockApps.length;
 
+TweenLite.set(dock.children, {width: 83});
+
 function dockHover(e) {
 	if (document.onmousemove == null) {
 		document.onmousemove = dockmove;
@@ -151,7 +153,7 @@ function dockHover(e) {
 		e = e || window.event;
 		for (var i = 0; i < dock.children.length; i++) {
 			if (dock.children[i] != document.getElementById('dockseparator')) {
-				dock.children[i].style.width = Math.max(((128-83) * Math.cos(0.005 * ( (dock.children[i].getBoundingClientRect().left + (dock.children[i].clientWidth/2)) - e.clientX ) ) ) + 83, 83) + "px";
+				TweenLite.to(dock.children[i], 0.2, {width: Math.max(((128 - 83) * Math.cos(0.005 * ((dock.children[i].getBoundingClientRect().left + (dock.children[i].clientWidth / 2)) - e.clientX))) + 83, 83)});
 			}
 		}
 	}
@@ -160,7 +162,7 @@ function dockHover(e) {
 function unDockHover() {
 	for (var i = 0; i < dock.children.length; i++) {
 		if (dock.children[i] != document.getElementById('dockseparator')) {
-			dock.children[i].style.width = "83px";
+			TweenLite.to(dock.children[i], 0.2, {width: 83});
 		}
 	}
 	document.onmousemove = null;
