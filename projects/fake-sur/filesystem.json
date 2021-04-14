@@ -1,14 +1,4 @@
 {
-    "bootrom": {
-        "bootfiles": {
-            "type": 1,
-            "path": "boot/bootfiles.json"
-        },
-        "StartupChime": {
-            "type": 1,
-            "path": "sounds/startupChime.mp3"
-        }
-    },
     "Macintosh HD": {
         "Applications": {
             "Safari.app": {
@@ -26,6 +16,10 @@
                     "AppKit.framework": {
                         "type": 1,
                         "path": "js/AppKit.js"
+                    },
+                    "CoreGraphics.framework": {
+                        "type": 1,
+                        "path": "js/CoreGraphics.js"
                     }
                 },
                 "Private Frameworks": {

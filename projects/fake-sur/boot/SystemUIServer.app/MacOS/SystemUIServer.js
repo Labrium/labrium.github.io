@@ -33,10 +33,10 @@ var dockApps = [
 		menus: ["File", "Edit", "View", "Window", "Help"],
 		run: function () {
 			activeApp = 2;
-			if (document.body.classList.contains('dark')) {
-				document.body.classList.remove('dark');
+			if (document.body.classList.contains("dark")) {
+				document.body.classList.remove("dark");
 			} else {
-				document.body.classList.add('dark');
+				document.body.classList.add("dark");
 			}
 			loadMenubar();
 			document.querySelector('[src="images/apps/SystemPreferences.png"]').parentElement.classList.remove("launching");
@@ -167,7 +167,6 @@ function loadDock() {
 	for (var i = 0; i < dockFiles.length; i++) {
 		dock.innerHTML += '<div class="docktile tooltip" onclick="dockApps[0].open(\'' + dockFiles[i].path + '\');"><span class="tooltiptext">' + dockFiles[i].name + '</span><img src="images/apps/' + dockFiles[i].name.replace(/\s/g, "") + dockFiles[i].state + '.png"/></div>';
 	}
-	setTimeout(function () { dock.style.bottom = "5px"; }, 250);
 }
 
 
@@ -216,12 +215,18 @@ var activeApp = 0;
 var menubar = document.getElementById("menubar");
 var dock = document.getElementById("dock");
 var appLength = dockApps.length;
-TweenLite.to(document.getElementById("bootScreen"), 0.1, { opacity: 0 });
-setTimeout(function () {
-	document.getElementById("bootScreen").parentElement.removeChild(document.getElementById("bootScreen"));
-	TweenLite.set(dock.children, { width: 83 });
-	dock.onmouseenter = dockHover;
-	dock.onmouseleave = unDockHover;
-	loadMenubar();
-	loadDock();
-}, 500);
+TweenLite.set(dock.children, { width: 83 });
+dock.onmouseenter = dockHover;
+dock.onmouseleave = unDockHover;
+loadMenubar();
+loadDock();
+CGImagesDidLoad(document.body, function () {
+	document.querySelector("#bootScreen progress").value = 1;
+	setTimeout(function () {
+	TweenLite.to(document.getElementById("bootScreen"), 0.1, { opacity: 0 });
+	setTimeout(function () {
+		document.getElementById("bootScreen").parentElement.removeChild(document.getElementById("bootScreen"));
+		setTimeout(function () { dock.style.bottom = "5px"; }, 300);
+	}, 500);
+	}, 500);
+});

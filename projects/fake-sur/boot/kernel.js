@@ -44,19 +44,22 @@ var kernel = {
 
     boot: function () {
         document.body.innerHTML = '<div id="bootScreen"><img src="boot/bootLogo.svg" /><progress value="0"></progress></div>';
+        
         kernel.readFile("filesystem.json", function (fileData) {
             var fs = JSON.parse(fileData);
-            kernel.POSIXPath("bootrom/StartupChime", function (sc) {
-                var startupChime = new Audio(sc.path);
+                var startupChime = new Audio("boot/startupChime.mp3");
                 startupChime.play();
                 setTimeout(function () {
                     document.getElementById("bootScreen").style.opacity = 1;
-                    document.querySelector("#bootScreen progress").value = 1;
                     setTimeout(function () {
-                        kernel.POSIXPath("bootrom/bootfiles", function (fw) {
-                            kernel.readFile(fw.path, function (fwData) {
+                    document.querySelector("#bootScreen progress").style.visibility = "visible";
+                    document.querySelector("#bootScreen progress").value = 0.2;
+                            kernel.readFile("boot/bootfiles.json", function (fwData) {
+                                document.querySelector("#bootScreen progress").value = 0.4;
                                 var fwList = JSON.parse(fwData);
+                                document.querySelector("#bootScreen progress").value = 0.6;
                                 var fwListLength = fwList.load.length;
+                                document.querySelector("#bootScreen progress").value = 0.8;
                                 for (var i = 0; i < fwListLength; i++) {
                                     kernel.POSIXPath(fwList.load[i], function (fwrPath) {
                                         if (fwrPath.type == 1) {
@@ -69,11 +72,9 @@ var kernel = {
                                         }
                                     });
                                 }
-                            });
                         });
-                    }, 10000);
+                     }, 3000);
                 }, 4000);
-            });
         });
     }
 
