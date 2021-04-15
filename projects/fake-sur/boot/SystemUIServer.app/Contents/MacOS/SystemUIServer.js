@@ -170,7 +170,7 @@ function loadDock() {
 		var fileBuffer = [];
 		kernel.readFile(kernel.POSIXPath("/System/Library/CoreServices/Finder.app").path + "/Contents/Info.json", function (infoDotJSON, pth) {
 			var info = JSON.parse(infoDotJSON);
-			var dt = new NSDockTile({ name: info.CFBundleName, path: pth.split("/Contents/Info.json")[0], icon: info.CFBundleIconFile.split(".icns")[0] + ".iconset/icon_128x128.png", type: "app" });
+			var dt = new NSDockTile({ name: info.CFBundleName, path: pth.split("/Contents/Info.json")[0], icon: info.CFBundleIconFile.split(".icns")[0] + ".iconset", type: "app" });
 			appBuffer.push(dt);
 		});
 		for (var i = 0; i < dockPrefs.apps.length; i++) {
@@ -178,7 +178,7 @@ function loadDock() {
 				var f = kernel.POSIXPath(dockPrefs.apps[i]);
 				kernel.readFile(f.path + "/Contents/Info.json", function (infoDotJSON, pth) {
 					var info = JSON.parse(infoDotJSON);
-					var dt = new NSDockTile({ name: info.CFBundleName, path: pth.split("/Contents/Info.json")[0], icon: info.CFBundleIconFile.split(".icns")[0] + ".iconset/icon_128x128.png", type: "app" });
+					var dt = new NSDockTile({ name: info.CFBundleName, path: pth.split("/Contents/Info.json")[0], icon: info.CFBundleIconFile.split(".icns")[0] + ".iconset", type: "app" });
 					appBuffer.push(dt);
 				});
 			} catch (e) { }
