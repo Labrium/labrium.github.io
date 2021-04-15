@@ -5,9 +5,39 @@
                 "type": 0,
                 "path": "Applications/Safari.app"
             },
+            "Calendar.app": {
+                "type": 0,
+                "path": "Applications/Calendar.app"
+            },
+            "Preview.app": {
+                "type": 0,
+                "path": "Applications/Preview.app"
+            },
             "TextEdit.app": {
                 "type": 0,
                 "path": "Applications/TextEdit.app"
+            },
+            "System Preferences.app": {
+                "type": 0,
+                "path": "Applications/System Preferences.app"
+            },
+            "Utilities": {
+                "Script Editor.app": {
+                    "type": 0,
+                    "path": "Applications/Script Editor.app"
+                },
+                "Terminal.app": {
+                    "type": 0,
+                    "path": "Applications/Terminal.app"
+                }
+            }
+        },
+        "Library": {
+            "Preferences": {
+                "com.apple.dock.plist": {
+                    "type": 1,
+                    "path": "defaults/com.apple.dock.json"
+                }
             }
         },
         "System": {
@@ -32,6 +62,14 @@
                     "SystemUIServer.app": {
                         "type": 0,
                         "path": "boot/SystemUIServer.app"
+                    },
+                    "Finder.app": {
+                        "type": 0,
+                        "path": "system/Finder.app"
+                    },
+                    "CoreTypes.bundle": {
+                        "type": 0,
+                        "path": "images/CoreTypes"
                     }
                 }
             }

@@ -1,0 +1,15 @@
+{
+    "size": 83,
+    "apps": [
+        "/Applications/Calendar.app",
+        "/Applications/System Preferences.app",
+        "/Applications/Safari.app",
+        "/Applications/Preview.app",
+        "/Applications/TextEdit.app",
+        "/Applications/Utilities/Script Editor.app",
+        "/Applications/Utilities/Terminal.app"
+    ],
+    "files": [
+        "~/Downloads"
+    ]
+}
