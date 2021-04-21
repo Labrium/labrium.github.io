@@ -8,7 +8,7 @@ body {
 	--toolbarItemPressedColor: rgba(0, 0, 0, 0.2);
 	--titlebarColor: rgba(0, 0, 0, 0.02);
 
-	--defaultCursor: url("cursors/Arrow.tiff"),default;
+	--defaultCursor: /*url("cursors/Arrow.tiff"),*/default;
 }
 
 @font-face {
@@ -37,6 +37,9 @@ body {
 	overflow: hidden;
 	width: 100%;
 	height: 100%;
+}
+body[onclick] {
+	background: url("../boot/powerOn.svg") no-repeat center center fixed, black;
 }
 
 .desktop {
