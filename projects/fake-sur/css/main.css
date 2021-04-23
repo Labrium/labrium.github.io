@@ -8,12 +8,19 @@ body {
 	--toolbarItemPressedColor: rgba(0, 0, 0, 0.2);
 	--titlebarColor: rgba(0, 0, 0, 0.02);
 
+	--borderColor: rgba(0, 0, 0, 0.2);
+	--dockAccessoryColor: rgba(0, 0, 0, 0.5);
+
 	--defaultCursor: /*url("cursors/Arrow.tiff"),*/default;
 }
 
 @font-face {
-	font-family: "AppleSystemFont";
-	src: url("../fonts/SFProText-Medium.woff") format('woff');
+	font-family: "AppleSystemFontSemibold";
+	src: url("../fonts/sf-pro-text_semibold.woff2") format('woff2');
+}
+@font-face {
+	font-family: "AppleSystemFontRegular";
+	src: url("../fonts/sf-pro-text_regular.woff2") format('woff2');
 }
 
 *:focus {
@@ -28,15 +35,17 @@ body {
 html {
 	width: 100%;
 	height: 100%;
+	background: black;
 }
 body {
 	background: black;
-	font-family: -apple-system-font, -apple-system, BlinkMacSystemFont, "AppleSystemFont", "Helvetica", sans-serif;
+	font-family: "AppleSystemFontRegular", -apple-system-font, -apple-system, BlinkMacSystemFont, "Helvetica", sans-serif;
 	margin: 0;
 	font-size: 14px;
 	overflow: hidden;
 	width: 100%;
 	height: 100%;
+	line-height: 1.4;
 }
 body[onclick] {
 	background: url("../boot/powerOn.svg") no-repeat center center fixed, black;
@@ -70,6 +79,7 @@ body[onclick] {
 /* Menu Bar */
 
 #menubar {
+	font-family: "AppleSystemFontSemibold", -apple-system-font, -apple-system, BlinkMacSystemFont, "Helvetica", sans-serif;
 	box-sizing: border-box;
 	width: 100%;
 	padding: 0 10px;
@@ -100,6 +110,8 @@ body[onclick] {
 	cursor: var(--defaultCursor);
 	color: inherit;
 	text-decoration: none;
+	height: 24px;
+	box-sizing: border-box;
 }
 .menu:active {
 	background-color: rgba(255, 255, 255, 0.25);
@@ -121,7 +133,7 @@ body[onclick] {
 .window {
 	background-color: white;
 	border-radius: 11px;
-	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 15px 40px 1px rgba(0, 0, 0, 0.425);
+	box-shadow: 0 0 0 1px var(--borderColor), 0 15px 40px 1px rgba(0, 0, 0, 0.425);
 	position: absolute;
 	overflow: hidden;
 	resize: both;
@@ -130,7 +142,7 @@ body[onclick] {
 .window:before {
 	content:'';
 	display:block;
-	box-shadow:inset 0 0 2px 1px rgba(255, 255, 255, 0.75);
+	box-shadow:inset 0 0 0 1px rgba(255, 255, 255, 0.75);
 	position:absolute;
 	top:0;
 	left:0;
@@ -152,8 +164,8 @@ body[onclick] {
 	z-index: 1;
 }
 .titlebar:hover {
-	border-bottom: 1px solid #d7d8d7;
-	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+	border-bottom: 1px solid var(--borderColor);
+	box-shadow: 0 0 0 1px var(--borderColor);
 }
 
 .windowTitle {
@@ -378,6 +390,10 @@ input:focus {
   0%   {transform: translateY(0);}
   100%  {transform: translateY(-25px);}
 }
+@keyframes reverseDockJump {
+  0%   {transform: translateY(0);}
+  100%  {transform: translateY(25px);}
+}
 
 
 
@@ -392,7 +408,7 @@ input:focus {
 	background-color: rgba(255, 255, 255, 0.25);
 	backdrop-filter: blur(50px) saturate(125%) brightness(120%);
 	-webkit-backdrop-filter: blur(50px) saturate(125%) brightness(120%);
-	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.09), 0 0 27px 9px rgba(39, 26, 26, 0.15);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 0 1px var(--borderColor), 0 0 27px 9px rgba(0, 0, 0, 0.15);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -406,12 +422,12 @@ input:focus {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	height: var(--dockSize) !important;
+	height: calc(var(--dockSize) + 5px) !important;
 	z-index: 9999999 !important;
 }
 #dockseparator {
 	box-sizing: border-box;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: var(--dockAccessoryColor);
 	border-radius: 100px;
 	width: 1px;
 	height: calc(var(--dockSize) * 0.8);
@@ -438,9 +454,13 @@ input:focus {
 	align-items: flex-end;
 	max-height: 100%;
 	width: var(--dockSize);
+	margin-bottom: 5px;
 }
 .docktile.launching {
 	animation: dockJump 0.4s alternate cubic-bezier(0.2, 0.5, 0.5, 1) infinite;
+}
+.docktile.launching:after {
+	position: fixed;
 }
 .docktile img {
 	display: block;
@@ -451,6 +471,21 @@ input:focus {
 	-moz-user-drag: none;
 	-o-user-drag: none;
 	user-drag: none;
+}
+.docktile.running:after {
+	display: block;
+	content: "";
+	width: 4px;
+	height: 4px;
+	background-color: var(--dockAccessoryColor);
+	position: absolute;
+	bottom: -5px;
+	left: calc(50% - 2px);
+	border-radius: 50%;
+	transition: background-color 1s ease;
+}
+.docktile.launching.running:after {
+	animation: reverseDockJump 0.4s alternate cubic-bezier(0.2, 0.5, 0.5, 1) infinite;
 }
 .docktile img:active {
 	filter: brightness(50%);
@@ -482,7 +517,7 @@ input:focus {
 }
 #bootScreen img {
 	width: 75px;
-	margin-top: 81px;
+	margin-top: 106px;
 	-webkit-user-drag: none;
 	-khtml-user-drag: none;
 	-moz-user-drag: none;
@@ -494,7 +529,7 @@ input:focus {
 	-webkit-appearance: none;
 	height: 6px;
 	width: 232px;
-	margin-top: 75px;
+	margin-top: 100px;
 	visibility: hidden;
 	cursor: none !important;
 }
@@ -508,7 +543,7 @@ input:focus {
 	background-color: white;
 	border-radius: 100px;
 	min-width: 6px;
-	transition: width 0.5s ease-in;
+	/*transition: width 0.5s ease-in;*/
 	cursor: none !important;
 }
 
@@ -535,6 +570,9 @@ body.dark {
 	--toolbarItemPressedColor: rgba(255, 255, 255, 0.2);
 	--titlebarColor: rgba(255, 255, 255, 0.02);
 
+	--borderColor: black;
+	--dockAccessoryColor: rgba(255, 255, 255, 0.5);
+
 }
 body.dark .desktop:before {
 	opacity: 1;
@@ -549,9 +587,6 @@ body.dark .windowTitle {
 body.dark #dock {
 	background-color: rgba(0, 0, 0, 0.4);
 }
-body.dark #dockseparator {
-	background-color: rgba(255, 255, 255, 0.5);
-}
 body.dark .tooltip .tooltiptext {
 	color: rgba(255, 255, 255, 1);
 	background-color: rgba(0, 0, 0, 0.5);
@@ -560,5 +595,5 @@ body.dark .tooltip .tooltiptext:after {
 	border-top-color: rgba(0, 0, 0, 0.5);
 }
 body.dark .closeButton, body.dark .minimizeButton, body.dark .fullscreenButton {
-	border-color: rgba(255, 255, 255, 0.15);
+	border: none;
 }

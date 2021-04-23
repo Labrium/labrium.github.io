@@ -1,8 +1,8 @@
 {
     "load": [
-        "/System/Library/Private Frameworks/TweenMax.framework",
-        "/System/Library/Frameworks/AppKit.framework",
-        "/System/Library/Frameworks/CoreGraphics.framework",
+        "/System/Library/PrivateFrameworks/TweenMax.framework/TweenMax.js",
+        "/System/Library/Frameworks/AppKit.framework/AppKit.js",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics.js",
         "/System/Library/CoreServices/SystemUIServer.app"
     ]
 }
