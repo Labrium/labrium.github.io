@@ -1,7 +1,9 @@
+window.onerror = function (e, u, l) {
+	alert("An unexpected error occurred: " + e + ".\nURL: " + u + "\nLine: " + l + ".");
+}
 var BOOTVOLUME = "Macintosh HD";
 var ROOTFS = null;
 var kernel = {
-
 	console: [],
 	log: function (msg) {
 		kernel.console.push([0, String(msg)]);
@@ -13,7 +15,7 @@ var kernel = {
 	},
 	error: function (msg) {
 		kernel.console.push([2, String(msg)]);
-		console.error(msg);
+		console.error("*** " + msg + " ***");
 	},
 
 	readFile: function (file, callback) {
@@ -135,8 +137,7 @@ var kernel = {
 				}
 				return cpath;
 			} catch (e) {
-				kernel.error(vpath + ": No such file or directory.");
-				return false;
+				throw (vpath + ": No such file or directory.");
 			}
 		}
 	},
@@ -153,46 +154,49 @@ var kernel = {
 		kernel.log("Detecting displays...");
 		document.body.innerHTML = '<div id="bootScreen"><img src="boot/bootLogo.svg" /><progress value="0"></progress></div>';
 		kernel.log("Detected internal display: " + window.innerWidth + " x " + window.innerHeight + "px.");
-		kernel.mountFilesystem(function () {
-			kernel.log("Proceeding with boot process...");
-			kernel.log("Boot volume is “" + BOOTVOLUME + "”.");
+		setTimeout(function () {
+			kernel.log("Checking GPU...");
+			document.getElementById("bootScreen").style.opacity = 1;
+			kernel.log("GPU check passed.");
 			setTimeout(function () {
-				kernel.log("Checking GPU...");
-				document.getElementById("bootScreen").style.opacity = 1;
-				kernel.log("GPU check passed.");
-				setTimeout(function () {
+				kernel.log("Proceeding with boot process...");
+				document.querySelector("#bootScreen progress").style.visibility = "visible";
+				kernel.log("Boot volume is “" + BOOTVOLUME + "”.");
+				kernel.mountFilesystem(function () {
 					kernel.log("Loading system frameworks...");
-					document.querySelector("#bootScreen progress").style.visibility = "visible";
 					document.querySelector("#bootScreen progress").value += 0.3;
-					kernel.readFile("boot/bootfiles.json", function (fwData, fwpath) {
-						document.querySelector("#bootScreen progress").value += 0.3;
-						var fwList = JSON.parse(fwData);
-						document.querySelector("#bootScreen progress").value += 0.3;
-						var fwListLength = fwList.load.length;
-						document.querySelector("#bootScreen progress").value += 0.3;
-						for (var i = 0; i < fwListLength; i++) {
-							if (kernel.POSIXPath(fwList.load[i])["@TYPE"] == 1) {
-								var fwrPath = kernel.POSIXPath(fwList.load[i]);
-								kernel.loadFramework(fwrPath["@CONTENTS"]);
-								kernel.log("Successfully loaded framework “" + fwList.load[i].split("/")[fwList.load[i].split("/").length - 1].split(".")[0] + "”.");
-							} else {
-								var infoDotJSON = kernel.POSIXPath(fwList.load[i] + "/Contents/Info.json")["@CONTENTS"];
-								var appInfo = JSON.parse(infoDotJSON);
-								kernel.loadFramework(kernel.POSIXPath(fwList.load[i] + "/Contents/MacOS/" + appInfo.CFBundleExecutable + ".js")["@CONTENTS"]);
-								kernel.log("Launching “" + fwList.load[i].split("/")[fwList.load[i].split("/").length - 1] + "”...");
-							}
-							document.querySelector("#bootScreen progress").value += 0.3;
+					var fwData = kernel.POSIXPath("/var/db/bootfiles.json")["@CONTENTS"];
+					document.querySelector("#bootScreen progress").value += 0.3;
+					var fwList = JSON.parse(fwData);
+					document.querySelector("#bootScreen progress").value += 0.3;
+					var fwListLength = fwList.load.length;
+					document.querySelector("#bootScreen progress").value += 0.3;
+					for (var i = 0; i < fwListLength; i++) {
+						if (kernel.POSIXPath(fwList.load[i])["@TYPE"] == 1) {
+							var fwrPath = kernel.POSIXPath(fwList.load[i]);
+							kernel.loadFramework(fwrPath["@CONTENTS"]);
+							kernel.log("Successfully loaded framework “" + fwList.load[i].split("/")[fwList.load[i].split("/").length - 1].split(".")[0] + "”.");
+						} else {
+							var infoDotJSON = kernel.POSIXPath(fwList.load[i] + "/Contents/Info.json")["@CONTENTS"];
+							var appInfo = JSON.parse(infoDotJSON);
+							kernel.loadFramework(kernel.POSIXPath(fwList.load[i] + "/Contents/MacOS/" + appInfo.CFBundleExecutable + ".js")["@CONTENTS"]);
+							kernel.log("Launching “" + fwList.load[i].split("/")[fwList.load[i].split("/").length - 1] + "”...");
 						}
-					});
-				}, 2000);
-			}, 4000);
-		});
+						document.querySelector("#bootScreen progress").value += 0.3;
+					}
+				});
+			}, 2000);
+		}, 4000);
 	},
 	shutDown: function () {
 		kernel.startupChime.pause();
 		kernel.startupChime.currentTime = 0;
 		document.body.innerHTML = "";
 		document.body.setAttribute("onclick", "kernel.boot();");
+	},
+	reboot: function () {
+		kernel.shutDown();
+		kernel.boot();
 	}
 
 }

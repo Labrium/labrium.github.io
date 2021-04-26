@@ -49,6 +49,7 @@ body {
 }
 body[onclick] {
 	background: url("../boot/powerOn.svg") no-repeat center center fixed, black;
+	cursor: pointer;
 }
 
 .desktop {
@@ -99,9 +100,9 @@ body[onclick] {
 }
 .menu {
 	float: left;
-	margin: 0;
-	padding: 4px 10px 4px 10px;
-	border-radius: 8px;
+	margin: 0 -5px;
+	padding: 4px 15px;
+	border-radius: 5px;
 	-webkit-user-drag: none;
 	-khtml-user-drag: none;
 	-moz-user-drag: none;
@@ -120,11 +121,16 @@ body[onclick] {
 	font-weight: bold;
 }
 .menu.f7-icons {
-	padding: 2.5px 10px 3.5px 10px;
+	padding-top: 2.5px;
+	paddint-bottom: 3.5px;
 }
 
 #statusbar {
 	float: right;
+}
+#statusbar .menu span {
+	font: inherit;
+	line-height: inherit;
 }
 
 
@@ -357,7 +363,7 @@ input:focus {
 	position: absolute;
 	font-size: 14px;
 	z-index: 1;
-	bottom: 175%;
+	bottom: 148px;
 	left: 50%;
 	transform: translateX(-50%);
 	white-space: nowrap;
@@ -375,9 +381,6 @@ input:focus {
 	border-style: solid;
 	border-color: rgba(255, 255, 255, 0.675) transparent transparent transparent;
 	transition: border-top-color 1s ease;
-}
-.tooltip.hover .tooltiptext {
-	bottom: 170%;
 }
 
 .tooltip:hover .tooltiptext {
@@ -413,7 +416,7 @@ input:focus {
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	transition: all 1s ease;
+	transition: width 1s ease, background-color 1s ease, box-shadow 1s ease, bottom 1s ease;
 	max-width: 100%;
 	width: auto;
 	-webkit-touch-callout: none;
@@ -422,7 +425,7 @@ input:focus {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	height: calc(var(--dockSize) + 5px) !important;
+	height: calc(var(--dockSize) + 6px) !important;
 	z-index: 9999999 !important;
 }
 #dockseparator {
@@ -459,9 +462,6 @@ input:focus {
 .docktile.launching {
 	animation: dockJump 0.4s alternate cubic-bezier(0.2, 0.5, 0.5, 1) infinite;
 }
-.docktile.launching:after {
-	position: fixed;
-}
 .docktile img {
 	display: block;
 	min-width: var(--dockSize);
@@ -479,7 +479,7 @@ input:focus {
 	height: 4px;
 	background-color: var(--dockAccessoryColor);
 	position: absolute;
-	bottom: -5px;
+	bottom: -8px;
 	left: calc(50% - 2px);
 	border-radius: 50%;
 	transition: background-color 1s ease;

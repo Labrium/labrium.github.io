@@ -1,8 +1,0 @@
-{
-    "load": [
-        "/System/Library/PrivateFrameworks/TweenMax.framework/TweenMax.js",
-        "/System/Library/Frameworks/AppKit.framework/AppKit.js",
-        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics.js",
-        "/System/Library/CoreServices/SystemUIServer.app"
-    ]
-}
