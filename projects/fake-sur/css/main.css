@@ -543,8 +543,10 @@ input:focus {
 	background-color: white;
 	border-radius: 100px;
 	min-width: 6px;
-	/*transition: width 0.5s ease-in;*/
 	cursor: none !important;
+}
+#bootScreen progress.loaded::-webkit-progress-value {
+	transition: width 1s ease-in;
 }
 
 
