@@ -1,5 +1,5 @@
 window.onerror = function (e, u, l) {
-	alert("An unexpected error occurred: " + e + ".\nURL: " + u + "\nLine: " + l + ".");
+	alert(e);
 }
 var BOOTVOLUME = "Macintosh HD";
 var ROOTFS = null;
