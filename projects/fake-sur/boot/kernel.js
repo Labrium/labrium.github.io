@@ -1,8 +1,12 @@
 window.onerror = function (e, u, l) {
 	alert(e);
+	if (BOOTING == true) {
+		kernel.shutdown();
+	}
 }
 var BOOTVOLUME = "Macintosh HD";
 var ROOTFS = null;
+var BOOTING = false;
 var kernel = {
 	console: [],
 	log: function (msg) {
@@ -95,12 +99,12 @@ var kernel = {
 						kernel.log("Filesystem is not bootable.");
 						kernel.log("Filesystem mount failed.");
 						kernel.log("Shutting Down...");
-						kernel.shutDown();
+						kernel.shutdown();
 					}
 				} else {
 					kernel.log("Filesystem mount failed.");
 					kernel.log("Shutting Down...");
-					kernel.shutDown();
+					kernel.shutdown();
 				}
 			});
 		} else {
@@ -145,6 +149,7 @@ var kernel = {
 	startupChime: undefined,
 
 	boot: function () {
+		BOOTING = true;
 		var PTS = 0;
 		var PCS = 0;
 		function upb() {
@@ -194,21 +199,23 @@ var kernel = {
 						if (i <= fwListLength) {
 							setTimeout(lf, 0);
 						}
-						} catch (e) { }
+						} catch (e) {
+							BOOTING = false;
+						}
 					}
 					lf();
 				});
 			}, 2000);
 		}, 4000);
 	},
-	shutDown: function () {
+	shutdown: function () {
 		kernel.startupChime.pause();
 		kernel.startupChime.currentTime = 0;
 		document.body.innerHTML = "";
 		document.body.setAttribute("onclick", "kernel.boot();");
 	},
 	reboot: function () {
-		kernel.shutDown();
+		kernel.shutdown();
 		kernel.boot();
 	}
 
