@@ -6,7 +6,7 @@ body {
 	--toolbarDisabledTextColor: rgba(0, 0, 0, 0.1);
 	--toolbarTextColor: rgba(0, 0, 0, 0.5);
 	--toolbarItemPressedColor: rgba(0, 0, 0, 0.2);
-	--titlebarColor: rgba(0, 0, 0, 0.02);
+	--titlebarColor: #f8f8f8;
 
 	--borderColor: rgba(0, 0, 0, 0.2);
 	--dockAccessoryColor: rgba(0, 0, 0, 0.5);

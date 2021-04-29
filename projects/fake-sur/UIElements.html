@@ -23,25 +23,33 @@
 			--ui-element-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 -1px 0 0 rgba(0, 0, 0, 0.05), 1px 0 0 0 rgba(0, 0, 0, 0.05), -1px 0 0 0 rgba(0, 0, 0, 0.05);
 			--ui-element-inset-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.3), inset 0 -1px 0 0 rgba(0, 0, 0, 0.1), inset 1px 0 0 0 rgba(0, 0, 0, 0.1), inset -1px 0 0 0 rgba(0, 0, 0, 0.1);
 			--animation: 0.25s cubic-bezier(.28, .11, .32, 1);
-			--darken: 0;
+			--border-color: rgba(0, 0, 0, 0.2);
 		}
 
 		@font-face {
 			font-family: "AppleSystemFontRegular";
-			src: url("https://techlabsinc.github.io/projects/fake-sur/fonts/sf-pro-text_regular.woff2") format('woff2');
+			src: url("https://techlabsinc.github.io/projects/fake-sur/fonts/woff2/sf-pro-text_regular.woff2") format('woff2');
+		}
+		@font-face {
+			font-family: "AppleSystemFontSemibold";
+			src: url("https://techlabsinc.github.io/projects/fake-sur/fonts/woff2/sf-pro-text_semibold.woff2") format('woff2');
 		}
 
 		button,
 		input,
 		textarea,
-		select {
+		select,
+		legend,
+		.alert,
+		.notification {
 			font-family: "AppleSystemFontRegular", -apple-system-font, -apple-system, BlinkMacSystemFont, "Helvetica", sans-serif;
 			/*font-weight: bold;*/
+			font-size: 12px;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			outline: none;
 			border: none;
-			margin: 8px;
+			margin: 4px;
 		}
 
 		button,
@@ -56,7 +64,8 @@
 			border-radius: 6px;
 			border: none;
 			box-shadow: var(--ui-element-shadow);
-			padding: 2px 10px;
+			padding: 0 12px;
+			height: 20px;
 		}
 
 		button[active],
@@ -104,9 +113,11 @@
 		}
 
 		button[type="help"]:active,
-		input[type="checkbox"]:not([switch], [disabled]):active,
-		input[type="radio"]:not([disabled]):active {
-			filter: brightness(75%);
+		input[type="checkbox"]:not([disabled]):active,
+		input[type="radio"]:not([disabled]):active,
+		input[type="range"]:active::-webkit-slider-thumb {
+			filter: brightness(95%);
+			-webkit-backdrop-filter: brightness(95%);
 		}
 
 		input[type="text"],
@@ -119,24 +130,8 @@
 			box-shadow: var(--ui-element-shadow);
 		}
 
-		::selection {
-			background-color: var(--highlight-color);
-		}
-
-		::-moz-selection {
-			background-color: var(--highlight-color);
-		}
-
-		::-o-selection {
-			background-color: var(--highlight-color);
-		}
-
-		::-ms-selection {
-			background-color: var(--highlight-color);
-		}
-
-		::-webkit-selection {
-			background-color: var(--highlight-color);
+		input[type="search"] {
+			-webkit-appearance: none;
 		}
 
 		input[type="color"] {
@@ -246,6 +241,7 @@
 			background: var(--accent-color);
 			margin-top: 10px;
 			margin-bottom: 10px;
+			position: relative;
 		}
 
 		input[type="range"]::-moz-range-track {
@@ -265,6 +261,12 @@
 			background: white;
 			border: none;
 			box-shadow: var(--ui-element-shadow);
+		}
+
+		input[type="range"][step]::-webkit-slider-thumb {
+			width: 8px;
+			border-radius: 10000000px;
+			position: relative;
 		}
 
 		input[type="range"]::-moz-range-thumb {
@@ -395,6 +397,58 @@
 			border-right: 1px solid rgba(0, 0, 0, 0.2);
 		}
 
+
+
+		fieldset {
+			background-color: rgba(0, 0, 0, 0.035);
+			border-radius: 6px;
+			border: none;
+			box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.045);
+		}
+		legend {
+			margin: auto;
+			font-size: 14px;
+			background-color: #e7e7e7;
+			border-radius: 7px;
+			box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.06);
+			/*padding: 0 14px;*/
+			box-sizing: border-box;
+			padding: 0 1px;
+			height: 22px;
+			line-height: 22px;
+		}
+		legend button {
+			margin: 0;
+			transform: translateY(-1px);
+			position: relative;
+		}
+		legend button:not(:first-child) {
+			margin-left: -4px;
+		}
+		legend button:not([selected]) {
+			background: none;
+		}
+		legend button:not(:hover):not([selected]) {
+			box-shadow: none;
+		}
+		legend button:not([selected]):not(:first-child):not(:last-child):after {
+			content: "";
+			display: block;
+			width: 1px;
+			height: 12px;
+			background-color: rgba(0, 0, 0, 0.2);
+			position: absolute;
+			right: 0;
+			top: 4px;
+		}
+		legend button:active {
+			background: white !important;
+			box-shadow: var(--ui-element-shadow) !important;
+			color: black !important;
+			filter: brightness(95%);
+		}
+
+
 		input:focus,
 		button:focus,
 		textarea:focus,
@@ -402,11 +456,176 @@
 			box-shadow: 0 0 0 4px var(--highlight-color) !important;
 			border-radius: 4px;
 		}
+
+		::selection {
+			background-color: var(--highlight-color) !important;
+		}
+
+		::-moz-selection {
+			background-color: var(--highlight-color) !important;
+		}
+
+		::-o-selection {
+			background-color: var(--highlight-color) !important;
+		}
+
+		::-ms-selection {
+			background-color: var(--highlight-color) !important;
+		}
+
+		::-webkit-selection {
+			background-color: var(--highlight-color) !important;
+		}
+
+
+
+
+
+
+		.alert {
+			width: 260px;
+			background-color: transparent;
+			border-radius: 11px;
+			box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), 0 0 0 1px var(--border-color), 0 15px 40px 1px rgba(0, 0, 0, 0.425);
+			-webkit-backdrop-filter: blur(50px);
+			padding: 12px;
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: center;
+			align-items: center;
+			box-sizing: border-box;
+		}
+		.alert img {
+			margin: 8px auto;
+			width: 64px;
+		}
+		.alert span {
+			margin: 8px;
+			text-align: center;
+			width: calc(100% - 8px);
+			white-space: normal;
+			font-size: 11px;
+		}
+		.alert span:first-of-type {
+			font-family: "AppleSystemFontSemibold", -apple-system-font, -apple-system, BlinkMacSystemFont, "Helvetica", sans-serif;
+			margin-top: 16px;
+			font-size: 12px;
+			/*font-weight: bold;*/
+		}
+		.alert div {
+			display: flex;
+			width: 100%;
+			margin-top: 8px;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			box-sizing: border-box;
+			flex-wrap: wrap;
+		}
+		.alert div.row {
+			flex-direction: row;
+		}
+		.alert button {
+			flex-grow: 1;
+			height: 28px;
+			box-shadow: none;
+			box-sizing: border-box;
+		}
+		.alert div:not(.row) button {
+			width: calc(100% - 4px);
+		}
+		.alert button:not([active]) {
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+
+
+		#NotificationCenterDisplay {
+			position: fixed;
+			top: 0px;
+			right: 0px;
+			height: 100vh;
+			padding: 4px;
+			pointer-events: none;
+		}
+
+		.notification {
+			pointer-events: all;
+			background-color: transparent;
+			border-radius: 11px;
+			box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), 0 0 0 1px var(--border-color), 0 0 8px 0 rgba(0, 0, 0, 0.3);
+			-webkit-backdrop-filter: blur(50px);
+			padding: 12px;
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: flex-start;
+			align-items: center;
+			box-sizing: border-box;
+			width: 344px;
+			min-height: 74px;
+			height: auto;
+			margin: 16px;
+			box-sizing: border-box;
+			padding: 8px;
+			cursor: default;
+			transform: translateX(calc(100% + 28px));
+			transition: transform 0.6s ease-out;
+			position: relative;
+		}
+		.notification div:first-child {
+			content: "";
+			width: 20px;
+			height: 20px;
+			display: block;
+			position: absolute;
+			background: url("/Volumes/BYUSD/code/HTML/macOS Big Sur/images/close.svg") no-repeat center center, #ebebeb;
+			background-size: 14px;
+			filter: grayscale(100%);
+			border-radius: 50%;
+			box-shadow: 0 0 0 1px var(--border-color), 0 0 8px 0 rgba(0, 0, 0, 0.3);
+			top: -6px;
+			left: -6px;
+			cursor: default;
+			opacity: 0;
+		}
+		.notification:hover div:first-child {
+			opacity: 1;
+		}
+		.notification div:first-child:active {
+			filter: brightness(95%);
+		}
+		.notification img {
+			float: left;
+			margin-right: 4px;
+			margin-bottom: 4px;
+			width: 16px;
+		}
+		.notification div:nth-child(2) {
+			height: 18px;
+			line-height: 18px;
+			width: 100%;
+			color: rgba(0, 0, 0, 0.5);
+			margin-bottom: 4px;
+		}
+		.notification div span:first-of-type {
+			display: inline-block;
+			text-transform: uppercase;
+		}
+		.notification div span:last-of-type {
+			display: block;
+			float: right;
+		}
+		.notification > span {
+			width: 100%;
+			height: 18px;
+		}
+		.notification > span:first-of-type {
+			font-family: "AppleSystemFontSemibold", -apple-system-font, -apple-system, BlinkMacSystemFont, "Helvetica", sans-serif;
+		}
 	</style>
 </head>
 
 <body style="background: #f3f3f3;">
-	<button>Button</button>
+	<button onclick="notify();">Button</button>
 	<button disabled>Disabled</button>
 	<button active>Active</button>
 	<button type="help"></button>
@@ -424,11 +643,19 @@
 	<input type="file" disabled />
 	<input type="number" value="100" />
 	<input type="password" value="Password" />
+	<fieldset>
+	<legend>
+		<button>Fieldset</button>
+		<button selected>Segmented</button>
+		<button>Control</button>
+		<button>Box</button>
+	</legend>
 	<input type="radio" value="Radio" name="Radio" />
 	<input type="radio" value="Radio" name="Radio" checked />
 	<input type="radio" value="Radio" name="Radio2" disabled />
 	<input type="radio" value="Radio" name="Radio2" disabled checked />
-	<input type="range" value="Range" />
+	<input type="range" value="50" />
+	<input type="range" value="50" step="10" />
 	<input type="reset" value="Reset" />
 	<input type="search" value="Search" />
 	<input type="submit" value="Submit" />
@@ -444,9 +671,138 @@
 		<option>Option 2</option>
 		<option>Option 3</option>
 	</select>
+	</fieldset>
+
+
+
+
+
+
+
+
+
+	<div class="alert" style="float: left; margin: 16px;">
+		<img src="file:///Users/kiosk/Desktop/fakeOS Filesystem/Macintosh HD/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.iconset/icon_128x128.png" />
+		<span>Are you sure you want to delete "file.txt"?</span>
+		<span>This item will be delete immediately.<br/>You can't undo this action.</span>
+		<div class="row">
+			<button active>Cancel</button>
+			<button>Delete</button>
+		</div>
+	</div>
+
+	<div class="alert" style="float: left; margin: 16px;">
+		<img src="file:///Users/kiosk/Desktop/fakeOS Filesystem/Macintosh HD/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.iconset/icon_128x128.png" />
+		<span>Are you sure you want to delete "file.txt"?</span>
+		<span>This item will be delete immediately.<br/>You can't undo this action.</span>
+		<div>
+			<button active>Cancel</button>
+			<button>Delete</button>
+		</div>
+	</div>
+
+	<div class="alert" style="float: left; margin: 16px;">
+		<img src="file:///Users/kiosk/Desktop/fakeOS Filesystem/Macintosh HD/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.iconset/icon_128x128.png" />
+		<span>Are you sure you want to delete "file.txt"?</span>
+		<span>This item will be delete immediately.<br/>You can't undo this action.</span>
+		<div class="row">
+			<button active>Cancel</button>
+			<button>Delete</button>
+			<button>OK</button>
+			<button>Something Else</button>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+	<div id="NotificationCenterDisplay">
+
+	<div class="notification">
+		<div onclick="this.parentElement.remove();"></div>
+		<div>
+			<img src="file:///Users/kiosk/Desktop/fakeOS Filesystem/Macintosh HD/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.iconset/icon_16x16.png" />
+			<span>Finder</span>
+			<span>10:30 AM</span>
+		</div>
+		<span>This is notification #1.</span>
+		<span>This is the subtitle of a notification.</span>
+		<span>This is the message body of a notification.</span>
+	</div>
+
+	<div class="notification">
+		<div onclick="this.parentElement.remove();"></div>
+		<div>
+			<img src="file:///Users/kiosk/Desktop/fakeOS Filesystem/Macintosh HD/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.iconset/icon_16x16.png" />
+			<span>Finder</span>
+			<span>10:30 AM</span>
+		</div>
+		<span>This is notification #2.</span>
+		<span>This is the subtitle of a notification.</span>
+		<span>This is the message body of a notification.</span>
+	</div>
+
+	<div class="notification">
+		<div onclick="this.parentElement.remove();"></div>
+		<div>
+			<img src="file:///Users/kiosk/Desktop/fakeOS Filesystem/Macintosh HD/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.iconset/icon_16x16.png" />
+			<span>Finder</span>
+			<span>10:30 AM</span>
+		</div>
+		<span>This is notification #3.</span>
+		<span>This is the subtitle of a notification.</span>
+		<span>This is the message body of a notification.</span>
+	</div>
+
+	<div class="notification">
+		<div onclick="this.parentElement.remove();"></div>
+		<div>
+			<img src="file:///Users/kiosk/Desktop/fakeOS Filesystem/Macintosh HD/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.iconset/icon_16x16.png" />
+			<span>Finder</span>
+			<span>10:30 AM</span>
+		</div>
+		<span>This is notification #4.</span>
+		<span>This is the subtitle of a notification.</span>
+		<span>This is the message body of a notification.</span>
+	</div>
+
+	<div class="notification">
+		<div onclick="this.parentElement.remove();"></div>
+		<div>
+			<img src="file:///Users/kiosk/Desktop/fakeOS Filesystem/Macintosh HD/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.iconset/icon_16x16.png" />
+			<span>Finder</span>
+			<span>10:30 AM</span>
+		</div>
+		<span>This is notification #5.</span>
+		<span>This is the subtitle of a notification.</span>
+		<span>This is the message body of a notification.</span>
+	</div>
+
+	</div>
+
+
+
+
+
+
+
+
 
 
 	<script>
+		var i = 0;
+		function notify () {
+			document.getElementsByClassName('notification')[i].style.transform = "none";
+			i++;
+			setTimeout(notify, 300);
+		}
 		setInterval(function () {
 			var pbars = document.querySelectorAll('progress[value], meter');
 			for (var i = 0; i < pbars.length; i++) {
