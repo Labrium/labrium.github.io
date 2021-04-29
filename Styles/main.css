@@ -843,6 +843,9 @@ button:hover {
   h2 {
     font-size: 5vw;
   }
+  .accordion h2 img {
+    margin-right: 10px;
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -879,5 +882,12 @@ button:hover {
   }
   article {
     margin: auto;
+  }
+  .accordion h2 {
+    font-size: 3vw;
+  }
+  .accordion h2 small {
+    font-size: 75%;
+    margin: 1%;
   }
 }
