@@ -141,8 +141,6 @@ body[onclick] {
 	border-radius: 11px;
 	box-shadow: 0 0 0 1px var(--borderColor), 0 15px 40px 1px rgba(0, 0, 0, 0.425);
 	position: absolute;
-	overflow: hidden;
-	resize: both;
 	transition: background-color 1s ease;
 }
 .window:before {
@@ -169,14 +167,14 @@ body[onclick] {
 	transition: all 0.5s ease;
 }
 .titlebarThick:not(.titled) .windowControls {
-	padding: 9px;
+	margin: 9px;
 }
 
 .titlebarThick.tabbed {
 	height: 54px;
 }
 .titlebarThick.tabbed .windowControls {
-	padding: 17px;
+	margin: 17px;
 }
 .titlebarThick.tabbed .toolbar {
 	box-sizing: border-box;
@@ -189,8 +187,7 @@ body[onclick] {
 .windowControls {
 	position: absolute;
 	display: flex;
-	padding: 4px;
-	z-index: 2;
+	margin: 4px;
 }
 
 .closeButton, .minimizeButton, .fullscreenButton {
@@ -230,6 +227,79 @@ body[onclick] {
 .closeButton:active, .minimizeButton:active, .fullscreenButton:active {
 	filter: brightness(75%);
 }
+
+.windowTopRightResizeHandle, .windowTopLeftResizeHandle, .windowBottomRightResizeHandle, .windowBottomLeftResizeHandle, .windowTopResizeHandle, .windowBottomResizeHandle, .windowLeftResizeHandle, .windowRightResizeHandle {
+	/*-webkit-backdrop-filter: invert();
+	backdrop-filter: invert();*/
+	box-sizing: border-box;
+}
+.windowTopRightResizeHandle, .windowTopLeftResizeHandle, .windowBottomRightResizeHandle, .windowBottomLeftResizeHandle {
+	width: 16px;
+	height: 16px;
+}
+
+.windowTopRightResizeHandle {
+	position: absolute;
+	top: -6px;
+	right: -6px;
+	cursor: nesw-resize;
+}
+.windowTopLeftResizeHandle {
+	position: absolute;
+	top: -6px;
+	left: -6px;
+	cursor: nwse-resize;
+}
+.windowBottomRightResizeHandle {
+	position: absolute;
+	bottom: -6px;
+	right: -6px;
+	cursor: nwse-resize;
+}
+.windowBottomLeftResizeHandle {
+	position: absolute;
+	bottom: -6px;
+	left: -6px;
+	cursor: nesw-resize;
+}
+.windowTopResizeHandle {
+	position: absolute;
+	top: -4px;
+	right: 10px;
+	width: calc(100% - 20px);
+	height: 8px;
+	cursor: ns-resize;
+}
+.windowBottomResizeHandle {
+	position: absolute;
+	bottom: -4px;
+	right: 10px;
+	width: calc(100% - 20px);
+	height: 8px;
+	cursor: ns-resize;
+}
+.windowLeftResizeHandle {
+	position: absolute;
+	top: 10px;
+	left: -4px;
+	width: 8px;
+	height: calc(100% - 20px);
+	cursor: ew-resize;
+}
+.windowRightResizeHandle {
+	position: absolute;
+	top: 10px;
+	right: -4px;
+	width: 8px;
+	height: calc(100% - 20px);
+	cursor: ew-resize;
+}
+.contentView {
+	border-bottom-right-radius: inherit;
+	border-bottom-left-radius: inherit;
+}
+
+
 
 
 
@@ -392,14 +462,17 @@ input:focus {
 	transition: color 1s ease;
 	display: block;
 	line-height: 27px;
+	height: 27px;
 	text-align: center;
 	font-weight: bold;
+	overflow: hidden;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	pointer-events: none;
 }
 
 
