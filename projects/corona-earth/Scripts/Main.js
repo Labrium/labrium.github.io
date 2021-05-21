@@ -27,6 +27,13 @@ function LLHtoECEF(lat, lon, alt, rad) {
 	return new THREE.Vector3(x, y, z);
 }
 
+function commaSeparateNumber(val){
+    while (/(\d+)(\d{3})/.test(val.toString())){
+      val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+    }
+    return val;
+  }
+
 var camdistance = 2;
 
 var orbitUp, orbitDown, orbitLeft, orbitRight;
@@ -94,6 +101,9 @@ var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHei
 
 var renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
+if (navigator.userAgent == "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/604.3.5 (KHTML, like Gecko)") {
+	renderer.domElement.style.borderRadius = "20px";
+}
 document.body.appendChild(renderer.domElement);
 var Earth = new THREE.Mesh(new THREE.SphereGeometry(1, 64, 64), new THREE.MeshPhongMaterial({
 	map: new THREE.TextureLoader().load('Images/Earth.png'),
@@ -146,8 +156,8 @@ getJHUReport(function (text) {
 	console.log(data);
 	for (var i = 0; i < data.length-1; i++) {
 		var newspot = spot.clone();
-		newspot.position.copy(LLHtoECEF(data[i].Lat, data[i].Long_, 0.025 + data[i].Confirmed / 3000000, 1));
-		newspot.scale.set(0.025 + data[i].Confirmed / 3000000, 0.025 + data[i].Confirmed / 3000000);
+		newspot.position.copy(LLHtoECEF(data[i].Lat, data[i].Long_, 0.025 + data[i].Confirmed / 30000000, 1));
+		newspot.scale.set(0.025 + data[i].Confirmed / 30000000, 0.025 + data[i].Confirmed / 30000000);
 		spots.add(newspot);
 		pinStems.push(new THREE.Vector3(0, 0, 0));
 		pinStems.push(newspot.position);
@@ -159,9 +169,12 @@ getJHUReport(function (text) {
 		linewidth: 3,
 	}));
 	spots.add(stems);
-	alert(total);
+	document.getElementById('cases').innerHTML = "Global Cases: " + commaSeparateNumber(total);
 });
 
+for (var i = 0; i < spots.children.length - 1; i++) {
+	spots.children[i].position.copy(LLHtoECEF(data[i].Lat, data[i].Long_, 0.025 + data[i].Confirmed / 30000000, 1));
+}
 
 var animate = function () {
 	requestAnimationFrame(animate);
@@ -183,10 +196,6 @@ var animate = function () {
 	Clouds.rotateY(0.0002);
 	camera.lookAt(Earth.position);
 	camera.translateZ(-(distance(camera.position, Earth.position) - camdistance) / 10);
-
-	for (var i = 0; i < spots.children.length - 1; i++) {
-		spots.children[i].position.copy(LLHtoECEF(data[i].Lat, data[i].Long_, 0.025 + data[i].Confirmed / 3000000, 1));
-	}
 
 	light.position.copy(camera.position);
 	renderer.render(scene, camera);

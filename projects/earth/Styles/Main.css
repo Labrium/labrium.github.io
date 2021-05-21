@@ -10,10 +10,6 @@ body {
 	cursor: default;
 }
 
-canvas {
-	border-radius: 20px;
-}
-
 #logo {
 	margin: 0;
 	position: absolute;

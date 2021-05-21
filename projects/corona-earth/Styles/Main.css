@@ -10,15 +10,18 @@ body {
 	cursor: default;
 }
 
-canvas {
-	border-radius: 20px;
-}
-
-#logo {
-	margin: 0;
+#cases {
+	background-color: rgba(0, 0, 0, 0.5);
+	text-align: center;
+	font-size: 24px;
+	color: red;
+	font-weight: bold;
+	padding: 8px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 	position: absolute;
-	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 10;
+	top: 0;
+	transform: translateX(-50%);
+	font-family: -apple-system-font, sans-serif, monospace;
 }

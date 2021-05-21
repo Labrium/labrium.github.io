@@ -56,8 +56,8 @@ var onKeyUp = function (event) {
 			break;
 	}
 };
-	document.addEventListener("keydown", onKeyDown, false);
-	document.addEventListener("keyup", onKeyUp, false);
+document.addEventListener("keydown", onKeyDown, false);
+document.addEventListener("keyup", onKeyUp, false);
 
 function onWindowResize() {
 	camera.aspect = window.innerWidth / window.innerHeight;
@@ -74,54 +74,60 @@ new THREE.TextureLoader().load('Images/sky.png', function (texture) {
 	sky = rt;
 	scene.background = rt;
 });
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.0001, 1000 );
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.0001, 1000);
 
-			var renderer = new THREE.WebGLRenderer({antialias: true});
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			document.body.appendChild( renderer.domElement );
-			var Earth = new THREE.Mesh( new THREE.SphereGeometry(1,64,64), new THREE.MeshPhongMaterial( { map: new THREE.TextureLoader().load('Images/Earth.png'),
-bumpMap: new THREE.TextureLoader().load('Images/earth_bumpmap.jpg'),
-bumpScale: 0.05} ) );
-			var Atmosphere = new THREE.Mesh( new THREE.SphereGeometry(1.11,64,64), new THREE.MeshMatcapMaterial( { color: 0x56E9FD,
-matcap: new THREE.TextureLoader().load('Images/Atmosphere.png'),
-side: THREE.BackSide, blending: THREE.AdditiveBlending} ) );
+var renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+if (navigator.userAgent == "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/604.3.5 (KHTML, like Gecko)") {
+	renderer.domElement.style.borderRadius = "20px";
+}
+document.body.appendChild(renderer.domElement);
+var Earth = new THREE.Mesh(new THREE.SphereGeometry(1, 64, 64), new THREE.MeshPhongMaterial({
+	map: new THREE.TextureLoader().load('Images/Earth.png'),
+	bumpMap: new THREE.TextureLoader().load('Images/earth_bumpmap.jpg'),
+	bumpScale: 0.05
+}));
+var Atmosphere = new THREE.Mesh(new THREE.SphereGeometry(1.11, 64, 64), new THREE.MeshMatcapMaterial({
+	color: 0x56E9FD,
+	matcap: new THREE.TextureLoader().load('Images/Atmosphere.png'),
+	side: THREE.BackSide, blending: THREE.AdditiveBlending
+}));
 
-			var Clouds = new THREE.Mesh( new THREE.SphereGeometry(1,64,64), new THREE.MeshBasicMaterial( {alphaMap: new THREE.TextureLoader().load('Images/Clouds.jp2'), transparent: true} ) );
-			Clouds.material.depthFunc = THREE.AlwaysDepth;
+var Clouds = new THREE.Mesh(new THREE.SphereGeometry(1, 64, 64), new THREE.MeshBasicMaterial({ alphaMap: new THREE.TextureLoader().load('Images/Clouds.jp2'), transparent: true, depthTest: false }));
 
-			scene.add( Earth );
-			scene.add( Atmosphere );
-			scene.add( Clouds );
-			var light = new THREE.HemisphereLight(0x2c2c2c,0xffffff,5);
-			scene.add(light);
+scene.add(Earth);
+scene.add(Atmosphere);
+scene.add(Clouds);
+var light = new THREE.HemisphereLight(0x2c2c2c, 0xffffff, 5);
+scene.add(light);
 
-			camera.position.z = 20;
-			camera.position.y = 10;
-			
+camera.position.z = 20;
+camera.position.y = 10;
 
-			var animate = function () {
-				requestAnimationFrame( animate );
 
-				if (orbitUp === true) {
-			camera.translateY(camdistance / 50);
-		}
-		if (orbitDown === true) {
-			camera.translateY(-camdistance / 50);
-		}
-		if (orbitRight === true) {
-			camera.translateX(camdistance / 50);
-		}
-		if (orbitLeft === true) {
-			camera.translateX(-camdistance / 50);
-		}
+var animate = function () {
+	requestAnimationFrame(animate);
 
-				camera.translateX(-0.001);
-				Clouds.rotateY(0.0001);
-				camera.lookAt(scene.position);
-				camera.translateZ(-(distance(camera.position, Earth.position) - camdistance) / 10);
+	if (orbitUp === true) {
+		camera.translateY(camdistance / 50);
+	}
+	if (orbitDown === true) {
+		camera.translateY(-camdistance / 50);
+	}
+	if (orbitRight === true) {
+		camera.translateX(camdistance / 50);
+	}
+	if (orbitLeft === true) {
+		camera.translateX(-camdistance / 50);
+	}
 
-				light.position.copy(camera.position);
-				renderer.render( scene, camera );
-			};
+	camera.translateX(-0.001);
+	Clouds.rotateY(0.0001);
+	camera.lookAt(scene.position);
+	camera.translateZ(-(distance(camera.position, Earth.position) - camdistance) / 10);
 
-			animate();
+	light.position.copy(camera.position);
+	renderer.render(scene, camera);
+};
+
+animate();
