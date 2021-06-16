@@ -1,6 +1,0 @@
-newmtl Mat
-Kd 0.188235 0.596078 0.062745
-Ks 0.466667 1.000000 0.533333
-illum 2
-Ns 50.781250
-map_Kd cactus.png

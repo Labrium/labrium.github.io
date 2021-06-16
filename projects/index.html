@@ -31,14 +31,22 @@
 			for (var i = 0; i < projectList.new.length; i++) {
 				readTextFile("projectCatalog/" + projectList.new[i] + ".json", function (newtext) {
 					var projectInfo = JSON.parse(newtext);
-					var newProjectCard = '<a href="' + projectInfo.projectPage + '" class="gridItem card"><div class="ribbon"><span>NEW<\span></div><img src = "Images/' + projectInfo.projectPage + '.png"> <br>' + projectInfo.name + '<p>' + projectInfo.description + '</p><div class="statusLabel">Status:<br/><div style="background-color: ' + colors[projectInfo.status[0]] + ';"></div><span style="color: ' + colors[projectInfo.status[0]] + ';">' + projectInfo.status[1] + '</span></div></a>';
+					var pURL = projectInfo.projectPage;
+					if (projectInfo.externalURL) {
+						pURL = projectInfo.externalURL;
+					}
+					var newProjectCard = '<a href="' + pURL + '" class="gridItem card"><div class="ribbon"><span>NEW<\span></div><img src = "Images/' + projectInfo.projectPage + '.png"> <br>' + projectInfo.name + '<p>' + projectInfo.description + '</p><div class="statusLabel">Status:<br/><div style="background-color: ' + colors[projectInfo.status[0]] + ';"></div><span style="color: ' + colors[projectInfo.status[0]] + ';">' + projectInfo.status[1] + '</span></div></a>';
 					document.getElementsByClassName("gridRow")[0].innerHTML += newProjectCard;
 				});
 			}
 			for (var i = 0; i < projectList.notNew.length; i++) {
 				readTextFile("projectCatalog/" + projectList.notNew[i] + ".json", function (newtext) {
 					var projectInfo = JSON.parse(newtext);
-					var newProjectCard = '<a href="' + projectInfo.projectPage + '" class="gridItem card"><img src = "Images/' + projectInfo.projectPage + '.png"> <br>' + projectInfo.name + '<p>' + projectInfo.description + '</p><div class="statusLabel">Status:<br/><div style="background-color: ' + colors[projectInfo.status[0]] + ';"></div><span style="color: ' + colors[projectInfo.status[0]] + ';">' + projectInfo.status[1] + '</span></div></a>';
+					var pURL = projectInfo.projectPage;
+					if (projectInfo.externalURL) {
+						pURL = projectInfo.externalURL;
+					}
+					var newProjectCard = '<a href="' + pURL + '" class="gridItem card"><img src = "Images/' + projectInfo.projectPage + '.png"> <br>' + projectInfo.name + '<p>' + projectInfo.description + '</p><div class="statusLabel">Status:<br/><div style="background-color: ' + colors[projectInfo.status[0]] + ';"></div><span style="color: ' + colors[projectInfo.status[0]] + ';">' + projectInfo.status[1] + '</span></div></a>';
 					document.getElementsByClassName("gridRow")[0].innerHTML += newProjectCard;
 				});
 			}

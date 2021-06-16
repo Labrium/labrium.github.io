@@ -1,6 +1,7 @@
 {
     "name": "fakeOS Fake Sur",
     "projectPage": "fake-sur",
+    "externalURL": "https://techlabsinc.github.io/fakeOS-Fake-Sur/",
     "description": "A macOS Big Sur operating system replica made with HTML, CSS and JavaScript. This project has been meticulously designed to look virtually indistinguishable from the real OS, and function in a similar way. Other potential fakeOS concepts include fakeOS Fake Sierra (macOS High Sierra 10.13), and fakeOS Fakeetah [name needs work] (OSX Cheetah 10.0).",
     "status": ["green", "Beta"]
 }
