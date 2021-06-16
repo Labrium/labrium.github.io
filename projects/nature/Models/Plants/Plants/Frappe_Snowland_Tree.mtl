@@ -1,0 +1,9 @@
+newmtl Leaves
+Kd 0.156863 0.345098 0.094118
+illum 1
+map_Kd fsl_tree_a.png
+
+newmtl Bark
+Kd 0.407843 0.282353 0.188235
+illum 1
+map_Kd fsl_tree_b.png

@@ -1,0 +1,23 @@
+newmtl Spots
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+illum 2
+Ns 50.781250
+map_Kd piranha_a.png
+
+newmtl Black
+Kd 0.800000 0.800000 0.800000
+illum 1
+map_Kd piranha_d.png
+
+newmtl Lips
+Kd 0.972549 0.972549 0.000000
+illum 1
+map_Kd piranha_b.png
+
+newmtl Leaves
+Kd 0.156863 0.658824 0.062745
+Ks 1.000000 1.000000 1.000000
+illum 2
+Ns 50.781250
+map_Kd piranha_c.png

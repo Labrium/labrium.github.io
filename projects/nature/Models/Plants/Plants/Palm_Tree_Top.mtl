@@ -1,0 +1,5 @@
+newmtl NemuMat67
+Kd 0.996094 0.996094 0.996094
+illum 1
+map_Kd palm.png
+map_d palm.png

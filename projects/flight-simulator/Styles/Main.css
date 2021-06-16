@@ -1,0 +1,25 @@
+body {
+	margin: 0;
+	/*background: url("../Images/Background.png") no-repeat center center fixed;*/
+	background-color:transparent;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	overflow: hidden;
+	cursor: default;
+}
+
+canvas {
+	width: 100%;
+	height: 100%;
+}
+
+#logo {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 10;
+}

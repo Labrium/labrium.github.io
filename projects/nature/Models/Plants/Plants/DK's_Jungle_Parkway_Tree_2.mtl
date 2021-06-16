@@ -1,0 +1,13 @@
+newmtl Bark
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+illum 2
+Ns 50.781250
+map_Kd dk_tree_a.png
+
+newmtl Leaves
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+illum 2
+Ns 50.781250
+map_Kd dk_tree_c.png
