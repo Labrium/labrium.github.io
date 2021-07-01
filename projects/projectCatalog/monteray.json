@@ -1,0 +1,7 @@
+{
+    "name": "MonteRay",
+    "projectPage": "monteray",
+    "externalURL": "https://techlabsinc.github.io/MonteRay/Examples/Luxo.html",
+    "description": "A Three.js pathtracing renderer written in 100% ES5 JavaScript using native Three.js classes and objects. This renderer has been created as an alternative to the default Three.js WebGL renderer, and will (at some future time) support most if not all Three.js scenes and materials.",
+    "status": ["green", "Alpha"]
+}
