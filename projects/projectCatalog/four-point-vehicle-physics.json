@@ -1,6 +1,6 @@
 {
     "name": "Four Point Vehicle Physics",
     "projectPage": "four-point-vehicle-physics",
-    "description": "A new method for realistic realtime vehicle physics without a conventional physics engine, and avoiding complex rotations and unnecessary collision tests by simulating four individual free-moving spheres and constraining them by a distance to the other three spheres.",
+    "description": "A new method for realistic realtime vehicle physics without a conventional physics engine, and avoiding complex rotations and unnecessary collision tests by simulating four individual free-moving spheres and constraining them by a distance to the other three spheres. Special thanks to <i>Jan Blaha</i> for the Sketchbook World.",
     "status": ["green", "Functional"]
 }
