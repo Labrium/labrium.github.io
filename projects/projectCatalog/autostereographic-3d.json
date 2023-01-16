@@ -1,0 +1,6 @@
+{
+    "name": "Autostereographic 3D",
+    "projectPage": "autostereographic-3d",
+    "description": "An experiment with creating Autostereograms (or <i>MagicEye</i>) in realtime using WebGL",
+    "status": ["green", "Complete"]
+}

@@ -611,6 +611,7 @@ loader.load(tireLib[P1.tires].model[kartLib[P1.kart].type], function (collada) {
 });
 loader.load(characterLib[P1.character].model, function (collada) {
 	Mario = collada.scene;
+	Mario.matrixAutoUpdate = false;
 });
 
 
@@ -1322,6 +1323,8 @@ function init() {
 		Mario.rotation.y = -Mkart.children[1].skeleton.bones[0].rotation.z;
 		Mario.position.y = -Mkart.children[1].skeleton.bones[0].position.z / 10;
 
+		Mario.updateMatrix();
+		camera.up.lerp(Mario.getWorldDirection(), 1/5);
 
 		camera.lookAt(target);
 		//camera.rotation.z += deg(180);

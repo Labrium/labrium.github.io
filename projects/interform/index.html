@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Interform</title>
+	<link rel="stylesheet" href="Styles/Main.css" />
+	<link rel="icon" type="image/png" href="Images/IFLogo.png" />
+	<link rel="shortcut icon" type="image/png" href="Images/IFLogo.png" />
+	<link rel="apple-touch-icon" type="image/png" href="Images/IFLogo.png" />
+</head>
+
+<body>
+	<div id="menubar">[MENUBAR]</div>
+	<div id="content">
+		<div id="sidebar">[SIDEBAR]</div>
+		<div id="main">
+			<div id="toolbar"></div>
+			<div id="onscreen">
+				<div id="browser" class="floatPanel">[BROWSER]</div>
+				<canvas id="helpercube" width="128px" height="128px"></canvas>
+				<div id="explorer" class="floatPanel">[EXPLORER]</div>
+				<div id="dock" class="floatPanel"></div>
+				<div id="viewcontainer"></div>
+			</div>
+			<div id="timeline"></div>
+		</div>
+	</div>
+	<script src="Scripts/Three.js"></script>
+
+	<!-- CONTROLS -->
+	<script src="Scripts/Controls/OrbitControls.js"></script>
+	<script src="Scripts/Controls/TransformControls.js"></script>
+	<script src="Scripts/Controls/SelectionBox.js"></script>
+	<script src="Scripts/Controls/SelectionHelper.js"></script>
+
+	<!-- LOADERS -->
+	<script src="Scripts/Libs/meshopt_decoder.js"></script>
+	<script src="Scripts/Loaders/GLTFLoader.js"></script>
+	<script src="Scripts/Loaders/OBJLoader.js"></script>
+
+	<script src="Scripts/ImportController.js"></script>
+
+	<!-- EXPORTERS -->
+
+	<script src="Scripts/LightProbeGenerator.js"></script>
+	<script src="Scripts/AxisCubeHelper.js"></script>
+	<script src="Scripts/App.js"></script>
+</body>
+
+</html>

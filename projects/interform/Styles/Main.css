@@ -1,0 +1,212 @@
+:root {
+	--small-padding: 4px;
+	--medium-padding: 8px;
+	--large-padding: 16px;
+	--standard-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25), inset 0 0 4px 0 rgba(0, 0, 0, 0.25);
+	--ui-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.25), inset 0 0 4px 0 rgba(0, 0, 0, 0.25);
+	--icon-size: 48px;
+}
+
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+}
+* {
+	border-radius: 10px;
+	box-sizing: border-box;
+}
+
+* {
+	position: relative;
+}
+
+*:after {
+	box-sizing: content-box !important;
+	padding: 0;
+	margin: 0;
+	content: "";
+	position: absolute;
+	display: none;
+	top: 4px;
+	left: 4px;
+	width: calc(100% - 8px);
+	height: calc(100% - 8px);
+	filter: blur(0px);
+	border-radius: inherit;
+	box-shadow: inset 8px 8px 0 -8px white, inset -8px -8px 0 -10px white;
+	z-index: 2;
+	display: block;
+	pointer-events: none;
+	mix-blend-mode: screen;
+}
+
+button {
+	-webkit-user-select: none;
+	box-shadow: inset 0 0 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+#toolbar > button {
+	cursor: pointer;
+	border: none;
+	background-color: transparent;
+	padding: var(--medium-padding);
+	margin: var(--medium-padding);
+	min-height: var(--icon-size);
+	flex: 1 0;
+	font-size: 12px;
+	font-family: "Arial Rounded MT Bold", sans-serif;
+	max-height: 48px;
+}
+button:hover {
+	background-color: rgba(255, 255, 255, 0.1) !important;
+	box-shadow: var(--ui-shadow);
+}
+button:active {
+	color: black;
+	background-color: rgba(0, 0, 0, 0.1) !important;
+	box-shadow: inset var(--ui-shadow) !important;
+}
+
+body {
+	overflow: hidden;
+	cursor: default;
+	display: flex;
+	flex-direction: column;
+	font-family: "Arial Rounded MT Bold", sans-serif;
+}
+#menubar {
+	/*box-shadow: var(--standard-shadow);*/
+	/*box-shadow: var(--ui-shadow);*/
+	z-index: 3;
+	background-color: white;
+	padding: var(--small-padding);
+	-webkit-user-select: none;
+}
+#content {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+}
+#main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+#viewcontainer {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#onscreen {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	flex-grow: 1;
+}
+#onscreen > *:not(#viewcontainer) {
+	z-index: 1;
+}
+#helpercube {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+#toolbar {
+	width: 100%;
+	box-shadow: var(--standard-shadow);
+	padding: var(--small-padding);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+	background-color: white;
+}
+#sidebar {
+	box-shadow: var(--standard-shadow);
+	padding: var(--large-padding);
+	background-color: white;
+	margin-left: -115px;
+	transition: margin 0.25s ease-out;
+}
+#sidebar.show {
+	z-index: 2;
+	margin-left: 0;
+}
+#timeline {
+	width: 100%;
+	box-shadow: var(--standard-shadow);
+	padding: var(--large-padding);
+	background-color: white;
+	z-index: 1;
+}
+
+.floatPanel {
+	box-shadow: var(--standard-shadow);
+	-webkit-backdrop-filter: blur(20px);
+	backdrop-filter: blur(20px);
+	background-color: rgba(255, 255, 255, 0.25);
+	padding: var(--large-padding);
+	overflow: scroll;
+	max-width: 250px;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+}
+
+#browser {
+	position: absolute;
+	top: var(--medium-padding);
+	left: var(--medium-padding);
+	-webkit-backdrop-filter: blur(20px);
+	backdrop-filter: blur(20px);
+	background-color: rgba(255, 255, 255, 0.25);
+	padding: var(--large-padding);
+	overflow: scroll;
+	max-height: calc(100% - var(--medium-padding) * 2);
+}
+#explorer {
+	position: absolute;
+	bottom: 50%;
+	transform: translateY(50%);
+	right: var(--medium-padding);
+	max-height: calc(100% - 256px);
+}
+#dock {
+	position: absolute;
+	bottom: var(--medium-padding);
+	right: 50%;
+	transform: translateX(50%);
+	-webkit-backdrop-filter: blur(20px);
+	backdrop-filter: blur(20px);
+	background-color: rgba(255, 255, 255, 0.25);
+	padding: var(--small-padding);
+	max-width: calc(100% - var(--medium-padding) * 2);
+	max-height: calc(var(--icon-size) + var(--medium-padding) * 2);
+	border-radius: 1000px;
+}
+#dock > button {
+	border-radius: 1000px;
+	cursor: pointer;
+	border: none;
+	background-color: transparent;
+	padding: var(--medium-padding);
+	margin: var(--small-padding);
+	min-height: var(--icon-size);
+	min-width: var(--icon-size);
+	flex: 1 0;
+}
+#dock > button.active {
+	box-shadow: var(--ui-shadow);
+}

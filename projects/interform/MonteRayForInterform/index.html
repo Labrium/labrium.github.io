@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>MonteRay - A Three.js pathtracing renderer - CornellBox</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link type="text/css" rel="stylesheet" href="renderTool.css">
+</head>
+
+<body>
+
+	<div id="info">
+		<button id="renderGL">WebGL Render</button><button id="render">Render</button><button id="download">Save</button><br />
+		<span id="sa">Ready</span>
+	</div>
+	<script src="Three.js"></script>
+	<script src="MeshBVHLib.js"></script>
+	<script src="MeshSurfaceSampler.js"></script>
+	<script src="MonteRayEngine.js"></script>
+	<script src="MonteRay.js"></script>
+	<script>
+		var camera, scene, renderer, GLRenderer;
+		var group;
+
+		init();
+
+		function initScene(width, height) {
+
+			camera = new THREE.PerspectiveCamera(60, width / height, 0.01, 10000);
+			camera.position.z = 525;
+			//camera.rotation.set(0, 0, 0.1);
+
+			scene = new THREE.Scene();
+			scene.background = new THREE.Color(0xffffff);
+			//scene.background = new THREE.Color(0x80b0ff);
+			//scene.background = new THREE.Color(0x000000);
+
+			var grnd = new THREE.Mesh(new THREE.PlaneBufferGeometry(1000, 1000), new THREE.MeshLambertMaterial());
+			grnd.rotation.x = -Math.PI / 2;
+			//scene.add(grnd);
+
+			var light = new THREE.Mesh(new THREE.PlaneBufferGeometry(1000, 1000), new THREE.MeshLambertMaterial({ emissive: 0xffffff, emissiveIntensity: 1 }));
+			light.rotation.x = Math.PI / 2;
+			light.position.y = 100;
+			//scene.add(light);
+
+			scene.add(new THREE.HemisphereLight(0xffffff, 0x000000, 1));
+
+		}
+
+		function init() {
+
+			var buttonRender = document.getElementById('render');
+			buttonRender.addEventListener('click', function () {
+				//numFrames = Number(prompt("How many frames?"));
+				render();
+			});
+
+			var buttonRender = document.getElementById('renderGL');
+			buttonRender.addEventListener('click', function () {
+				GLRenderer.render(scene, camera);
+			});
+
+			var buttonRender = document.getElementById('download');
+			buttonRender.addEventListener('click', function () {
+				renderer.download();
+			});
+
+			//
+
+			initScene(window.innerWidth, window.innerHeight);
+
+			//
+			var numFrames = 1;
+			renderer = new MonteRay.PathtracingRenderer({
+				alpha: true,
+				fps: 20,
+				renderMode: MonteRay.CenterRenderMode,
+				antialiasBackground: true,
+				//threads: 4,
+				//BVHAcceleration: false,
+				//pixelBatchSize: 10000,
+				//downloadInterval: 1,
+				//maxSamples: 20,
+				//advancedLighting: true,
+				//recursiveLighting: true,
+				//lightSamples: 10
+			});
+			renderer.setPixelRatio(0.5);
+			GLRenderer = new THREE.WebGLRenderer({
+				antialias: true
+			});
+			GLRenderer.setPixelRatio(0.5);
+			GLRenderer.setSize(window.innerWidth, window.innerHeight);
+			GLRenderer.domElement.style.position = "absolute";
+			document.body.appendChild(GLRenderer.domElement);
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			renderer.domElement.style.position = "absolute";
+			document.body.appendChild(renderer.domElement);
+
+
+			/*window.addEventListener('resize', function () {
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				GLRenderer.setSize(window.innerWidth, window.innerHeight);
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.resetSamples();
+			});*/
+
+		}
+
+
+		function render() {
+			renderer.render(scene, camera);
+		}
+
+
+	</script>
+
+</body>
+
+</html>

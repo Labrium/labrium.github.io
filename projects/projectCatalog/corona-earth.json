@@ -2,5 +2,5 @@
     "name": "Corona Earth",
     "projectPage": "corona-earth",
     "description": "A real time COVID-19 globe with case data from the <i>Johns Hopkins Coronavirus Resource Center</i>.",
-    "status": ["green", "Working"]
+    "status": ["green", "Functional"]
 }

@@ -1,0 +1,6 @@
+{
+    "name": "CVLOD",
+    "projectPage": "cvlod",
+    "description": "CVLOD or Continuously Variable Level Of Detail is a custom method of creating infinitely repeatable image-based terrain with infinitely variable levels of detail.",
+    "status": ["green", "Complete"]
+}

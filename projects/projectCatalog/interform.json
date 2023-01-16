@@ -1,0 +1,6 @@
+{
+    "name": "Interform",
+    "projectPage": "interform",
+    "description": "A web-based CAD tool for creating and editing 3D models in various formats.",
+    "status": ["orange", "In Development"]
+}

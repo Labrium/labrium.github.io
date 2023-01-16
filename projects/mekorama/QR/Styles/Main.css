@@ -1,0 +1,123 @@
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	background-color: #f0f2f4;
+	/*margin: 10px;*/
+}
+
+#upload {
+	display: block;
+}
+
+table {
+	width: 50%;
+	height: 100%;
+	overflow: scroll;
+	font: 12pt monospace;
+	border-collapse: collapse;
+	display: block;
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+
+td {
+	padding: 0;
+	width: calc(50% / 16);
+	min-width: 24px;
+}
+
+.separator {
+	border-bottom: 1px solid black;
+}
+
+label {
+	float: left;
+	font: 12px monospace;
+	margin-right: 6px;
+}
+
+label[for="crop"] {
+	float: none;
+}
+
+td>input[type="text"] {
+	font: 12px monospace;
+	padding: 0;
+	width: 100%;
+	text-align: center;
+}
+
+input[type="text"] {
+	display: block;
+}
+
+td>input[type="text"][value="00"]:not(:focus),
+td>input[type="text"][value="0"]:not(:focus),
+td>input[type="text"][value=""]:not(:focus) {
+	opacity: 0.2;
+}
+
+#unicode {
+	display: block;
+	float: right;
+	width: 50%;
+	height: 50%;
+	overflow-y: scroll;
+	overflow-x: auto;
+	margin: 0;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+#container {
+	display: block;
+	float: right;
+	width: 50%;
+	height: 100%;
+}
+
+#uqr {
+	max-width: 100vw;
+	max-height: 100vh;
+	background-color: #fff;
+	transition: all 0.25s ease 1s;
+}
+
+#cam {
+	position: absolute;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+#input {
+	position: relative;
+	display: inline-block;
+}
+
+#upload {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	color: white;
+	font-weight: bold;
+	font-size: 12px;
+	filter: drop-shadow(0 1px 5px rgba(0, 0, 0, 1));
+}
+
+#viewer {
+	background: radial-gradient(circle, #ffffff, #dce7ef, #95b8cf);
+}

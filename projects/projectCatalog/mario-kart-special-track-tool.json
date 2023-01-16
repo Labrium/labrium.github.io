@@ -1,0 +1,6 @@
+{
+    "name": "Mario Kart Special Track Tool",
+    "projectPage": "mario-kart-special/TrackTool",
+    "description": "A tool to help image-based track recognition for <i>Mario Kart Special</i>.",
+    "status": ["orange", "In Progress"]
+}

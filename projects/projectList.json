@@ -1,16 +1,29 @@
 {
     "new": [
 	"monteray",
-	"fake-sur",
-        "drone-driver",
-        "flywings-simulator",
-        "flight-simulator",
+	"3d-printing-simulator",
+	"autostereographic-3d",
+	"cvlod",
+	"interform",
+	"mekorama-qr",
+	"2d-ascii-map-collision",
+	"four-point-vehicle-physics",
+	"postprocessing-water-shader",
+	"speed-cube-simulator",
+	"webgpu-hybrid-compute",
+	"mario-kart-special",
+	"mario-kart-special-track-tool",
+	"mario-kart-special-racer-tool"
+    ],
+    "notNew": [
+        "fake-sur",
         "corona-earth",
         "earth",
         "vr-test",
-        "vr-rollercoaster"
-    ],
-    "notNew": [
+        "vr-rollercoaster",
+        "drone-driver",
+        "flywings-simulator",
+        "flight-simulator",
 	"overcooked-online",
         "mekorama",
         "mario-kart-8",

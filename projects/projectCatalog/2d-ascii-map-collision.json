@@ -1,0 +1,6 @@
+{
+    "name": "2D ASCII Map Collision",
+    "projectPage": "2d-ascii-map-collision",
+    "description": "A method for collision 2D using only a 2D character array to prevent collision clipping.",
+    "status": ["green", "In Progress"]
+}

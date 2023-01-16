@@ -1,0 +1,6 @@
+{
+    "name": "Mekorama QR",
+    "projectPage": "mekorama/QR",
+    "description": "A QR code scanner and bytecode editor specialized for editing levels from <i>Mekorama</i> by <i>Martin Magni</i>.",
+    "status": ["green", "Functional"]
+}

@@ -1,0 +1,6 @@
+{
+    "name": "WebGPU Hybrid Compute",
+    "projectPage": "webgpu-hybrid-compute",
+    "description": "An experiment to test CPU/GPU hybrid compute efficiency and precision through WebGPU.",
+    "status": ["green", "Functional"]
+}

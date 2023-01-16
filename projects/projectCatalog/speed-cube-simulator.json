@@ -1,0 +1,6 @@
+{
+    "name": "Speed Cube Simulator",
+    "projectPage": "speed-cube-simulator",
+    "description": "A simulator built with Ammo.js for testing custom Rubik's speed cube designs.",
+    "status": ["green", "Complete"]
+}

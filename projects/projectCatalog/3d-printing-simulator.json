@@ -1,0 +1,6 @@
+{
+    "name": "3D Printing Simulator",
+    "projectPage": "3d-printing-simulator",
+    "description": "A GCODE file visualizer featuring the exact dimensions of the <i>Creality Ender 3</i>.",
+    "status": ["green", "Functional"]
+}

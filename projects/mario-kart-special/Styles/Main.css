@@ -1,0 +1,214 @@
+@font-face {
+	font-family: "Special";
+	font-weight: normal;
+	src: url("../Fonts/Special-Regular.otf") format("opentype");
+}
+
+@font-face {
+	font-family: "Special Bold";
+	font-weight: normal;
+	src: url("../Fonts/Special-Bold.otf") format("opentype");
+}
+
+@font-face {
+	font-family: "DS Digital";
+	font-weight: normal;
+	src: url("../Fonts/DS-Digital-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "DS Digital Italic";
+	font-weight: normal;
+	src: url("../Fonts/DS-Digital-Italic.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "DS Digital Bold";
+	font-weight: normal;
+	src: url("../Fonts/DS-Digital-Bold.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "DS Digital Bold Italic";
+	font-weight: normal;
+	src: url("../Fonts/DS-Digital-BoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Super Mario";
+	font-weight: normal;
+	src: url("../Fonts/NewSuperMarioFontU-Regluar.ttf") format("truetype");
+}
+
+html {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+}
+
+body {
+	margin: 0;
+	/*background: url("../Images/Background.png") no-repeat center center fixed; */
+	background-color: transparent;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	overflow: hidden;
+	cursor: default;
+	width: 100%;
+	height: 100%;
+	font-family: "Special";
+	text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+
+canvas {
+	width: 100% !important;
+	height: 100% !important;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -webkit-crisp-edges;
+	image-rendering: pixelated;
+	image-rendering: crisp-edges;
+}
+
+* {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+
+
+
+#display {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: stretch;
+	justify-content: center;
+	flex-wrap: wrap;
+	max-width: 100%;
+}
+
+.screen {
+	position: relative;
+	max-width: 100%;
+	flex: 1 1 auto;
+	border: 1px solid black;
+}
+
+
+
+
+/* Debug UI */
+
+#racerlist {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: block;
+	max-height: 25vh;
+	overflow: scroll;
+	max-width: 100%;
+}
+
+td {
+	text-align: center;
+	vertical-align: middle;
+}
+
+td div * {
+	width: 16.667%;
+	padding-left: 0;
+	padding-right: 0;
+	text-align: center;
+}
+
+
+
+
+/* Item Box */
+
+.item-container {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	max-width: 100%;
+}
+
+
+
+
+
+/* Gauge */
+
+.gauge-container {
+	width: 150px;
+	height: 150px;
+	position: absolute;
+	bottom: -60px;
+	right: -60px;
+	overflow: hidden;
+	text-align: center;
+	transform: translate(-50%, -50%);
+}
+
+.gauge-data,
+.gauge-label {
+	color: white;
+	position: absolute;
+	left: 15%;
+	margin-left: auto;
+	margin-right: auto;
+	width: inherit;
+}
+
+.gauge-data {
+	font-size: 36px;
+	top: 55%;
+}
+
+.gauge-label {
+	font-size: 18px;
+	top: 80%;
+}
+
+.gauge {
+	z-index: 4;
+	box-sizing: border-box;
+	position: absolute;
+	width: 200%;
+	height: 200%;
+	top: 0;
+	left: 0;
+	border-radius: 1000px;
+	border: 15px solid #444;
+	border-left: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	transform: rotate(-45deg);
+}
+
+.gauge-fill {
+	width: 200%;
+	height: 200%;
+	border-radius: 50%;
+	background: linear-gradient(to top right, #0F0 20%, #FF0 44%, #FF0 46%, #F00 70%);
+	-webkit-mask: radial-gradient(transparent 135px, #000 136px);
+	mask: radial-gradient(transparent 135px, #000 136px);
+}
+
+.gauge-fill:before {
+	content: "";
+	display: block;
+	padding-top: 100%;
+}

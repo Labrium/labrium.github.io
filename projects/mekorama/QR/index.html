@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<title>MekoMaker</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="./Styles/Main.css" />
+</head>
+
+<body>
+	<video playsinline id="cam"></video>
+	<div id="input">
+		<input type="file" accept="image/*, .bin" id="upload" />
+		<canvas id="uqr"></canvas>
+	</div>
+	<br />
+	<label for="crop">Crop</label>
+	<input type="checkbox" id="crop" />
+	<button id="cambutton"></button>
+	<button id="screenbutton"></button>
+	<br />
+	<img id="qr"></img>
+	<pre id="header"></pre>
+	<label for="title">Title</label>
+	<input type="text" maxlength="16" id="title" onchange="regenerateQR();" />
+	<label for="author">Author</label>
+	<input type="text" maxlength="16" id="author" onchange="regenerateQR();" />
+	<table id="data"></table>
+	<pre id="unicode"></pre>
+	<div id="container">
+		<canvas id="viewer"></canvas>
+	</div>
+
+	<script src="./Scripts/Three.js"></script>
+	<script src="./Scripts/OrbitControls.js"></script>
+	<script src="./Scripts/RGBELoader.js"></script>
+	<script src="./Scripts/BufferGeometryUtils.js"></script>
+	<script src="./Scripts/THREE.MeshLine.js"></script>
+	<script src="./Scripts/MekoBlocks.js"></script>
+	<script src="./Scripts/3DView.js"></script>
+	<script src="./Scripts/qrcode.js"></script>
+	<script src="./Scripts/pako.es5.js"></script>
+	<script src="./Scripts/Main.js"></script>
+</body>
+
+</html>

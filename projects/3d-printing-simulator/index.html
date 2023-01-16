@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>3D Printing Simulator</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="Styles/main.css">
+	</head>
+
+	<body>
+		<div id="info">
+			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - 3D Printing Simulator
+		</div>
+
+		<div id="printerScreen">
+			<span id="filename">Loading...</span>
+			<span class="row"><button id="prnt" onclick="printing = true; this.textContent = 'Stop'; ppos.copy(printHead.position); dist = 0; var origclick = this.onclick; this.onclick = function () {printing = false; ppos.copy(printHead.position); dist = 0; index = 3; particlesPlaced = 2; particleIndex = 0; headDown = false; this.onclick = origclick; this.textContent = 'Print';};">Print</button><span id="filament">Filament:0 cm</span></span>
+			<span class="row"><span id="speed">1x</span><input type="range" oninput="timescale = Math.round(Math.pow(this.value, 2) / speed); document.getElementById('speed').innerHTML = Math.pow(this.value, 2) + 'x';" min="1" max="32" step="1" value="1"></input></span>
+			<span id="instruction">CMD:0 / 0</span>
+			<span id="instructionT">X:0 Y:0 Z:0 E:0</span>
+			<span class="row"><span id="prgrsT">0%</span><span id="prgrsbar"><span id="prgrsfill"></span></span></span>
+			<span id="status">Ready</span>
+		</div>
+
+		<script src="Scripts/three.js"></script>
+		<script src="Scripts/OrbitControls.js"></script>
+		<script src="Scripts/GCodeLoader.js"></script>
+		<script src="Scripts/Main.js"></script>
+
+	</body>
+</html>

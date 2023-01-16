@@ -1,0 +1,16 @@
+body {
+	margin: 0;
+	/*background: url("../Images/Background.png") no-repeat center center fixed; */
+	background-color:transparent;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	overflow: hidden;
+	cursor: default;
+}
+
+body, html, canvas {
+	width: 100% !important;
+	height: 100% !important;
+}

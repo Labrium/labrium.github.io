@@ -1,0 +1,6 @@
+{
+    "name": "Postprocessing Water Shader",
+    "projectPage": "postprocessing-water-shader",
+    "description": "A pseudo-refractive custom water shader inspired by the refraction effects in <i>Super Mario Sunshine</i> and <i>Super Mario Odyssey</i>.",
+    "status": ["green", "Functional"]
+}

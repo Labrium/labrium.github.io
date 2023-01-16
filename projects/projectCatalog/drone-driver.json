@@ -2,5 +2,5 @@
     "name": "Drone Driver",
     "projectPage": "drone-driver",
     "description": "With graphics inspired by <i>Dinosaur Polo Club'</i>s <i>Mini Metro</i> and <i>Mini Motorways</i>, this simple game has a simple goal: Fly the first drone taxi to deliver passengers to their destinations.",
-    "status": ["green", "Working"]
+    "status": ["green", "Functional"]
 }
