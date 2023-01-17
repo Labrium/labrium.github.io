@@ -10,6 +10,7 @@ var orbitUp, orbitDown, orbitLeft, orbitRight;
 var moveUp, moveDown, moveleft, moveRight, jump;
 
 var antigrav = false;
+var carmode = false;
 
 var onKeyDown = function (event) {
 	switch (event.code) {
@@ -53,6 +54,9 @@ var onKeyDown = function (event) {
 
 		case "KeyF":
 			antigrav = !antigrav;
+			break;
+		case "KeyC":
+			carmode = !carmode;
 			break;
 
 	}
@@ -618,10 +622,15 @@ var animate = function () {
 	}
 	if (moveUp === true || moveDown === true || moveleft === true || moveRight === true) {
 		acv.setLength(speed);
-		Earth.userData.vel.addScaledVector(acv, 1/4);
-		Earth2.userData.vel.addScaledVector(acv, 1/4);
-		Earth3.userData.vel.addScaledVector(acv, 1/4);
-		Earth4.userData.vel.addScaledVector(acv, 1/4);
+		if (carmode) {
+			Earth.userData.vel.addScaledVector(acv, 2/4);
+			Earth2.userData.vel.addScaledVector(acv, 2/4);
+		} else {
+			Earth.userData.vel.addScaledVector(acv, 1/4);
+			Earth2.userData.vel.addScaledVector(acv, 1/4);
+			Earth3.userData.vel.addScaledVector(acv, 1/4);
+			Earth4.userData.vel.addScaledVector(acv, 1/4);
+		}
 		/*if (anim == false) {
 			rfa = new TWEEN.Tween(Earth.getObjectByName("L_FootJ").position).to({
 				z: 0,
@@ -684,19 +693,23 @@ var animate = function () {
 	var d1t = Earth2.position.clone().sub(Earth.position).normalize();
 	var d1 = Earth.position.distanceTo(Earth2.position);
 
+	if (carmode) {
 	Earth.position.addScaledVector(d1t, (d1 - cw) * 0.5);
-	/*if (Earth.userData.onground == true) {
+	if (Earth.userData.onground == true) {
 		Earth.userData.vel.addScaledVector(d1t, -d1t.dot(Earth.userData.vel) * friction);
-	} else {*/
+	} else {
 		Earth.userData.vel.addScaledVector(d1t, -d1t.dot(Earth.userData.vel.clone().sub(Earth2.userData.vel)) * 0.5);
-	//}
+	}
 
 	Earth2.position.addScaledVector(d1t, (d1 - cw) * -0.5);
-	/*if (Earth2.userData.onground == true) {
+	if (Earth2.userData.onground == true) {
 		Earth2.userData.vel.addScaledVector(d1t, -d1t.dot(Earth2.userData.vel) * friction);
-	} else {*/
+	} else {
 		Earth2.userData.vel.addScaledVector(d1t, -d1t.dot(Earth2.userData.vel.clone().sub(Earth.userData.vel)) * 0.5);
-	//}
+	}
+	} else {
+		constrainSpheres(Earth, Earth2, d1, cw, d1t);
+	}
 	}
 
 
@@ -712,19 +725,23 @@ var animate = function () {
 	var d1t = Earth4.position.clone().sub(Earth3.position).normalize();
 	var d1 = Earth3.position.distanceTo(Earth4.position);
 
+	if (carmode) {
 	Earth3.position.addScaledVector(d1t, (d1 - cw) * 0.5);
-	/*if (Earth3.userData.onground == true) {
+	if (Earth3.userData.onground == true) {
 		Earth3.userData.vel.addScaledVector(d1t, -d1t.dot(Earth3.userData.vel) * friction);
-	} else {*/
+	} else {
 		Earth3.userData.vel.addScaledVector(d1t, -d1t.dot(Earth3.userData.vel.clone().sub(Earth4.userData.vel)) * 0.5);
-	//}
+	}
 
 	Earth4.position.addScaledVector(d1t, (d1 - cw) * -0.5);
-	/*if (Earth4.userData.onground == true) {
+	if (Earth4.userData.onground == true) {
 		Earth4.userData.vel.addScaledVector(d1t, -d1t.dot(Earth4.userData.vel) * friction);
-	} else {*/
+	} else {
 		Earth4.userData.vel.addScaledVector(d1t, -d1t.dot(Earth4.userData.vel.clone().sub(Earth3.userData.vel)) * 0.5);
-	//}
+	}
+	} else {
+		constrainSpheres(Earth3, Earth4, d1, cw, d1t);
+	}
 	}
 
 
@@ -816,10 +833,10 @@ var animate = function () {
 	if (Earth.position.y < 0) {
 		tcp.copy(camera.position);
 		Earth.worldToLocal(tcp);
-		Earth.position.set(0, 15.5, 0);
-		Earth2.position.set(0, 15.5, 0);
-		Earth3.position.set(0, 15.5, 0);
-		Earth4.position.set(0, 15.5, 0);
+		Earth.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
+		Earth2.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
+		Earth3.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
+		Earth4.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
 		Earth.updateMatrixWorld();
 		Earth.localToWorld(tcp);
 		camera.position.copy(tcp);
