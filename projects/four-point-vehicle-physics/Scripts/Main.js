@@ -327,17 +327,26 @@ Earth.userData.rotAxis = new THREE.Vector3(0, 1, 0);
 Earth.userData.rotVel = 1;
 
 Earth.userData.shadow = new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({
+	color: 0x808080,
 	map: new THREE.TextureLoader().load("Images/roundshadow.png"),
 	transparent: true,
-	opacity: 0.5,
 	side: THREE.DoubleSide,
-	depthWrite: false
+	depthWrite: false,
+	blending: THREE.SubtractiveBlending
 }));
+Earth.userData.shadow.material.map.encoding = THREE.sRGBEncoding;
 Earth.userData.shadow.material.onBeforeCompile = function (shader) {
-	console.log(shader.vertexShader);
+	console.log(shader.fragmentShader);
 	shader.vertexShader = shader.vertexShader.replace("}", `
 		gl_Position.z -= 0.01;
-	}`)
+	}`);
+	shader.fragmentShader = shader.fragmentShader.replace("#include <map_fragment>", `
+	#ifdef USE_MAP
+		vec4 texelColor = texture2D( map, vUv );
+		texelColor = vec4(1.0 - texelColor.rgb, texelColor.a);
+		texelColor = mapTexelToLinear( texelColor );
+		diffuseColor *= texelColor;
+	#endif`);
 }
 scene.add(Earth.userData.shadow);
 scene.add(Earth);
@@ -865,9 +874,13 @@ var animate = function () {
 
 	
 	if (antigrav) {
+		Earth.userData.shadow.material.blending = THREE.AdditiveBlending;
+		Earth.userData.shadow.material.color.set(0x008080);
 		camera.lookAt(cpos);
 		//camera.lookAt(cpos.clone().addScaledVector(is.face.normal, 1));
 	} else {
+		Earth.userData.shadow.material.blending = THREE.SubtractiveBlending;
+		Earth.userData.shadow.material.color.set(0x808080);
 		camera.lookAt(cpos.x, cpos.y + 1, cpos.z);
 	}
 	camera.translateZ(-(camera.position.distanceTo(cpos) - camdistance) / 5);
