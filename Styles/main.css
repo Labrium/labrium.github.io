@@ -752,7 +752,12 @@ button:hover {
   -webkit-user-select: none;
   border-radius: var(--round-border);
   transition: all 1s ease;
-  position: absolute;
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  /*max-width: 1250px;*/
 }
 
 /* Next & previous buttons */
