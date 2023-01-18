@@ -366,7 +366,7 @@ var g;
 
 new THREE.GLTFLoader().load("./Models/world.glb", function (obj) {
 	//console.log(obj);
-	var tmp = new THREE.Mesh(new THREE.TorusKnotBufferGeometry(20, 5, 256, 32), new THREE.MeshBasicMaterial());
+	var tmp = new THREE.Mesh(new THREE.TorusKnotBufferGeometry(20, 7.5, 256, 32), new THREE.MeshBasicMaterial());
 	tmp.geometry.translate(0, 60, 0);
 	tmp.userData.data = "physics";
 	obj.scene.add(tmp);
@@ -823,15 +823,30 @@ var animate = function () {
 	/*cpos.copy(Earth.position).add(Earth2.position).add(Earth3.position).multiplyScalar(1/3);
 	cnorm.copy(is.face.normal).add(is2.face.normal).add(is3.face.normal).multiplyScalar(1/3).normalize();*/
 
+	if (Earth.position.y < 0) {
+		tcp.copy(camera.position);
+		tcp.sub(cpos);
+		cpos.set(0, 15.5, 0);
+		Earth.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
+		Earth2.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
+		Earth3.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
+		Earth4.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
+		tcp.add(cpos);
+		camera.position.copy(tcp);
+		Earth.userData.vel.y = 0;
+		Earth2.userData.vel.y = 0;
+		Earth3.userData.vel.y = 0;
+		Earth4.userData.vel.y = 0;
+	}
 
 	cpos.copy(Earth.position).add(Earth2.position).add(Earth3.position).add(Earth4.position).multiplyScalar(1/4);
 
 	if (antigrav) {
 		cnorm.copy(is.face.normal).add(is2.face.normal).add(is3.face.normal).add(is4.face.normal).multiplyScalar(1/4).normalize();
-		camera.up.lerp(cnorm, 1/10);
+		camera.up.lerp(cnorm, 1/50);
 		Earth.material.emissiveIntensity = THREE.MathUtils.lerp(Earth.material.emissiveIntensity, 2, 1/5);
 	} else {
-		camera.up.lerp(Earth.up, 1/10);
+		camera.up.lerp(Earth.up, 1/50);
 		Earth.material.emissiveIntensity = THREE.MathUtils.lerp(Earth.material.emissiveIntensity, 0, 1/5);
 	}
 
@@ -845,23 +860,6 @@ var animate = function () {
 			//Earth.userData.vel.addScaledVector(is.face.normal, 0.4);
 		//}
 	}
-
-	if (Earth.position.y < 0) {
-		tcp.copy(camera.position);
-		Earth.worldToLocal(tcp);
-		Earth.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
-		Earth2.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
-		Earth3.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
-		Earth4.position.set(Math.random() - 0.5, 15.5 + Math.random(), Math.random() - 0.5);
-		Earth.updateMatrixWorld();
-		Earth.localToWorld(tcp);
-		camera.position.copy(tcp);
-		Earth.userData.vel.y = 0;
-		Earth2.userData.vel.y = 0;
-		Earth3.userData.vel.y = 0;
-		Earth4.userData.vel.y = 0;
-	}
-
 
 
 	var anorm = Earth3.position.clone().sub(Earth2.position).normalize();
@@ -883,31 +881,32 @@ var animate = function () {
 		Earth3.geometry = bwgc;
 		Earth4.geometry = bwgc;
 
-		if (anorm3.dot(cnorm) < 0) {
-			if (Earth.userData.onground == true) {
+		if (Earth.userData.onground == true) {
+			if (anorm3.dot(is.face.normal) < 0) {
 				Earth.userData.CFV = -anorm.dot(Earth.userData.vel) / (fwr * tau);
-			}
-			if (Earth2.userData.onground == true) {
-				Earth2.userData.CFV = -anorm.dot(Earth2.userData.vel) / (fwr * tau);
-			}
-			if (Earth3.userData.onground == true) {
-				Earth3.userData.CFV = -anorm.dot(Earth3.userData.vel) / (bwr * tau);
-			}
-			if (Earth4.userData.onground == true) {
-				Earth4.userData.CFV = -anorm.dot(Earth4.userData.vel) / (bwr * tau);
-			}
-		} else {
-			if (Earth.userData.onground == true) {
+			} else {
 				Earth.userData.CFV = anorm.dot(Earth.userData.vel) / (fwr * tau);
 			}
-			if (Earth2.userData.onground == true) {
+		}
+		if (Earth2.userData.onground == true) {
+			if (anorm3.dot(is2.face.normal) < 0) {
+				Earth2.userData.CFV = -anorm.dot(Earth2.userData.vel) / (fwr * tau);
+			} else {
 				Earth2.userData.CFV = anorm.dot(Earth2.userData.vel) / (fwr * tau);
 			}
-			if (Earth3.userData.onground == true) {
-				Earth3.userData.CFV = anorm.dot(Earth3.userData.vel) / (bwr * tau);
+		}
+		if (Earth3.userData.onground == true) {
+			if (anorm3.dot(is3.face.normal) < 0) {
+				Earth3.userData.CFV = -anorm.dot(Earth3.userData.vel) / (fwr * tau);
+			} else {
+				Earth3.userData.CFV = anorm.dot(Earth3.userData.vel) / (fwr * tau);
 			}
-			if (Earth4.userData.onground == true) {
-				Earth4.userData.CFV = anorm.dot(Earth4.userData.vel) / (bwr * tau);
+		}
+		if (Earth4.userData.onground == true) {
+			if (anorm3.dot(is4.face.normal) < 0) {
+				Earth4.userData.CFV = -anorm.dot(Earth4.userData.vel) / (fwr * tau);
+			} else {
+				Earth4.userData.CFV = anorm.dot(Earth4.userData.vel) / (fwr * tau);
 			}
 		}
 
@@ -943,8 +942,7 @@ var animate = function () {
 	if (antigrav) {
 		Earth.userData.shadow.material.blending = THREE.AdditiveBlending;
 		Earth.userData.shadow.material.color.set(0x004040);
-		camera.lookAt(cpos);
-		//camera.lookAt(cpos.clone().addScaledVector(is.face.normal, 1));
+		camera.lookAt(cpos.clone().addScaledVector(camera.up, 1));
 	} else {
 		Earth.userData.shadow.material.blending = THREE.SubtractiveBlending;
 		Earth.userData.shadow.material.color.set(0x404040);
@@ -952,15 +950,15 @@ var animate = function () {
 	}
 	camera.translateZ(-(camera.position.distanceTo(cpos) - camdistance) / 5);
 	if (antigrav) {
-		//camera.lookAt(cpos.clone().addScaledVector(is.face.normal, 0.5));
+		camera.lookAt(cpos.clone().addScaledVector(camera.up, 0.5));
 	} else {
 		camera.lookAt(cpos.x, cpos.y + 0.5, cpos.z);
 	}
 
 
-	if (antigrav) {
+	/*if (antigrav) {
 		collideSphere(camera, 1);
-	}
+	}*/
 
 	body.position.copy(cpos);
 	s.position.copy(cpos);
