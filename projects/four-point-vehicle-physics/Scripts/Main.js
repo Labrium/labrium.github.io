@@ -883,7 +883,7 @@ var animate = function () {
 		Earth3.geometry = bwgc;
 		Earth4.geometry = bwgc;
 
-		if (anorm3.dot(Earth.up) < 0) {
+		if (anorm3.dot(cnorm) < 0) {
 			if (Earth.userData.onground == true) {
 				Earth.userData.CFV = -anorm.dot(Earth.userData.vel) / (fwr * tau);
 			}
