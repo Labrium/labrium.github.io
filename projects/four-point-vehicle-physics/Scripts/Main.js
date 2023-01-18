@@ -305,8 +305,14 @@ var ch = 2;
 var fwr = 0.5;
 var bwr = 0.5;
 
+var fwgs = new THREE.SphereBufferGeometry(fwr, 32, 16);
+var bwgs = new THREE.SphereBufferGeometry(bwr, 32, 16);
+var fwgc = new THREE.CylinderBufferGeometry(fwr, fwr, fwr * 1.5, 32);
+var bwgc = new THREE.CylinderBufferGeometry(bwr, bwr, bwr * 1.5, 32);
+fwgc.rotateZ(tau / 4);
+bwgc.rotateZ(tau / 4);
 
-var Earth = new THREE.Mesh(new THREE.SphereGeometry(fwr, 64, 64), new THREE.MeshStandardMaterial({
+var Earth = new THREE.Mesh(fwgs, new THREE.MeshStandardMaterial({
 	map: new THREE.TextureLoader().load("Images/Earth.png"),
 	emissive: 0x00ffff,
 	emissiveMap: new THREE.TextureLoader().load("Images/grid.png"),
@@ -325,9 +331,10 @@ Earth.userData.onground = false;
 Earth.userData.vel = new THREE.Vector3();
 Earth.userData.rotAxis = new THREE.Vector3(0, 1, 0);
 Earth.userData.rotVel = 1;
+Earth.userData.CFA = 1;
+Earth.userData.CFV = 1;
 
-Earth.userData.shadow = new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), new THREE.MeshBasicMaterial({
-	color: 0x808080,
+Earth.userData.shadow = new THREE.Mesh(new THREE.PlaneBufferGeometry(1.5, 1.5), new THREE.MeshBasicMaterial({
 	map: new THREE.TextureLoader().load("Images/roundshadow.png"),
 	transparent: true,
 	side: THREE.DoubleSide,
@@ -426,17 +433,21 @@ Earth2.userData.onground = false;
 Earth2.userData.vel = new THREE.Vector3();
 Earth2.userData.rotAxis = new THREE.Vector3(0, 1, 0);
 Earth2.userData.rotVel = 1;
+Earth2.userData.CFA = 1;
+Earth2.userData.CFV = 1;
 Earth2.userData.shadow = Earth.userData.shadow.clone();
 scene.add(Earth2.userData.shadow);
 scene.add(Earth2);
 
 var Earth3 = Earth.clone();
-Earth3.geometry = new THREE.SphereGeometry(bwr, 64, 64);
+Earth3.geometry = bwgs;
 Earth3.position.set(2, 20, 1);
 Earth3.userData.onground = false;
 Earth3.userData.vel = new THREE.Vector3();
 Earth3.userData.rotAxis = new THREE.Vector3(0, 1, 0);
 Earth3.userData.rotVel = 1;
+Earth3.userData.CFA = 1;
+Earth3.userData.CFV = 1;
 Earth3.userData.shadow = Earth.userData.shadow.clone();
 scene.add(Earth3.userData.shadow);
 scene.add(Earth3);
@@ -449,6 +460,8 @@ Earth4.userData.onground = false;
 Earth4.userData.vel = new THREE.Vector3();
 Earth4.userData.rotAxis = new THREE.Vector3(0, 1, 0);
 Earth4.userData.rotVel = 1;
+Earth4.userData.CFA = 1;
+Earth4.userData.CFV = 1;
 Earth4.userData.shadow = Earth.userData.shadow.clone();
 scene.add(Earth4.userData.shadow);
 scene.add(Earth4);
@@ -823,12 +836,6 @@ var animate = function () {
 	}
 
 
-	Earth.rotateOnWorldAxis(Earth.userData.rotAxis, Earth.userData.rotVel);
-	Earth2.rotateOnWorldAxis(Earth2.userData.rotAxis, Earth2.userData.rotVel);
-	Earth3.rotateOnWorldAxis(Earth3.userData.rotAxis, Earth3.userData.rotVel);
-	Earth4.rotateOnWorldAxis(Earth4.userData.rotAxis, Earth4.userData.rotVel);
-
-
 	if (jump == true) {
 		//if (Earth.userData.onground == true) {
 			Earth.userData.vel.y += 0.2 / 4;
@@ -870,17 +877,77 @@ var animate = function () {
 	body.up.copy(anorm3);
 
 
+	if (carmode) {
+		Earth.geometry = fwgc;
+		Earth2.geometry = fwgc;
+		Earth3.geometry = bwgc;
+		Earth4.geometry = bwgc;
+
+		if (anorm3.dot(Earth.up) < 0) {
+			if (Earth.userData.onground == true) {
+				Earth.userData.CFV = -anorm.dot(Earth.userData.vel) / (fwr * tau);
+			}
+			if (Earth2.userData.onground == true) {
+				Earth2.userData.CFV = -anorm.dot(Earth2.userData.vel) / (fwr * tau);
+			}
+			if (Earth3.userData.onground == true) {
+				Earth3.userData.CFV = -anorm.dot(Earth3.userData.vel) / (bwr * tau);
+			}
+			if (Earth4.userData.onground == true) {
+				Earth4.userData.CFV = -anorm.dot(Earth4.userData.vel) / (bwr * tau);
+			}
+		} else {
+			if (Earth.userData.onground == true) {
+				Earth.userData.CFV = anorm.dot(Earth.userData.vel) / (fwr * tau);
+			}
+			if (Earth2.userData.onground == true) {
+				Earth2.userData.CFV = anorm.dot(Earth2.userData.vel) / (fwr * tau);
+			}
+			if (Earth3.userData.onground == true) {
+				Earth3.userData.CFV = anorm.dot(Earth3.userData.vel) / (bwr * tau);
+			}
+			if (Earth4.userData.onground == true) {
+				Earth4.userData.CFV = anorm.dot(Earth4.userData.vel) / (bwr * tau);
+			}
+		}
+
+		Earth.quaternion.copy(body.quaternion);
+		Earth2.quaternion.copy(body.quaternion);
+		Earth3.quaternion.copy(body.quaternion);
+		Earth4.quaternion.copy(body.quaternion);
+
+		Earth.userData.CFA += Earth.userData.CFV;
+		Earth2.userData.CFA += Earth2.userData.CFV;
+		Earth3.userData.CFA += Earth3.userData.CFV;
+		Earth4.userData.CFA += Earth4.userData.CFV;
+		
+		Earth.rotateX(Earth.userData.CFA * tau);
+		Earth2.rotateX(Earth2.userData.CFA * tau);
+		Earth3.rotateX(Earth3.userData.CFA * tau);
+		Earth4.rotateX(Earth4.userData.CFA * tau);
+
+	} else {
+		Earth.geometry = fwgs;
+		Earth2.geometry = fwgs;
+		Earth3.geometry = bwgs;
+		Earth4.geometry = bwgs;
+
+		Earth.rotateOnWorldAxis(Earth.userData.rotAxis, Earth.userData.rotVel);
+		Earth2.rotateOnWorldAxis(Earth2.userData.rotAxis, Earth2.userData.rotVel);
+		Earth3.rotateOnWorldAxis(Earth3.userData.rotAxis, Earth3.userData.rotVel);
+		Earth4.rotateOnWorldAxis(Earth4.userData.rotAxis, Earth4.userData.rotVel);
+	}
 
 
 	
 	if (antigrav) {
 		Earth.userData.shadow.material.blending = THREE.AdditiveBlending;
-		Earth.userData.shadow.material.color.set(0x008080);
+		Earth.userData.shadow.material.color.set(0x004040);
 		camera.lookAt(cpos);
 		//camera.lookAt(cpos.clone().addScaledVector(is.face.normal, 1));
 	} else {
 		Earth.userData.shadow.material.blending = THREE.SubtractiveBlending;
-		Earth.userData.shadow.material.color.set(0x808080);
+		Earth.userData.shadow.material.color.set(0x404040);
 		camera.lookAt(cpos.x, cpos.y + 1, cpos.z);
 	}
 	camera.translateZ(-(camera.position.distanceTo(cpos) - camdistance) / 5);
