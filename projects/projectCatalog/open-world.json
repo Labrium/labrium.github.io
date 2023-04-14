@@ -1,0 +1,6 @@
+{
+    "name": "Open World Test",
+    "projectPage": "open-world",
+    "description": "The next generation of CVLOD, now with physics and analytical shading, as well as a custom method for fog on an image-based skybox.",
+    "status": ["green", "Functional"]
+}

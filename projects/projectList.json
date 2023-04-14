@@ -3,10 +3,11 @@
 	"monteray",
 	"3d-printing-simulator",
 	"autostereographic-3d",
-	"cvlod",
+	"open-world",
 	"interform",
 	"mekorama-qr",
 	"2d-ascii-map-collision",
+	"portal-physics",
 	"four-point-vehicle-physics",
 	"postprocessing-water-shader",
 	"speed-cube-simulator",
@@ -16,6 +17,7 @@
 	"mario-kart-special-racer-tool"
     ],
     "notNew": [
+	"cvlod",
         "fake-sur",
         "corona-earth",
         "earth",

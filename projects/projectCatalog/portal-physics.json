@@ -1,0 +1,6 @@
+{
+    "name": "Portal Physics",
+    "projectPage": "portal-physics",
+    "description": "An implementation of portal physics designed for maximum continuity. Special thanks to <i>Jan Blaha</i> for the Sketchbook World.",
+    "status": ["green", "Functional"]
+}
